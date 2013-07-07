@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/itemEdit" android:title="@string/menuitem_title_edit"></item>
+    <item android:id="@+id/itemDelete" android:title="@string/menuitem_title_delete"></item>
+    <item android:id="@+id/itemShowEstimate" android:title="@string/menuitem_title_show_estimate"></item>
+    <item android:id="@+id/itemShowCalc" android:title="@string/menuitem_title_show_calculation"></item>
+    <item android:id="@+id/itemHideCalc" 
+        android:checkable="true" 
+        android:title="@string/menuitem_title_hide_calculation">
+    </item>
+</menu>

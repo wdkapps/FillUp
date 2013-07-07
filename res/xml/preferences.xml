@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <PreferenceCategory
+        android:key="@string/pref_key_category_settings"
+        android:summary="@string/pref_summary_category_settings"
+        android:title="@string/pref_title_category_settings" >
+        
+        <ListPreference
+            android:title="@string/pref_title_units"
+            android:key="@string/pref_key_units"
+            android:defaultValue="0"
+            android:entries="@array/arrayUnitsEntries"
+            android:entryValues="@array/arrayUnitsEntryValues" />
+        
+        <CheckBoxPreference
+          	android:title="@string/pref_title_require_cost"
+          	android:key="@string/pref_key_require_cost"
+          	android:summary="@string/pref_summary_require_cost" 
+          	android:defaultValue="false" />
+
+        <CheckBoxPreference
+          	android:title="@string/pref_title_display_cost"
+          	android:key="@string/pref_key_display_cost"
+          	android:summary="@string/pref_summary_display_cost" 
+          	android:defaultValue="true" />
+
+        <CheckBoxPreference
+          	android:title="@string/pref_title_display_notes"
+          	android:key="@string/pref_key_display_notes"
+          	android:summary="@string/pref_summary_display_notes" 
+          	android:defaultValue="true" />
+        
+        <ListPreference
+            android:title="@string/pref_title_plot_date_range"
+            android:key="@string/pref_key_plot_date_range"
+            android:defaultValue="4"
+            android:entries="@array/arrayPlotDateRangeEntries"
+            android:entryValues="@array/arrayPlotDateRangeEntryValues" />
+
+        <ListPreference
+            android:title="@string/pref_title_plot_font_size"
+            android:key="@string/pref_key_plot_font_size"
+            android:defaultValue="1"
+            android:entries="@array/arrayPlotFontSizeEntries"
+            android:entryValues="@array/arrayPlotFontSizeEntryValues" />
+        
+        <PreferenceScreen
+	        android:title="@string/pref_title_about"
+	        android:summary="@string/pref_summary_about"
+    	    android:persistent="true" >
+
+            <Preference
+			    android:key="@string/pref_key_pkg_name"
+    			android:title="@string/pref_title_pkg_name"
+    			android:summary="@string/pref_summary_unknown"
+			/>
+            
+            <Preference
+			    android:key="@string/pref_key_pkg_version"
+    			android:title="@string/pref_title_pkg_version"
+    			android:summary="@string/pref_summary_unknown"
+			/>
+                        
+            <Preference
+			    android:key="@string/pref_key_build_date"
+    			android:title="@string/pref_title_build_date"
+    			android:summary="@string/pref_summary_unknown"
+			/>
+            
+            <Preference
+			    android:key="@string/pref_key_database_version"
+    			android:title="@string/pref_title_database_version"
+    			android:summary="@string/pref_summary_unknown"
+			/>
+            
+        </PreferenceScreen>
+
+        <Preference
+            android:key="@string/pref_key_license"
+            android:title="@string/pref_title_license"
+            android:summary="@string/pref_summary_license"
+        />
+        
+	</PreferenceCategory>
+    
+</PreferenceScreen>

@@ -1,0 +1,34 @@
+<resources>
+    
+    <!-- not used right now
+    <color name="titlebackgroundcolor">#000098</color>
+    <color name="titletextcolor">#980000</color>
+    -->
+    
+    <!-- DIALOG COLORS -->
+    <color name="separator_bg">#989898</color>
+    <color name="separator_fg">#ffffff</color>
+    <color name="dialog_buttonbar_bg">#989898</color>
+    
+    <!-- GAS LOG COLORS -->
+    <color name="log_header_bg">#ececec</color>
+    <color name="log_header_fg">#000000</color>
+    <color name="log_divider_color">#87cefa</color>   <!-- light blue -->
+    <color name="log_row_selected_bg">#ffd800</color> <!-- yellow -->
+    <color name="log_bg">#ececec</color>              <!-- off-white (see spiral_tile.png) -->
+    <color name="log_fg">#000000</color>
+    
+    <!--  BORDER COLORS -->
+    <color name="border_fg">#989898</color>
+    <color name="border_bg">#000000</color>
+    
+    <!-- PLOT COLORS -->
+    <color name="plot_line_color">#000000</color>
+    <color name="plot_point_color">#000064</color>
+    <color name="plot_fill_color">#9600c800</color>
+    <color name="plot_avgline_color">#80e10000</color>
+    
+    <!-- BLUE LINK -->
+    <color name="link_color">#1e90ff</color> <!--  light blue -->
+    
+</resources>

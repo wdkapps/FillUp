@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/mileage_dialog_width_land"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="@drawable/dialog_border">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="6dp"
+            android:text="@string/title_mileage_calculation"
+            android:textSize="@dimen/mileage_dialog_title_font_size" 
+            android:textColor="#ffffff" />
+
+        <ImageView
+            android:id="@+id/imageCloseDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_dialog_close"
+            android:contentDescription="@string/close_dialog_description" />
+        
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/strut"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true" />
+
+        <com.github.wdkapps.fillup.GasGauge
+            android:id="@+id/viewGauge"
+            android:layout_width="@dimen/mileage_dialog_gauge_width"
+            android:layout_height="@dimen/mileage_dialog_gauge_width"
+            android:layout_alignRight="@id/strut"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/fuel_gauge_description" />
+
+        <TextView
+            android:id="@+id/textCalculation"
+            android:layout_width="@dimen/mileage_dialog_gauge_width"
+            android:layout_height="@dimen/mileage_dialog_gauge_width"
+            android:layout_alignLeft="@id/strut"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@string/mileage_calculation_none"
+            android:textSize="@dimen/mileage_dialog_calc_font_size" />
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView 
+            android:id="@+id/textNote"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/link_color"
+            android:textSize="@dimen/mileage_dialog_note_font_size" 
+	        android:text="@string/mileage_estimate_note" />
+        
+    </RelativeLayout>
+
+</LinearLayout>

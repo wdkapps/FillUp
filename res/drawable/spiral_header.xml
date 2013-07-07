@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CREATES A BITMAP ACCROSS THE SCREEN THAT LOOKS LIKE A NOTEBOOK SPIRAL -->
+<bitmap 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	android:src="@drawable/spiral_tile" 
+	android:tileMode="repeat"
+	/> 

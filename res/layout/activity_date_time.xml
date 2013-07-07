@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:layout_alignParentTop="true" 
+        android:paddingBottom="50dp" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dip" >
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"                
+                android:text="@string/date_label" />
+
+            <DatePicker
+                android:id="@+id/datePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_below="@id/textViewDate" />
+
+            <TextView
+                android:id="@+id/textViewTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_label" 
+                android:layout_below="@id/datePicker"/>
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_below="@id/textViewTime"/>
+            
+        </RelativeLayout>
+        
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" 
+        android:background="@color/dialog_buttonbar_bg"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="4dip" >
+
+        <Button
+            android:id="@+id/buttonOK"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:onClick="clickedOk"
+            android:text="@string/ok_label" />
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:onClick="clickedCancel"
+            android:text="@string/cancel_label" />
+        
+    </LinearLayout>
+
+</RelativeLayout>
+    

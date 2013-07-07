@@ -1,0 +1,109 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <!-- VEHICLE SELECTION GROUP -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/main_margin"                
+            android:layout_marginBottom="@dimen/main_half_margin"                
+            android:layout_marginLeft="@dimen/main_margin"                
+            android:layout_marginRight="@dimen/main_margin"                
+            android:padding="@dimen/main_margin"
+            android:background="@drawable/border"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/labelSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/main_text_size"
+                android:text="@string/vehicles_spinner_prompt" />
+
+            <Spinner
+                android:id="@+id/spinnerVehicles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/main_text_size"
+                android:prompt="@string/vehicles_spinner_prompt" />
+
+            <!-- VEHICLE ADD/EDIT/DELETE BUTTONS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/buttonVehicleDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/delete_description"
+                    android:src="@drawable/ic_btn_delete" />
+
+                <ImageButton
+                    android:id="@+id/buttonVehicleEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/edit_description"
+                    android:src="@drawable/ic_btn_edit" />
+
+                <ImageButton
+                    android:id="@+id/buttonVehicleAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/add_description"
+                    android:src="@drawable/ic_btn_add" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ACTIONS GROUP -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/main_half_margin"                
+            android:layout_marginBottom="@dimen/main_margin"                
+            android:layout_marginLeft="@dimen/main_margin"                
+            android:layout_marginRight="@dimen/main_margin"                
+            android:padding="@dimen/main_margin"
+            android:background="@drawable/border"
+            android:orientation="vertical" >
+
+            <!-- GET GAS BUTTON -->
+            <Button
+                android:id="@+id/buttonGetGas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_gas_can"
+                android:textSize="@dimen/main_text_size"
+                android:text="@string/get_gas_button_label" />
+
+            <!-- VIEW LOG BUTTON -->
+            <Button
+                android:id="@+id/buttonViewLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_notepad"
+                android:textSize="@dimen/main_text_size"
+                android:text="@string/view_log_button_label" />
+
+            <!-- PLOT DATA BUTTON -->
+            <Button
+                android:id="@+id/buttonPlotData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_plot"
+                android:textSize="@dimen/main_text_size"
+                android:text="@string/plot_data_label" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

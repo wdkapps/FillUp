@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="layout_size">large</string>
+    
+    <!-- large screens are at least 640dp x 480dp -->
+    <dimen name="main_margin">30dp</dimen>
+    <dimen name="main_half_margin">15dp</dimen>
+    <dimen name="main_text_size">22sp</dimen>
+    <dimen name="log_text_size">22sp</dimen>
+    <dimen name="log_small_text_size">18sp</dimen>    
+    
+    <!--  mileage dialog dimensions -->
+    <dimen name="mileage_dialog_title_font_size">22sp</dimen>
+    <dimen name="mileage_dialog_calc_font_size">18sp</dimen>
+    <dimen name="mileage_dialog_note_font_size">16sp</dimen>
+    <dimen name="mileage_dialog_width_port">320dp</dimen>
+    <dimen name="mileage_dialog_width_land">600dp</dimen>
+    <dimen name="mileage_dialog_gauge_width">240dp</dimen>
+    
+</resources>

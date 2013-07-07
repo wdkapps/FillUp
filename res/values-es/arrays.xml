@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SPANISH -->
+    
+    <string-array name="arrayUnitsEntries">
+        <item>Millas por galón\n(MPG)</item>
+        <item>Kilómetros por litro\n(KM/L)</item>
+        <item>Litros por 100 kilómetros\n(L/100KM)</item>
+        <item>RU MPG (imperial)\nmillas, litros</item>
+        <item>RU MPG (imperial)\nkilómetros, litros</item>
+    </string-array>
+    
+    <string-array name="arrayUnitsEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    
+    <string-array name="arrayPlotDateRangeEntries">
+        <item>Último mes</item>
+        <item>Últimos 6 meses</item>
+        <item>Últimos 12 meses</item>
+        <item>De un año a la fecha</item>
+        <item>Todos los datos</item>
+    </string-array>
+    
+    <string-array name="arrayPlotDateRangeEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    
+    <string-array name="arrayPlotFontSizeEntries">
+        <item>Pequeño</item>
+        <item>Medio</item>
+        <item>Grande</item>
+        <item>X-Grande</item>
+    </string-array>
+    
+    <string-array name="arrayPlotFontSizeEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    
+    <string-array name="arrayPlotMonthLabels">
+        <item>ene.</item>
+        <item>feb.</item>
+        <item>mar.</item>
+        <item>abr.</item>
+        <item>may.</item>
+        <item>jun.</item>
+        <item>jul.</item>
+        <item>ago.</item>
+        <item>sep.</item>
+        <item>oct.</item>
+        <item>nov.</item>
+        <item>dic.</item>
+    </string-array>
+        
+</resources>

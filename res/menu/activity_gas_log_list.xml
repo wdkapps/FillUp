@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemGetGas"
+        android:title="@string/get_gas_label" 
+        android:icon="@drawable/ic_gas_can" 
+        />
+    
+    <item
+        android:id="@+id/itemImport"
+        android:title="@string/import_label" 
+        android:icon="@drawable/ic_menu_upload" 
+        />
+    
+    <item
+        android:id="@+id/itemExport"
+        android:title="@string/export_label" 
+        android:icon="@drawable/ic_menu_save" 
+        />
+        
+    <item android:id="@+id/itemSettings"
+        android:title="@string/menu_settings"
+        android:icon="@drawable/ic_menu_preferences"
+        android:orderInCategory="100" 
+        />
+    
+</menu>

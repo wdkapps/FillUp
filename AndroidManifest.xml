@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.github.wdkapps.fillup"
+    android:versionCode="11"
+    android:versionName="1.4" >
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="10" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.github.wdkapps.fillup.App"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.github.wdkapps.fillup.StartupActivity"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.GasRecordActivity"
+            android:label="@string/title_activity_get_gas" 
+            android:windowSoftInputMode="stateHidden" > 
+            <!-- stateHidden = no virtual keyboard when activity starts -->
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.GasLogListActivity"
+            android:label="@string/title_activity_gas_log_list" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.Settings"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.PlotActivity"
+            android:label="@string/title_activity_plot" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.PlotPreferencesActivity"
+            android:label="@string/title_activity_plot_options" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.MileagePlotActivity"
+            android:label="@string/title_activity_mileage_plot" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.GallonsPlotActivity"
+            android:label="@string/title_activity_gallons_plot" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.CostPlotActivity"
+            android:label="@string/title_activity_cost_plot" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.OdometerPlotActivity"
+            android:label="@string/title_activity_odometer_plot" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.HtmlViewerActivity"
+            android:label="@string/title_activity_html_viewer" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.DateTimeActivity"
+            android:label="@string/title_activity_date_time" >
+        </activity>
+    </application>
+
+</manifest>

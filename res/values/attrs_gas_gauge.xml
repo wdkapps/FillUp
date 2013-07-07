@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="GasGauge">
+        <attr name="handPosition" format="float" />
+    </declare-styleable>
+</resources>

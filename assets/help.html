@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+  <title>Help</title>
+
+  
+</head><body>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"> <img style="width: 96px; height: 96px;" alt="[fuel gauge]" src="images/fuel_gauge.png"><a name="TOP"></a> </td>
+      <td style="vertical-align: middle;">
+      <h1 style="text-align: left;">FillUp <br>
+      </h1>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h2>Frequently Asked Questions (FAQ)</h2>
+
+<ol>
+
+  <li><a href="#1">Why isn't FillUp calculating my mileage?</a></li>
+  <li><a href="#2">Why does FillUp only estimate my mileage?</a></li>
+  <li><a href="#3">Why do the mileage estimates seem wrong?</a></li>
+  <li><a href="#4">What if I forget to record a gas purchase?</a></li>
+  <li><a href="#5">What is a CSV file and why should I care?</a></li>
+</ol>
+
+<br>
+
+<hr style="width: 100%; height: 2px;">
+<h3><a name="1"></a>Why isn't FillUp calculating my mileage?</h3>
+
+You need to fill your tank once to establish a starting point, and then
+continue recording all of your gasoline purchases. Each time you fill
+your tank after the starting point, FillUp will calculate your mileage
+by determining the distance driven and gasoline used since the previous
+full tank. All gas purchases between full tanks are included in the
+calculations. <br>
+
+<br>
+
+<a href="help.html#TOP">TOP</a><br>
+
+<hr style="width: 100%; height: 2px;">
+<h3><a name="2"></a>Why does FillUp only estimate my mileage?</h3>
+
+A full tank is needed to accurately calculate how much gas was used
+since the previous full tank. When you get gas and the tank is not
+full, FillUp cannot calculate mileage exactly. Instead it will allow
+you to estimate mileage by asking you to approximate how much gas is
+left in the vehicle's tank (move the FillUp fuel gauge needle so that
+it matches your actual vehicle fuel gauge reading). <span style="font-style: italic;">Note that the estimates are for display
+only - they are not saved or shown in the Log.</span><br>
+
+<br>
+
+<a href="help.html#TOP">TOP</a><br>
+
+<hr style="width: 100%; height: 2px;">
+<h3><a name="3"></a>Why do the mileage estimates seem wrong?</h3>
+
+Vehicle fuel tank size is needed to permit the most accurate
+estimates. The default tank size is initially set to 16 gallons (60
+liters) which is the capacity for an average mid-size car. Check your
+vehicle owner's manual to determine the actual fuel tank size, and edit
+the
+vehicle data in the FillUp main screen to define your tank size.<br>
+
+<br>
+
+<ul>
+
+<li>Select a vehicle, and click the edit button.</li>
+</ul>
+
+<div style="margin-left: 40px;"><img style="width: 202px; height: 96px;" alt="[edit vehicle]" src="images/edit_vehicle.png"><br>
+</div>
+
+<br>
+
+<ul>
+
+<li>Edit the Tank Size and click OK. </li>
+</ul>
+
+<div style="margin-left: 40px;"><img style="width: 202px; height: 192px;" alt="[edit vehicle]" src="images/tank_size.png"><br>
+</div>
+
+<br>
+
+<a href="help.html#TOP">TOP</a><br>
+
+<hr style="width: 100%; height: 2px;">
+<h3><a name="4"></a>What if I forget to record a gas purchase?</h3>
+
+The next time you fill your tank, the mileage calculation will be wrong
+(too high). You can hide this value by selecting it in the Log and
+clicking "Hide Calculation". This will cause FillUp to ignore it when
+plotting data and calculating statistics. Subsequent calculations will
+not be effected by the missing data as long as all future gas purchases
+are accurately recorded.<br>
+
+<br>
+
+<a href="help.html#TOP">TOP</a><br>
+
+<hr style="width: 100%; height: 2px;">
+<h3><a name="5"></a>What is a CSV file and why should I care?<br>
+</h3>
+
+A <span style="font-style: italic; font-weight: bold;">comma separated
+values</span>
+(CSV) file is a plain text file where each line represents a data
+record and the record field values are separated by commas. FillUp can
+save (Export) Log data to a CSV file, and restore (Import) it from
+a CSV file. This feature can be useful for backing up your data or
+transferring it from one phone to another. <br>
+
+<br>
+
+To save Log data:<br>
+
+<ol>
+
+  <li>While viewing a vehicle Log, select <span style="font-style: italic;">Export</span> from the options menu.</li>
+  <li>Follow the directions on screen. <br>
+  </li>
+  <li>A CSV file will be created in the Downloads folder of your
+device's sdcard. The file name will be the name of the vehicle with
+".csv" appended.<br>
+  </li>
+</ol>
+
+To restore Log data:<br>
+
+<ol>
+
+  <li>While viewing a vehicle Log, select <span style="font-style: italic;">Import</span> from the options menu.</li>
+  <li>Select a CSV file to import from the displayed list.<br>
+  </li>
+  <li>FillUp will read data from the CSV file into the Log.<br>
+  </li>
+</ol>
+
+<div style="margin-left: 40px;"><span style="font-weight: bold;">NOTE</span>:
+Import will fail if
+the CSV file contains any data that is already in the Log (i.e. same
+odometer values). For this reason it is best to Import data into an
+empty Log. Either delete all existing data from the Log (delete and
+re-create the vehicle) or create a new vehicle with a different name
+and Import into the Log for that vehicle. <br>
+</div>
+
+<br>
+
+CSV files can also be used with most spreadsheet programs. In this
+case, each spreadsheet row represents a line from the FillUp
+Log.&nbsp; The spreadsheet table columns are defined as:<br>
+
+<br>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">date/time<br>
+      </th>
+      <th style="vertical-align: top;">odometer<br>
+      </th>
+      <th style="vertical-align: top;">quantity<br>
+      </th>
+      <th style="vertical-align: top;">fulltank<br>
+      </th>
+      <th style="vertical-align: top;">hidden<br>
+      </th>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">cost</span><br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">notes</span><br>
+      </td>
+      <th style="vertical-align: top;">calculation<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">when the gas was purchased</td>
+      <td style="vertical-align: top;">the vehicle odometer at the time
+of&nbsp; gas purchase</td>
+      <td style="vertical-align: top;">the amount of gas purchased
+(gallons or liters)</td>
+      <td style="vertical-align: top;"><span style="font-weight: bold; font-style: italic;">true</span>
+if tank was filled, <span style="font-weight: bold; font-style: italic;">false</span> otherwise</td>
+      <td style="vertical-align: top;"><span style="font-weight: bold; font-style: italic;">true</span>
+if the calculation is hidden in the log, <span style="font-weight: bold; font-style: italic;">false</span> otherwise</td>
+      <td style="vertical-align: top;">the total cost of the gas
+purchased.<br>
+      </td>
+      <td style="vertical-align: top;">the text entered in the Notes
+field when the gas was purchased (80 characters maximum)<br>
+      </td>
+      <td style="vertical-align: top;">the calculated mileage (MPG,
+KM/L, or L/100KM)</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<hr style="width: 100%; height: 2px;"><a href="#TOP">TOP</a><br>
+
+<br>
+
+</body></html>

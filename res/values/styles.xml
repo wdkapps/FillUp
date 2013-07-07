@@ -1,0 +1,15 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="android:Theme.Black.NoTitleBar">
+        <!--  not used right now
+        <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
+        --> 
+    </style>
+
+    <!--  not used right now
+    <style name="WindowTitleBackground">     
+        <item name="android:background">@color/titlebackgroundcolor</item>   
+    </style>
+    -->
+
+</resources>

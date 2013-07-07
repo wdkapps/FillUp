@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/log_bg"
+    android:orientation="vertical" >
+
+    <!-- SPIRAL NOTE BOOK HEADER -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spiral_header"
+        android:gravity="left"
+        android:orientation="horizontal" />
+
+    <!-- HEADER ROW -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/log_header_bg"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:padding="4dip" >
+
+        <TextView
+            android:id="@+id/headerDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:gravity="left"
+            android:text="@string/date_label"
+            android:textColor="@color/log_header_fg"
+            android:textSize="@dimen/log_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/headerOdometer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:gravity="right"
+            android:text="@string/odometer_label"
+            android:textColor="@color/log_header_fg"
+            android:textSize="@dimen/log_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/headerGallons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:gravity="right"
+            android:text="@string/gallons_label"
+            android:textColor="@color/log_header_fg"
+            android:textSize="@dimen/log_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/headerMileage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:gravity="right"
+            android:text="@string/mileage_label"
+            android:textColor="@color/log_header_fg"
+            android:textSize="@dimen/log_text_size"
+            android:textStyle="bold" />
+        
+    </LinearLayout>
+
+    <!-- LIST OF GAS RECORDS -->
+    <ListView
+        android:id="@+id/gas_log_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/log_bg"
+        android:cacheColorHint="@color/log_bg"
+        android:divider="@color/log_divider_color"
+        android:dividerHeight="1dip"
+        android:padding="4dip" />
+
+</LinearLayout>

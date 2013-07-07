@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="250dp" 
+    android:layout_height="wrap_content" 
+    android:orientation="vertical">
+        
+    <LinearLayout 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:orientation="vertical"
+	    android:paddingLeft="8dip" 
+	    android:paddingRight="8dip"
+	    android:paddingBottom="8dip">
+	    
+	    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vehicle_name_label" 
+            />
+
+        <EditText
+            android:id="@+id/textVehicleName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:maxLength="20"
+            />
+        
+   	    <TextView
+   	        android:id="@+id/labelVehicleTankSize"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vehicle_tanksize_label" 
+            />
+
+        <EditText
+            android:id="@+id/textVehicleTankSize"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:digits="0123456789.,"
+            />
+        
+	</LinearLayout>
+	
+	<LinearLayout 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:orientation="horizontal"
+	    android:background="@color/dialog_buttonbar_bg"
+	    android:padding="5dip"
+	    >
+	    
+        <Button 
+            android:id="@+id/buttonOK" 
+            android:layout_width="120dp" 
+            android:layout_height="wrap_content" 
+            android:text="@string/ok_label" 
+            />
+        
+        <Button 
+            android:id="@+id/buttonCancel" 
+            android:layout_width="120dp" 
+            android:layout_height="wrap_content" 
+            android:text="@string/cancel_label" 
+            />
+                
+    </LinearLayout> 
+
+</LinearLayout>

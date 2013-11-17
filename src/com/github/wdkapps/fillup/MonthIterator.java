@@ -19,7 +19,6 @@
 
 package com.github.wdkapps.fillup;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -28,13 +27,13 @@ import java.util.NoSuchElementException;
  * DESCRIPTION:
  * Sequentially iterates over a Date range at 23:59:59 on the last day of each month.
  */
-public class MonthIterator implements Iterator<Date> {
+public class MonthIterator implements Iterator<Month> {
 	
 	/// the next month value in the iteration range
-	private Calendar next = Calendar.getInstance();
+	private Month next;
 	
-	/// the end date of the iteration range 
-	private Calendar end = Calendar.getInstance();
+	/// the last month of the iteration range 
+	private Month end;
 	
 	/**
 	 * DESCRIPTION:
@@ -43,13 +42,8 @@ public class MonthIterator implements Iterator<Date> {
 	 * @param dateEnd - the ending date
 	 */
 	public MonthIterator(Date dateStart, Date dateEnd) {
-		next.set(Calendar.MONTH,dateStart.getMonth());
-		next.set(Calendar.YEAR,dateStart.getYear()+1900);
-		next.set(Calendar.DAY_OF_MONTH,getLastDayOfMonth(next));
-		next.set(Calendar.HOUR_OF_DAY,23);
-		next.set(Calendar.MINUTE,59);
-		next.set(Calendar.SECOND,59);
-		end.setTime(dateEnd);
+		next = new Month(dateStart);
+		end = new Month(dateEnd);
 	}
 	
 	/**
@@ -69,12 +63,11 @@ public class MonthIterator implements Iterator<Date> {
 	 * @see java.util.Iterator#next()
 	 */
 	@Override
-	public Date next() {
+	public Month next() {
 		if (!hasNext()) throw new NoSuchElementException();
-		Date date = next.getTime();
-		next.add(Calendar.MONTH,1);
-		next.set(Calendar.DAY_OF_MONTH,getLastDayOfMonth(next));
-		return date;
+		Month month = new Month(next);
+		next.increment();
+		return month;
 	}
 
 	/**
@@ -88,15 +81,4 @@ public class MonthIterator implements Iterator<Date> {
 		throw new UnsupportedOperationException();
 	}
 	
-	/**
-	 * DESCRIPTION:
-	 * Convenience method to retrieve the last day of the month
-	 * for a specific month (indicated via Calendar instance). 
-	 * @param calendar - indicates the month to retrieve the last day for. 
-	 * @return int - the last day of the specified month.
-	 */
-	private int getLastDayOfMonth(Calendar calendar) {
-		return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);	
-	}
-
 }

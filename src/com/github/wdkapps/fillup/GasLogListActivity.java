@@ -29,7 +29,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -162,7 +161,7 @@ implements ConfirmationDialog.Listener,
     		return true;
     	
     	case R.id.itemImport:
-    	   	if (isExternalStorageReadable()) {
+    	   	if (ExternalStorage.isReadable()) {
     	   		showDialog(DIALOG_SELECT_IMPORT_FILE_ID);
         	} else {
         		Utilities.toast(this,getString(R.string.toast_external_storage_not_readable));
@@ -323,10 +322,7 @@ implements ConfirmationDialog.Listener,
     protected File getExportFile() {
     	
     	// get path to external storage directory 
-    	File dir = Environment.getExternalStoragePublicDirectory(DOWNLOAD_SERVICE);
-    	
-    	// make sure it exists
-    	dir.mkdir();
+    	File dir = ExternalStorage.getPublicDownloadDirectory();
     	
     	// export file is named after vehicle and stored in external storage directory
     	String file = vehicle.getName()+ ".csv";
@@ -339,7 +335,7 @@ implements ConfirmationDialog.Listener,
      */
     protected void exportData() {
     	
-    	if (!isExternalStorageWritable()) {
+    	if (!ExternalStorage.isWritable()) {
     		Utilities.toast(this,getString(R.string.toast_external_storage_not_writable));
     		return;
     	}
@@ -597,29 +593,6 @@ implements ConfirmationDialog.Listener,
         }
         
         return dialog;
-    }
-    
-    /**
-     * DESCRIPTION:
-     * Determine whether external storage (sdcard) is in a 
-     * readable state.
-     * @return boolean - true = readable
-     */
-    private boolean isExternalStorageReadable() {
-    	String state = Environment.getExternalStorageState();
-    	return (Environment.MEDIA_MOUNTED.equals(state) || 
-    			Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)); 
-    }
-
-    /**
-     * DESCRIPTION:
-     * Determine whether external storage (sdcard) is in a 
-     * writable state.
-     * @return boolean - true = writable
-     */
-    private boolean isExternalStorageWritable() {
-    	String state = Environment.getExternalStorageState();
-    	return Environment.MEDIA_MOUNTED.equals(state);
     }
     
 	/**

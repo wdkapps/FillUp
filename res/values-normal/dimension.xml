@@ -8,7 +8,9 @@
     <dimen name="main_half_margin">8dp</dimen>
     <dimen name="main_text_size">16sp</dimen>
     <dimen name="log_text_size">14sp</dimen>
-    <dimen name="log_small_text_size">12sp</dimen>    
+    <dimen name="log_small_text_size">12sp</dimen> 
+    <dimen name="range_button_width">60sp</dimen>    
+    <dimen name="range_button_text_size">14sp</dimen>
     
     <!--  mileage dialog dimensions -->
     <dimen name="mileage_dialog_title_font_size">19sp</dimen>

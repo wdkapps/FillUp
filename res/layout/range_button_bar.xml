@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:padding="5dp"
+    android:orientation="horizontal" >
+
+    <ToggleButton
+        android:id="@+id/button1"
+        android:layout_width="@dimen/range_button_width"
+        android:layout_height="wrap_content"
+        android:textOn="@string/label_range_1month"
+        android:textOff="@string/label_range_1month"
+        android:textSize="@dimen/range_button_text_size" />
+
+    <ToggleButton
+        android:id="@+id/button6"
+        android:layout_width="@dimen/range_button_width"
+        android:layout_height="wrap_content"
+        android:textOn="@string/label_range_6month"
+        android:textOff="@string/label_range_6month"
+        android:textSize="@dimen/range_button_text_size" />
+
+    <ToggleButton
+        android:id="@+id/button12"
+        android:layout_width="@dimen/range_button_width"
+        android:layout_height="wrap_content"
+        android:textOn="@string/label_range_12month"
+        android:textOff="@string/label_range_12month"
+        android:textSize="@dimen/range_button_text_size" />
+
+    <ToggleButton
+        android:id="@+id/buttonYTD"
+        android:layout_width="@dimen/range_button_width"
+        android:layout_height="wrap_content"
+        android:textOn="@string/label_range_ytd"
+        android:textOff="@string/label_range_ytd"
+        android:textSize="@dimen/range_button_text_size" />
+
+    <ToggleButton
+        android:id="@+id/buttonAll"
+        android:layout_width="@dimen/range_button_width"
+        android:layout_height="wrap_content"
+        android:textOn="@string/label_range_all"
+        android:textOff="@string/label_range_all"
+        android:textSize="@dimen/range_button_text_size" />
+
+</LinearLayout>

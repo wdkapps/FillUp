@@ -84,12 +84,14 @@ implements VehicleDialog.Listener, ConfirmationDialog.Listener, View.OnClickList
         Button buttonGetGas = (Button)findViewById(R.id.buttonGetGas);
         Button buttonViewLog = (Button)findViewById(R.id.buttonViewLog);
         Button buttonPlotData = (Button)findViewById(R.id.buttonPlotData);
+        Button buttonViewStatistics = (Button)findViewById(R.id.buttonViewStatistics);
         buttonVehicleAdd.setOnClickListener(this);
         buttonVehicleEdit.setOnClickListener(this);
         buttonVehicleDelete.setOnClickListener(this);
         buttonGetGas.setOnClickListener(this);
         buttonViewLog.setOnClickListener(this);
         buttonPlotData.setOnClickListener(this);
+        buttonViewStatistics.setOnClickListener(this);
         
         // create a list of views that require an existing vehicle
         listViewsThatNeedVehicle = new LinkedList<View>();
@@ -98,6 +100,7 @@ implements VehicleDialog.Listener, ConfirmationDialog.Listener, View.OnClickList
         listViewsThatNeedVehicle.add(buttonGetGas);
         listViewsThatNeedVehicle.add(buttonViewLog);
         listViewsThatNeedVehicle.add(buttonPlotData);
+        listViewsThatNeedVehicle.add(buttonViewStatistics);
 
         // create a log instance for use by this application
         gaslog = GasLog.getInstance();
@@ -227,6 +230,10 @@ implements VehicleDialog.Listener, ConfirmationDialog.Listener, View.OnClickList
 		case R.id.buttonPlotData:
 			plotData(v);
 			break;
+
+		case R.id.buttonViewStatistics:
+			viewStatistics(v);
+			break;
 			
 		default:
 			Utilities.toast(this,"Invalid view id.");
@@ -332,6 +339,22 @@ implements VehicleDialog.Listener, ConfirmationDialog.Listener, View.OnClickList
         // start an Activity to display gas records for the vehicle
     	Intent intent = new Intent(this, PlotActivity.class);
     	intent.putExtra(PlotActivity.VEHICLE, selectedVehicle);
+    	startActivity(intent);
+    }
+
+    /**
+     * DESCRIPTION:
+     * Starts an Activity to display statistical data for the selected vehicle.
+     * @param view - currently unused - necessary only if called as click listener.
+     */
+    public void viewStatistics(View view) {
+
+    	// get the selected vehicle
+        if (getSelectedVehicle() == null) return;
+        
+        // start an Activity to display statistics for the vehicle
+    	Intent intent = new Intent(this, StatisticsActivity.class);
+    	intent.putExtra(StatisticsActivity.VEHICLE, selectedVehicle);
     	startActivity(intent);
     }
     

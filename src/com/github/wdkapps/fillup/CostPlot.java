@@ -19,53 +19,63 @@
 
 package com.github.wdkapps.fillup;
 
+import java.text.Format;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.androidplot.series.XYSeries;
 import com.androidplot.util.PaintUtils;
+import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.BarFormatter;
 import com.androidplot.xy.BarRenderer;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
+import com.androidplot.xy.LineAndPointRenderer;
 import com.androidplot.xy.PointLabelFormatter;
+import com.androidplot.xy.PointLabeler;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYStepMode;
 
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Display;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 /**
  * DESCRIPTION:
- * An Activity that displays a graph of gas usage data.
+ * A plot of gas usage data.
+ * 
+ * NOTE: 
+ * This class was originally implemented as a separate Activity "tab" inside
+ * a parent TabActivity, but has been refactored to manage an XYPlot view
+ * for a parent Activity. 
  */
-public class CostPlotActivity extends Activity implements OnSharedPreferenceChangeListener {
+public class CostPlot implements OnSharedPreferenceChangeListener {
 
 	/// for logging
-	private static final String TAG = CostPlotActivity.class.getName();
+	private static final String TAG = CostPlot.class.getName();
+
+	/// the parent activity
+	private Activity activity;
 
     /// the plot
     private XYPlot plot;
     
-    /// the plot title
-    private TextView title;
-    
     /// defines how the plot bars are drawn
-    BarFormatter plotFormatter;
+    private BarFormatter plotFormatter;
     
     /// defines how the average line is drawn
-    LineAndPointFormatter avgFormatter;
-    
+    private LineAndPointFormatter avgFormatter;
+
+    /// defines how the average point label is drawn
+    private PointLabelFormatter avgLabelFormatter;
+
     /// average gas used per month for plot period
     private double average = 0;
     
@@ -88,34 +98,37 @@ public class CostPlotActivity extends Activity implements OnSharedPreferenceChan
     private MappedLabelFormat xlabels = new MappedLabelFormat();
     
     /// formatter for y-axis labels
-    private static final NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();  
+    private static final Format ylabels = NumberFormat.getCurrencyInstance();  
     
     /**
      * DESCRIPTION:
      * Creates the graph.
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
-    @Override
-    public void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState, Activity parent, XYPlot xyplot)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cost_plot);
-        
-        // get current instance of our widgets
-        plot = (XYPlot)findViewById(R.id.xyCostPlot);
-        title = (TextView)findViewById(R.id.titleCostPlot);
+    	this.activity = parent;
+    	this.plot = xyplot;
         
         // create a formatter to use for drawing the plot series 
         plotFormatter = new BarFormatter(
-				getResources().getColor(R.color.plot_fill_color),
-				getResources().getColor(R.color.plot_line_color));
-        
+				activity.getResources().getColor(R.color.plot_fill_color),
+				activity.getResources().getColor(R.color.plot_line_color));
+
+        // create a formatter for average label
+        float hOffset = 50f;
+        float vOffset = -10f;
+        avgLabelFormatter = new PointLabelFormatter(
+        		activity.getResources().getColor(R.color.plot_avgline_color),
+        		hOffset,
+        		vOffset);
+
         // create a formatter to use for drawing the average line
         avgFormatter = new LineAndPointFormatter(
-        		getResources().getColor(R.color.plot_avgline_color),
+        		activity.getResources().getColor(R.color.plot_avgline_color),
         		null,
         		null,
-        		(PointLabelFormatter)null);
+        		avgLabelFormatter);
         
         // white background for the plot
         plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
@@ -136,18 +149,14 @@ public class CostPlotActivity extends Activity implements OnSharedPreferenceChan
         
         // define plot axis labels
         plot.setRangeLabel("");
-        plot.setDomainLabel(getString(R.string.months_label));
+        plot.setDomainLabel(activity.getString(R.string.months_label));
         
         // specify format of axis value labels
-        plot.setRangeValueFormat(currencyFormat);
+        plot.setRangeValueFormat(ylabels);
         plot.setDomainValueFormat(xlabels);
         
         // plot the data
         drawPlot();
-
-        // setup to be notified when plot options change
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);;
-		prefs.registerOnSharedPreferenceChangeListener(this);
     }        
     
     /**
@@ -168,10 +177,18 @@ public class CostPlotActivity extends Activity implements OnSharedPreferenceChan
         // add a line reflecting data average
         if (average > 0) {
         	plot.addSeries(getAverageSeries(),avgFormatter);
-        }
 
-        // define the plot title
-        setPlotTitle();
+        	// specify format of the average point label 
+        	LineAndPointRenderer<?> lpr = (LineAndPointRenderer<?>)plot.getRenderer(LineAndPointRenderer.class);
+        	if (lpr != null) {
+        		lpr.setPointLabeler(new PointLabeler() {
+        			@Override
+        			public String getLabel(XYSeries series, int index) {
+        				return (index == 0) ? ylabels.format(series.getY(index)) : "";
+        			}
+        		});
+        	}
+        }
     }
     
     /**
@@ -190,50 +207,37 @@ public class CostPlotActivity extends Activity implements OnSharedPreferenceChan
      * preferences.
      */
     private void setPlotFontSizes() {
-    	Context context = getApplicationContext();
-    	PlotFontSize size = new PlotFontSize(this,Settings.KEY_PLOT_FONT_SIZE);
-    	
+    	PlotFontSize size = new PlotFontSize(activity,Settings.KEY_PLOT_FONT_SIZE);
+
+    	// plot title label
+        PaintUtils.setFontSizeDp(activity,
+            	plot.getTitleWidget().getLabelPaint(),size.getSizeDp());
+        plot.getTitleWidget().pack();
+
     	// axis step value labels
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
             	plot.getGraphWidget().getRangeLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
             	plot.getGraphWidget().getDomainLabelPaint(),size.getSizeDp());
         
         // axis origin value labels
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
         		plot.getGraphWidget().getRangeOriginLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
         		plot.getGraphWidget().getDomainOriginLabelPaint(),size.getSizeDp());
 
         // axis title labels
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
                 plot.getRangeLabelWidget().getLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
                 plot.getDomainLabelWidget().getLabelPaint(),size.getSizeDp());
         plot.getRangeLabelWidget().pack();
         plot.getDomainLabelWidget().pack();
+        
+        // average point label
+        avgLabelFormatter.getTextPaint().setTextSize(PixelUtils.dpToPix(size.getSizeDp()));
     }
     
-    /**
-     * DESCRIPTION:
-     * Sets the title of the plot to reflect the average gas per month used.
-     */
-    private void setPlotTitle() {
-    	
-    	String title = null;
-    	
-    	if (average > 0) {
-    		title = String.format(App.getLocale(),getString(R.string.title_plot_cost),
-    				currencyFormat.format(sumy),
-    				currencyFormat.format(average)); 
-    	} else {
-    		title = String.format(App.getLocale(),getString(R.string.title_plot_cost_noavg),
-    				currencyFormat.format(sumy));
-    	}
-
-    	this.title.setText(title);
-    }
-
     /**
      * DESCRIPTION:
      * Sets the boundaries for the X and Y-axis based on the data values.
@@ -265,7 +269,7 @@ public class CostPlotActivity extends Activity implements OnSharedPreferenceChan
         // adjust bar thickness based on number of months being plotted
         BarRenderer<?> barRenderer = (BarRenderer<?>)plot.getRenderer(BarRenderer.class);
         if(barRenderer != null) {
-        	Display display = getWindowManager().getDefaultDisplay();
+        	Display display = activity.getWindowManager().getDefaultDisplay();
         	float displayWidth = Utilities.convertPixelsToDp(display.getWidth());
         	float plotWidth = displayWidth * 0.75f;
             float barWidth = plotWidth / months;
@@ -301,7 +305,7 @@ public class CostPlotActivity extends Activity implements OnSharedPreferenceChan
     	xlabels.clear();
     	long x = 0L;
     	double y = 0f;
-    	for (Date month : PlotActivity.monthly) {
+    	for (Month month : PlotActivity.monthly) {
     		y = PlotActivity.monthly.getTrips(month).getCost();
     		Log.d(tag,"month="+month.toString()+" x="+x+" y="+y);
     		minx = Math.min(minx, x);
@@ -311,7 +315,7 @@ public class CostPlotActivity extends Activity implements OnSharedPreferenceChan
     		xNumbers.add(x);
     		yNumbers.add(y);
     		sumy += y;
-    		xlabels.put(x++,getMonthLabel(month));
+    		xlabels.put(x++,month.getLabel());
     	}
 
     	// adjust min/max values if no data
@@ -328,19 +332,6 @@ public class CostPlotActivity extends Activity implements OnSharedPreferenceChan
     	Log.d(tag,"miny="+miny+" maxy="+maxy);
     	Log.d(tag,"sumy="+sumy+" size="+yNumbers.size()+" average="+average);
 
-    	// add current month to series after average calculation was performed
-    	Date month = new Date();
-		y = PlotActivity.monthly.getTrips(month).getCost();
-		Log.d(tag,"month="+month.toString()+" x="+x+" y="+y);
-		minx = Math.min(minx, x);
-		maxx = Math.max(maxx, x);
-		miny = Math.min(miny, y);
-		maxy = Math.max(maxy, y);
-		xNumbers.add(x);
-		yNumbers.add(y);
-		sumy += y;
-		xlabels.put(x++,getMonthLabel(month));
-    	
         // create a new series from the x and y axis numbers
     	String title = "";
         return new SimpleXYSeries(xNumbers,yNumbers,title);
@@ -369,15 +360,6 @@ public class CostPlotActivity extends Activity implements OnSharedPreferenceChan
         return new SimpleXYSeries(xNumbers,yNumbers,title);
     }
     
-    /**
-     * DESCRIPTION:
-     * Called when units of measurement shared preference has changed.
-     * Updates the plot to reflect the new units.
-     */
-    public void onUpdateUnits() {
-    	// nothing to do - currency set via android system settings
-    }
-    
 	/**
 	 * DESCRIPTION:
 	 * Called when one or more plot preferences have changed.
@@ -395,25 +377,20 @@ public class CostPlotActivity extends Activity implements OnSharedPreferenceChan
 			// plot font size changed
 			redrawPlot();
         }
-		
-		/*
-		 * NOTE: changes to Settings.KEY_UNITS is handled via call to
-		 * our onUpdateUnits() method by our PlotActivity parent after
-		 * the plot data has been updated.
-		 */
 
 	}
 	
-	/**
-	 * DESCRIPTION:
-	 * Returns a label for a specified month.
-	 * @param date - the month
-	 * @return a label String.
-	 */
-	private String getMonthLabel(Date date) {
-		final String labels[] = getResources().getStringArray(R.array.arrayPlotMonthLabels);
-		return labels[date.getMonth()];
-	}
+    /**
+     * DESCRIPTION:
+     * Sets the height of the plot view.
+     * @param height - the height in pixels.
+     */
+    public void setHeight(int height) {
+    	ViewGroup.LayoutParams params = plot.getLayoutParams();
+    	params.height = height;
+    	plot.setLayoutParams(params);
+    	plot.redraw();
+    }
 
 }
 

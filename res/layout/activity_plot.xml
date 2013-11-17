@@ -1,30 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-    
-        <TabHost
-            android:id="@android:id/tabhost"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/stats_bg" >
+
+    <include android:id="@+id/rangeButtons" layout="@layout/range_button_bar"/>
+
+    <ScrollView
+        android:id="@+id/scrollviewPlots"
+        android:layout_below="@id/rangeButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:fillViewport="true" >
+        
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            
+            <TextView 
+                android:id="@+id/titleMileagePlot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:textColor="@color/plot_title_fg"
+                android:background="@color/plot_title_bg"
+                android:text="@string/title_plot_mileage" />
 
-            <LinearLayout
+            <com.androidplot.xy.XYPlot
+                android:id="@+id/xyMileagePlot"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:padding="3dp" >
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
+                androidplot.title="" />
+            
+            <TextView 
+                android:id="@+id/titleOdometerPlot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:textColor="@color/plot_title_fg"
+                android:background="@color/plot_title_bg"
+                android:text="@string/title_plot_odometer" />
+            
+            <com.androidplot.xy.XYPlot
+                android:id="@+id/xyOdometerPlot"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
+                androidplot.title="" />
 
-                <TabWidget
-                    android:id="@android:id/tabs"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
+            <TextView 
+                android:id="@+id/titleGallonsPlot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:textColor="@color/plot_title_fg"
+                android:background="@color/plot_title_bg"
+                android:text="@string/title_plot_gallons" />
+             
+            <com.androidplot.xy.XYPlot
+                android:id="@+id/xyGallonsPlot"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
+                androidplot.title="" />
+            
+            <TextView 
+                android:id="@+id/titleCostPlot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:textColor="@color/plot_title_fg"
+                android:background="@color/plot_title_bg"
+                android:text="@string/title_plot_cost" />
+ 
+            <com.androidplot.xy.XYPlot
+                android:id="@+id/xyCostPlot"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
+                androidplot.title="" />
 
-                <FrameLayout
-                    android:id="@android:id/tabcontent"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        </TabHost>
-</LinearLayout>
+            <TextView 
+                android:id="@+id/titlePricePlot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:textColor="@color/plot_title_fg"
+                android:background="@color/plot_title_bg"
+                android:text="@string/title_plot_price" />
+ 
+            <com.androidplot.xy.XYPlot
+                android:id="@+id/xyPricePlot"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
+                androidplot.title="" />
+            
+        </LinearLayout>
+        
+    </ScrollView>
+
+</RelativeLayout>

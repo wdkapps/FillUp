@@ -102,7 +102,6 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		
 		// initialize summary for each shared preference to reflect the selected value
 		onSharedPreferenceChanged(sharedPreferences,KEY_UNITS);
-		onSharedPreferenceChanged(sharedPreferences,KEY_PLOT_DATE_RANGE);
 		onSharedPreferenceChanged(sharedPreferences,KEY_PLOT_FONT_SIZE);
 	}
 	
@@ -127,9 +126,6 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		if (key.equals(KEY_UNITS)) {
 			Units units = new Units(key);
             pref.setSummary(units.getSummary());
-		} else if (key.equals(KEY_PLOT_DATE_RANGE)) {
-			PlotDateRange range = new PlotDateRange(this,key);
-            pref.setSummary(range.getSummary());
 		} else if (key.equals(KEY_PLOT_FONT_SIZE)) {
   			PlotFontSize size = new PlotFontSize(this,key);
             pref.setSummary(size.getSummary());

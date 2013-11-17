@@ -22,16 +22,19 @@ package com.github.wdkapps.fillup;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.TabActivity;
+import com.androidplot.xy.XYPlot;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TabHost;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 /**
@@ -39,9 +42,10 @@ import android.widget.TextView;
  * Implements a group of tabs containing plots for economy, 
  * gasoline purchased, and distance driven statistics.
  */
-public class PlotActivity extends TabActivity implements OnSharedPreferenceChangeListener {
+public class PlotActivity extends Activity implements OnSharedPreferenceChangeListener {
 	
 	/// a tag string for debug logging (the name of this class)
+	@SuppressWarnings("unused")
 	private static final String TAG = PlotActivity.class.getName();
 	
 	/// key name for the Vehicle to pass via Intent
@@ -49,13 +53,26 @@ public class PlotActivity extends TabActivity implements OnSharedPreferenceChang
 	public final static String VEHICLE = PlotActivity.class.getName() + ".VEHICLE";
 	
 	/// the data to plot
-	public static List<GasRecord> data = null;
+	public static List<GasRecord> records = null;
 	
 	/// the data aggregated per month
 	public static MonthlyTrips monthly = null;
 	
 	/// the vehicle to display gas records for (obtained via Intent)
 	private Vehicle vehicle;
+	
+    /// the plots
+    private MileagePlot plotMileage = new MileagePlot();
+    private OdometerPlot plotOdometer = new OdometerPlot();
+    private GallonsPlot plotGallons = new GallonsPlot();
+    private CostPlot plotCost = new CostPlot();
+    private PricePlot plotPrice = new PricePlot();
+    
+	/// buttons for selection of range of data to evaluate
+	@SuppressWarnings("unused")
+	private PlotDateRangeButtons rangeButtons;
+	
+	private ScrollView scrollview;
 
     /**
      * DESCRIPTION:
@@ -74,50 +91,54 @@ public class PlotActivity extends TabActivity implements OnSharedPreferenceChang
         
         // read the data from the gas log 
         GasLog gaslog = GasLog.getInstance();
-        data = gaslog.readAllRecords(vehicle);
+        records = gaslog.readAllRecords(vehicle);
         
         // calculate monthly totals
-        monthly = new MonthlyTrips(data);
+        monthly = new MonthlyTrips(records);
         
         // sort gas records by date
-    	Collections.sort(data,new DateComparator());
+    	Collections.sort(records,new DateComparator());
 
-        // configure the tabs
-        TabHost tabHost = getTabHost();
- 
-        Units units = new Units(Settings.KEY_UNITS);
-        String title = units.getMileageLabel();
-        intent = new Intent(this, MileagePlotActivity.class);
-        tabHost.addTab(tabHost.newTabSpec("tab0").setIndicator(title).setContent(intent));
+    	// initialize the plot range buttons
+    	rangeButtons = new PlotDateRangeButtons(this,Settings.KEY_PLOT_DATE_RANGE);
+    	
+        // create plots
+    	plotMileage.onCreate(savedInstanceState,this,(XYPlot)findViewById(R.id.xyMileagePlot));
+    	plotOdometer.onCreate(savedInstanceState,this,(XYPlot)findViewById(R.id.xyOdometerPlot));
+    	plotGallons.onCreate(savedInstanceState,this,(XYPlot)findViewById(R.id.xyGallonsPlot));
+    	plotCost.onCreate(savedInstanceState,this,(XYPlot)findViewById(R.id.xyCostPlot));
+    	plotPrice.onCreate(savedInstanceState,this,(XYPlot)findViewById(R.id.xyPricePlot));
 
-    	intent = new Intent(this, OdometerPlotActivity.class);
-        title = getString(R.string.title_tab_odometer_plot);
-        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator(title).setContent(intent));
-        
-    	intent = new Intent(this, GallonsPlotActivity.class);
-        title = getString(R.string.title_tab_gallons_plot);
-        tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator(title).setContent(intent));
-
-    	intent = new Intent(this, CostPlotActivity.class);
-        title = getString(R.string.title_tab_cost_plot);
-        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator(title).setContent(intent));
-        
-        // enable multi-line tab titles
-        for (int n=0; n<getTabWidget().getTabCount(); n++) {
-        	TextView textview;
-        	textview = (TextView)getTabWidget().getChildAt(n).findViewById(android.R.id.title); 
-        	textview.setSingleLine(false);
-        }
-        
-        // select the first tab
-        tabHost.setCurrentTab(0); 
-        
+		// set font size for plot titles to reflect preferences
+		setTitlesFontSize();
+    	
+		// setup to adjust plot height to fit on screen once layout size is known
+		scrollview = (ScrollView)findViewById(R.id.scrollviewPlots);
+		ViewTreeObserver vto = scrollview.getViewTreeObserver();
+		vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+	        @Override
+	        public void onGlobalLayout() {
+	        	int height = (scrollview.getHeight() * 85) / 100;
+	        	plotMileage.setHeight(height);
+	        	plotOdometer.setHeight(height);
+	        	plotGallons.setHeight(height);
+	        	plotCost.setHeight(height);
+	        	plotPrice.setHeight(height);
+	        	// remove this listener or it will repeatedly run
+	        	ViewTreeObserver vto = scrollview.getViewTreeObserver();
+	        	if (vto.isAlive()) {
+	        		vto.removeGlobalOnLayoutListener (this);
+	        	}
+	        }
+	    });
+		
         // setup to be notified when shared preferences change
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);;
 		prefs.registerOnSharedPreferenceChangeListener(this);
+
     }
-    
-    /**
+
+	/**
      * DESCRIPTION:
      * Initialize the contents of the Activity's standard options menu. 
      * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
@@ -157,43 +178,45 @@ public class PlotActivity extends TabActivity implements OnSharedPreferenceChang
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		
+		// update the data to reflect new units
 		if (key.equals(Settings.KEY_UNITS)) {
-			
-			// get new units of measurement
-	        Units units = new Units(Settings.KEY_UNITS);
-
-	        // change title of the mileage plot tab to reflect new units
-        	TextView title;
-        	title = (TextView)getTabWidget().getChildAt(0).findViewById(android.R.id.title); 
-        	title.setText(units.getMileageLabel());
-			
-			// update the data to reflect new units
-        	GasRecordList.calculateMileage(data);
-			
-			// get tab activities
-			MileagePlotActivity tab0 = null;
-			OdometerPlotActivity tab1 = null;
-			GallonsPlotActivity tab2 = null;
-			CostPlotActivity tab3 = null;
-			try {
-				tab0 = (MileagePlotActivity)getLocalActivityManager().getActivity("tab0");
-				tab1 = (OdometerPlotActivity)getLocalActivityManager().getActivity("tab1");
-				tab2 = (GallonsPlotActivity)getLocalActivityManager().getActivity("tab2");
-				tab3 = (CostPlotActivity)getLocalActivityManager().getActivity("tab3");
-			} catch (Throwable t) {
-				// made an attempt, but had a problem for some reason
-				// not a big deal - plots will reflect new units after activity exits
-				// and is restarted (next time plots are displayed).
-				Log.e(TAG+"onSharedPreferenceChanged()","unable to update units for child plots",t);
-			}
-			
-			// notify children that units have changed
-			if (tab0 != null) tab0.onUpdateUnits();
-			if (tab1 != null) tab1.onUpdateUnits();
-			if (tab2 != null) tab2.onUpdateUnits();
-			if (tab3 != null) tab3.onUpdateUnits();
+        	GasRecordList.calculateMileage(records);
+            monthly = new MonthlyTrips(records);
 		}
+		
+		// update title font size
+		if (key.equals(Settings.KEY_PLOT_FONT_SIZE)) {
+        	setTitlesFontSize();
+		}
+		
+		// notify plots that preferences have changed
+		plotMileage.onSharedPreferenceChanged(sharedPreferences,key);
+		plotOdometer.onSharedPreferenceChanged(sharedPreferences,key);
+		plotGallons.onSharedPreferenceChanged(sharedPreferences,key);
+		plotCost.onSharedPreferenceChanged(sharedPreferences,key);
+		plotPrice.onSharedPreferenceChanged(sharedPreferences,key);
 		
 	}
 	
+    /**
+     * DESCRIPTION:
+     * Adjust font size used for plot title labels to reflect shared
+     * preferences.
+     */
+    private void setTitlesFontSize() {
+    	PlotFontSize size = new PlotFontSize(this,Settings.KEY_PLOT_FONT_SIZE);
+    	float sizeTitle = size.getSizeDp() + 2.0f;
+    	TextView title;
+    	title = (TextView)findViewById(R.id.titleMileagePlot);
+    	title.setTextSize(sizeTitle);
+    	title = (TextView)findViewById(R.id.titleOdometerPlot);
+    	title.setTextSize(sizeTitle);
+    	title = (TextView)findViewById(R.id.titleGallonsPlot);
+    	title.setTextSize(sizeTitle);
+    	title = (TextView)findViewById(R.id.titleCostPlot);
+    	title.setTextSize(sizeTitle);
+    	title = (TextView)findViewById(R.id.titlePricePlot);
+    	title.setTextSize(sizeTitle);
+    }
+
 }

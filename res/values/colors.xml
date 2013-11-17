@@ -26,7 +26,12 @@
     <color name="plot_line_color">#000000</color>
     <color name="plot_point_color">#000064</color>
     <color name="plot_fill_color">#9600c800</color>
-    <color name="plot_avgline_color">#80e10000</color>
+    <color name="plot_avgline_color">#ff0000</color>
+    <color name="plot_title_bg">#000000</color>
+    <color name="plot_title_fg">#ffffff</color>
+    
+    <!-- STATISTICS COLORS -->
+    <color name="stats_bg">#000000</color>
     
     <!-- BLUE LINK -->
     <color name="link_color">#1e90ff</color> <!--  light blue -->

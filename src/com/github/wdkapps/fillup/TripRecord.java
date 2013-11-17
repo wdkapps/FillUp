@@ -20,6 +20,8 @@
 package com.github.wdkapps.fillup;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * DESCRIPTION:
@@ -43,6 +45,9 @@ public class TripRecord {
     /// the cost of the gasoline purchased
     private Double cost;
     
+    // the set of gas records that the trip represents
+    private Set<GasRecord> records = new HashSet<GasRecord>();
+    
     /**
      * DESCRIPTION:
      * Constructs an empty instance of TripRecord for a specified date
@@ -59,7 +64,7 @@ public class TripRecord {
     /**
      * DESCRIPTION:
      * Constructs an instance of TripRecord reflecting a trip
-     * between two gas records.
+     * between two gas stops.
      * @param start - GasRecord marking the start of the trip.
      * @param end - GasRecord marking the end of the trip.
      */
@@ -69,6 +74,8 @@ public class TripRecord {
     	distance = end.getOdometer() - start.getOdometer();
     	gallons = end.getGallons();
     	cost = end.getCost();
+    	//records.add(start);
+    	records.add(end);
     }
     
     /**
@@ -93,6 +100,7 @@ public class TripRecord {
     	this.distance += that.distance;
     	this.gallons += that.gallons;
     	this.cost += that.cost;
+    	this.records.addAll(that.records);
     }
     
 	/**
@@ -139,5 +147,28 @@ public class TripRecord {
 	public Double getCost() {
 		return cost;
 	}
+	
+	/**
+	 * DESCRIPTION:
+	 * Getter method for the gas record set attribute.
+	 * @return the set of gas records that the trip represents.
+	 */
+	public Set<GasRecord> getGasRecords() {
+		return records;
+	}
 
+	/**
+	 * DESCRIPTION:
+	 * Getter method for average price per gallon paid for fuel
+	 * over the trip period.
+	 * @return the price of fuel per gallon.
+	 */
+	public Double getPrice() {
+		Double price = 0.0d;
+		if (gallons > 0) {
+			price = cost/gallons;
+		}
+		return price;
+	}
+	
 }

@@ -103,6 +103,15 @@
                 android:drawableLeft="@drawable/ic_plot"
                 android:textSize="@dimen/main_text_size"
                 android:text="@string/plot_data_label" />
+            
+            <!-- VIEW STATISTICS BUTTON -->
+            <Button
+                android:id="@+id/buttonViewStatistics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_stats"
+                android:textSize="@dimen/main_text_size"
+                android:text="@string/view_statistics_label" />
 
         </LinearLayout>
     </LinearLayout>

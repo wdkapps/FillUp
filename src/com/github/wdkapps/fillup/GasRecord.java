@@ -23,9 +23,12 @@ import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
+
+import android.util.Log;
 
 /**
  * DESCRIPTION:
@@ -34,9 +37,16 @@ import java.util.Locale;
  * Needs to be Serializable in order to pass between Activity instances via 
  * an Intent instance.
  */
+/**
+ * DESCRIPTION:
+ *
+ */
 public class GasRecord implements Serializable {
 
 	private static final long serialVersionUID = -2409546847119346248L;
+	
+	/// for logging
+	private static final String TAG = GasRecord.class.getName();
 	
 	// define maximum values (for display reasons)
 	public static final int MAX_ODOMETER = 9999999;
@@ -61,9 +71,18 @@ public class GasRecord implements Serializable {
     // note: does not include currency symbol
     private static final NumberFormat costFormatter = NumberFormat.getInstance(App.getLocale());
     static {
-    	Currency currency = Currency.getInstance(App.getLocale());
-    	costFormatter.setMaximumFractionDigits(currency.getDefaultFractionDigits());
-    	costFormatter.setMinimumFractionDigits(currency.getDefaultFractionDigits());
+    	// determine number of fraction digits to display for locale
+    	int fractionDigits = 2;
+    	try {
+    		Currency currency = Currency.getInstance(App.getLocale());
+    		fractionDigits = currency.getDefaultFractionDigits();
+    	} catch(IllegalArgumentException ex) {
+    		Log.e(TAG,"currency formatter configuration failed",ex);
+    	}
+
+    	// configure fraction digits for the formatter
+    	costFormatter.setMaximumFractionDigits(fractionDigits);
+    	costFormatter.setMinimumFractionDigits(fractionDigits);
     }
     
     /// record id for database use (primary key)
@@ -95,6 +114,9 @@ public class GasRecord implements Serializable {
     
     ///  gas mileage calculation (if the tank was full, null otherwise) 
     private MileageCalculation calc;
+    
+    /// array of record attributes included in hash code calculations
+    private Object[] hash;
     
 	/**
 	 * DESCRIPTION:
@@ -572,5 +594,62 @@ public class GasRecord implements Serializable {
 				", notes=" + notes + 
 				", calc=" + calc + 
 				"]";
+	}
+
+	/**
+	 * DESCRIPTION:
+	 * Constructs an array of all attributes to be considered in
+	 * hash code calculations for this record.
+	 * @return an Object[] of attributes to be hashed.
+	 */
+	private Object[] getHashArray() {
+
+		// create the array (only once for performance)
+		if (hash == null) {
+			hash = new Object[9];
+		}
+		
+		// populate the array
+		hash[0] = id;
+		hash[1] = vid;
+        hash[2] = date;
+    	hash[3] = gallons;
+    	hash[4] = odometer;
+    	hash[5] = cost;
+    	hash[6] = notes;
+        hash[7] = fulltank;
+        hash[8] = hidden;
+        return hash;
+	}
+
+	/**
+	 * DESCRIPTION:
+	 * Calculates an integer hash code for this record. 
+	 * @see java.lang.Object#hashCode()
+	 * @return the integer hash code.
+	 */
+	@Override
+	public int hashCode() {
+		return Arrays.hashCode(getHashArray());
+	}
+
+	/**
+	 * DESCRIPTION:
+	 * Compares this instance with the specified object and indicates 
+	 * if they are equal. 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @return if the specified object is equal to this record; false otherwise.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj == this)
+			return true;
+		if (!(obj instanceof GasRecord))
+			return false;
+
+		GasRecord that = (GasRecord)obj;
+		return Arrays.equals(this.getHashArray(),that.getHashArray());
 	}
 }

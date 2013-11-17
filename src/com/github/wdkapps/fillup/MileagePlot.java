@@ -20,48 +20,59 @@
 package com.github.wdkapps.fillup;
 
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.androidplot.series.XYSeries;
 import com.androidplot.util.PaintUtils;
+import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
+import com.androidplot.xy.LineAndPointRenderer;
 import com.androidplot.xy.PointLabelFormatter;
+import com.androidplot.xy.PointLabeler;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYStepMode;
 
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 /**
  * DESCRIPTION:
- * An Activity that displays a graph of gas mileage data.
+ * A plot of gas mileage data.
+ * <p>
+ * NOTE: 
+ * This class was originally implemented as a separate Activity "tab" inside
+ * a parent TabActivity, but has been refactored to manage an XYPlot view
+ * for a parent Activity. 
  */
-public class MileagePlotActivity extends Activity implements OnSharedPreferenceChangeListener {
+public class MileagePlot implements OnSharedPreferenceChangeListener {
 	
 	/// for logging
-	private static final String TAG = MileagePlotActivity.class.getName();
+	private static final String TAG = MileagePlot.class.getName();
+	
+	/// the parent activity
+	private Activity activity;
 
-    /// the plot
+    /// the plot widget
     private XYPlot plot;
     
-    /// the plot title
-    private TextView title;
-    
     /// defines how the plot lines are drawn
-    LineAndPointFormatter plotFormatter;
+    private LineAndPointFormatter plotFormatter;
     
     /// defines how the average line is drawn
-    LineAndPointFormatter avgFormatter;
+    private LineAndPointFormatter avgFormatter;
+    
+    /// defines how the average point label is drawn
+    private PointLabelFormatter avgLabelFormatter;
     
     /// the range of dates to plot (shared preference) 
     private PlotDateRange range;
@@ -84,37 +95,49 @@ public class MileagePlotActivity extends Activity implements OnSharedPreferenceC
     /// units of measurement
     private Units units;
     
+    /// formatter for x-axis labels - maps from x-axis values to month labels
+    private static final Format xlabels = DateFormat.getDateFormat(App.getContext());
+
+    /// formatter for y-axis labels
+	private static final Format ylabels = new DecimalFormat("###0.0");
+
     /**
      * DESCRIPTION:
      * Creates the graph.
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
-    @Override
-    public void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState, Activity parent, XYPlot xyplot)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mileage_plot);
-        
+    	this.activity = parent;
+    	this.plot = xyplot;
+    	
         // get current units of measurement
         units = new Units(Settings.KEY_UNITS);
-        
-        // get current instance of our widgets
-        plot = (XYPlot)findViewById(R.id.xyMileagePlot);
-        title = (TextView)findViewById(R.id.titleMileagePlot);
-        
+         
         // create a formatter to use for drawing the series using LineAndPointRenderer:
         plotFormatter = new LineAndPointFormatter(
-        		getResources().getColor(R.color.plot_line_color),
-        		getResources().getColor(R.color.plot_point_color),
-        		getResources().getColor(R.color.plot_fill_color),
+        		activity.getResources().getColor(R.color.plot_line_color),
+        		activity.getResources().getColor(R.color.plot_point_color),
+        		activity.getResources().getColor(R.color.plot_fill_color),
         		(PointLabelFormatter)null);
+        
+        // use hairline width line for plotting (to ease reading avg label)
+        plotFormatter.getLinePaint().setStrokeWidth(0);
+
+        // create a formatter for average label
+        float hOffset = 50f;
+        float vOffset = -10f;
+        avgLabelFormatter = new PointLabelFormatter(
+        		activity.getResources().getColor(R.color.plot_avgline_color),
+        		hOffset,
+        		vOffset);
 
         // create a formatter to use for drawing the average line
         avgFormatter = new LineAndPointFormatter(
-        		getResources().getColor(R.color.plot_avgline_color),
+        		activity.getResources().getColor(R.color.plot_avgline_color),
         		null,
         		null,
-        		(PointLabelFormatter)null);
+        		avgLabelFormatter);
         
         // white background for the plot
         plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
@@ -142,16 +165,12 @@ public class MileagePlotActivity extends Activity implements OnSharedPreferenceC
         plot.setDomainLabel("");
         
         // specify format of axis value labels
-        plot.setRangeValueFormat(new DecimalFormat("###0.0"));
-        plot.setDomainValueFormat(DateFormat.getDateFormat(App.getContext()));
+        plot.setRangeValueFormat(ylabels);
+        plot.setDomainValueFormat(xlabels);
         
         // plot the data
         drawPlot();
-
-        // setup to be notified when plot options change
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);;
-		prefs.registerOnSharedPreferenceChangeListener(this);
-    }        
+    }
     
     /**
      * DESCRIPTION:
@@ -171,10 +190,18 @@ public class MileagePlotActivity extends Activity implements OnSharedPreferenceC
         // add a line reflecting data average
         if (average > 0) {
         	plot.addSeries(getAverageSeries(),avgFormatter);
-        }
 
-        // define the plot title
-        setPlotTitle();
+        	// specify format of the average point label 
+        	LineAndPointRenderer<?> lpr = (LineAndPointRenderer<?>)plot.getRenderer(LineAndPointRenderer.class);
+        	if (lpr != null) {
+        		lpr.setPointLabeler(new PointLabeler() {
+        			@Override
+        			public String getLabel(XYSeries series, int index) {
+        				return (index == 0) ? ylabels.format(series.getY(index)) : "";
+        			}
+        		});
+        	}
+        }
     }
     
     /**
@@ -193,42 +220,35 @@ public class MileagePlotActivity extends Activity implements OnSharedPreferenceC
      * preferences.
      */
     private void setPlotFontSizes() {
-    	Context context = getApplicationContext();
-    	PlotFontSize size = new PlotFontSize(this,Settings.KEY_PLOT_FONT_SIZE);
+    	PlotFontSize size = new PlotFontSize(activity,Settings.KEY_PLOT_FONT_SIZE);
+    	
+    	// plot title label
+        PaintUtils.setFontSizeDp(activity,
+            	plot.getTitleWidget().getLabelPaint(),size.getSizeDp());
+        plot.getTitleWidget().pack();
     	
     	// axis step value labels
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
             	plot.getGraphWidget().getRangeLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
             	plot.getGraphWidget().getDomainLabelPaint(),size.getSizeDp());
         
         // axis origin value labels
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
         		plot.getGraphWidget().getRangeOriginLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
         		plot.getGraphWidget().getDomainOriginLabelPaint(),size.getSizeDp());
 
         // axis title labels
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
                 plot.getRangeLabelWidget().getLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
                 plot.getDomainLabelWidget().getLabelPaint(),size.getSizeDp());
         plot.getRangeLabelWidget().pack();
         plot.getDomainLabelWidget().pack();
-    }
-    
-    /**
-     * DESCRIPTION:
-     * Sets the title of the plot to reflect the current average mileage.
-     */
-    private void setPlotTitle() {
-    	String title = getString(R.string.message_insufficient_data);
-    	if (average > 0) {
-    		title = String.format(App.getLocale(),getString(R.string.title_plot_mileage),
-    				average,
-    				units.getMileageLabel()); 
-    	}
-    	this.title.setText(title);
+        
+        // average point label
+        avgLabelFormatter.getTextPaint().setTextSize(PixelUtils.dpToPix(size.getSizeDp()));
     }
     
     /**
@@ -237,26 +257,30 @@ public class MileagePlotActivity extends Activity implements OnSharedPreferenceC
      */
     private void setPlotAxisBoundaries() {
     	
+    	final String tag = TAG + ".setPlotAxisBoundaries()";
+    	
     	final long MSEC_PER_DAY = 86400000L;
     	
-        //set y-axis boundaries
-    	long boundy = 5;
-    	while (maxy >= boundy) boundy *= 2;
-    	plot.setRangeBoundaries(0, (float)boundy, BoundaryMode.FIXED);
+        // calculate and set y-axis boundaries
+    	double pad = (maxy - miny) * 0.2d;
+    	if (pad == 0) pad = 0.5d;
+    	double upperboundy = Math.ceil(maxy + pad);
+    	double lowerboundy = Math.floor(miny - pad);
+    	if (lowerboundy < 0d) lowerboundy = 0d;
+        Log.d(tag,"lowerboundy="+lowerboundy+" upperboundy="+upperboundy);
+    	plot.setRangeBoundaries(lowerboundy,upperboundy,BoundaryMode.FIXED);
     	
-    	// set y-axis steps
-    	double stepy = ((double)boundy)/10;
+    	// calculate and set y-axis step size
+    	double stepy = 0.25d;
+    	double rangey = upperboundy - lowerboundy;
+    	while (rangey/stepy > 20.0f) stepy *= 2;
         plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, stepy);
         
         // calculate x-axis boundaries
+    	lowerboundx = range.getStartDate().getTime(); 
+    	upperboundx = range.getEndDate().getTime();
         if (range.getValue() == PlotDateRange.ALL) {
-        	// use actual min/max values from data
         	lowerboundx = minx;
-        	upperboundx = maxx;
-        } else {
-        	// use start/end values for the plot date range
-        	lowerboundx = range.getStartDate().getTime(); 
-        	upperboundx = range.getEndDate().getTime();
         }
         
         // special case: one data point - expand range to center it in the plot
@@ -264,8 +288,9 @@ public class MileagePlotActivity extends Activity implements OnSharedPreferenceC
         	lowerboundx -= MSEC_PER_DAY;
         	upperboundx += MSEC_PER_DAY;
         }
-
+        
         // set x-axis boundaries
+        Log.d(tag,"lowerboundx="+lowerboundx+" upperboundx="+upperboundx);
     	plot.setDomainBoundaries(lowerboundx,upperboundx,BoundaryMode.FIXED);
     }
 
@@ -280,7 +305,7 @@ public class MileagePlotActivity extends Activity implements OnSharedPreferenceC
     	final String tag = TAG + ".getPlotSeries()";
     	
     	// get plot date range from preferences
-    	range = new PlotDateRange(this,Settings.KEY_PLOT_DATE_RANGE); 
+    	range = new PlotDateRange(activity,Settings.KEY_PLOT_DATE_RANGE); 
 
     	// create lists of x-axis, and y-axis numbers to plot
     	List<Number> xNumbers = new LinkedList<Number>();
@@ -294,7 +319,7 @@ public class MileagePlotActivity extends Activity implements OnSharedPreferenceC
     	maxy = Float.MIN_VALUE;
     	minx = Long.MAX_VALUE; 
     	maxx = Long.MIN_VALUE;
-    	for (GasRecord record : PlotActivity.data) {
+    	for (GasRecord record : PlotActivity.records) {
     		if (record.hasCalculation() && 
     			!record.isCalculationHidden() && 
     			range.contains(record.getDate())) {
@@ -354,23 +379,6 @@ public class MileagePlotActivity extends Activity implements OnSharedPreferenceC
         return new SimpleXYSeries(xNumbers,yNumbers,title);
     }
 
-    /**
-     * DESCRIPTION:
-     * Called when units of measurement shared preference has changed.
-     * Updates the plot to reflect the new units.
-     */
-    public void onUpdateUnits() {
-    	
-        // get new units of measurement
-        units = new Units(Settings.KEY_UNITS);
-        
-        // update the plot to reflect new units
-        plot.setRangeLabel(units.getMileageLabel());
-
-        // redraw the plot
-		redrawPlot();
-    }
-    
 	/**
 	 * DESCRIPTION:
 	 * Called when one or more plot preferences have changed.
@@ -389,11 +397,30 @@ public class MileagePlotActivity extends Activity implements OnSharedPreferenceC
 			redrawPlot();
         }
 		
-		/*
-		 * NOTE: changes to Settings.KEY_UNITS is handled via call to
-		 * our onUpdateUnits() method by our PlotActivity parent after
-		 * the plot data has been updated.
-		 */
+		if (key.equals(Settings.KEY_UNITS)) {
+			
+	        // get new units of measurement
+	        units = new Units(Settings.KEY_UNITS);
+	        
+	        // update the plot to reflect new units
+	        plot.setRangeLabel(units.getMileageLabel());
+
+	        // redraw the plot
+			redrawPlot();
+		}
 
 	}
+	
+    /**
+     * DESCRIPTION:
+     * Sets the height of the plot view.
+     * @param height - the height in pixels.
+     */
+    public void setHeight(int height) {
+    	ViewGroup.LayoutParams params = plot.getLayoutParams();
+    	params.height = height;
+    	plot.setLayoutParams(params);
+    	plot.redraw();
+    }
+
 }

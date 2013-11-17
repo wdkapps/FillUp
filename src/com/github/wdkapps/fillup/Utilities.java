@@ -45,7 +45,7 @@ public class Utilities {
     
     /**
      * DESCRIPTION:
-     *Convert pixels to device independent pixels.
+     * Convert pixels to device independent pixels.
      * @param px - pixels
      * @return device independent pixels.
      */
@@ -53,6 +53,18 @@ public class Utilities {
         DisplayMetrics metrics = App.getContext().getResources().getDisplayMetrics();
         float dp = px / (metrics.densityDpi / 160f);
         return dp;
+    }
+    
+    /**
+     * DESCRIPTION:
+     * Convert device independent pixels to pixels. 
+     * @param dp - device independent pixels.
+     * @return pixels.
+     */
+    public static int convertDpToPixel(float dp){
+        DisplayMetrics metrics = App.getContext().getResources().getDisplayMetrics();
+        int px = (int) (dp * (metrics.densityDpi / 160f));
+        return px;
     }
     
     /**

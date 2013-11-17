@@ -20,61 +20,71 @@
 package com.github.wdkapps.fillup;
 
 import java.text.DecimalFormat;
-import java.util.Date;
+import java.text.Format;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.androidplot.series.XYSeries;
 import com.androidplot.util.PaintUtils;
+import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.BarFormatter;
 import com.androidplot.xy.BarRenderer;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
+import com.androidplot.xy.LineAndPointRenderer;
 import com.androidplot.xy.PointLabelFormatter;
+import com.androidplot.xy.PointLabeler;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYStepMode;
 
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Display;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 /**
  * DESCRIPTION:
- * An Activity that displays a graph of gas usage data.
+ * A plot of odometer data (distance driven).
+ * <p>
+ * NOTE: 
+ * This class was originally implemented as a separate Activity "tab" inside
+ * a parent TabActivity, but has been refactored to manage an XYPlot view
+ * for a parent Activity. 
  */
-public class GallonsPlotActivity extends Activity implements OnSharedPreferenceChangeListener {
+public class OdometerPlot implements OnSharedPreferenceChangeListener {
 
 	/// for logging
-	private static final String TAG = GallonsPlotActivity.class.getName();
+	private static final String TAG = OdometerPlot.class.getName();
+
+	/// the parent activity
+	private Activity activity;
 
     /// the plot
     private XYPlot plot;
     
-    /// the plot title
-    private TextView title;
-    
     /// defines how the plot bars are drawn
-    BarFormatter plotFormatter;
+    private BarFormatter plotFormatter;
     
     /// defines how the average line is drawn
-    LineAndPointFormatter avgFormatter;
+    private LineAndPointFormatter avgFormatter;
     
-    /// average gas used per month for plot period
+    /// defines how the average point label is drawn
+    private PointLabelFormatter avgLabelFormatter;
+    
+    /// average distance driven per month for plot period
     private float average = 0;
     
-    /// total gas used for plot period
-    private float sumy = 0;
+    /// total distance driven for plot period
+    private long sumy = 0;
     
-    /// range of y-axis data for the plot period (gas used)
-    private float miny = 0;
-    private float maxy = 0;
+    /// range of y-axis data for the plot period (distance driven)
+    private long miny = 0;
+    private long maxy = 0;
     
     /// range of x-axis data for the plot period (sequential index [0..n] mapped to months) 
     private long minx = 0;
@@ -89,36 +99,42 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
     
     /// formatter for x-axis labels - maps from x-axis values to month labels
     private MappedLabelFormat xlabels = new MappedLabelFormat();
-    
+
+    /// formatter for y-axis labels
+	private static final Format ylabels = new DecimalFormat("#######0");
+
     /**
      * DESCRIPTION:
      * Creates the graph.
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
-    @Override
-    public void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState, Activity parent, XYPlot xyplot)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gallons_plot);
+    	this.activity = parent;
+    	this.plot = xyplot;
         
         // get current units of measurement
         units = new Units(Settings.KEY_UNITS);
         
-        // get current instance of our widgets
-        plot = (XYPlot)findViewById(R.id.xyGallonsPlot);
-        title = (TextView)findViewById(R.id.titleGallonsPlot);
-        
         // create a formatter to use for drawing the plot series 
         plotFormatter = new BarFormatter(
-				getResources().getColor(R.color.plot_fill_color),
-				getResources().getColor(R.color.plot_line_color));
+				activity.getResources().getColor(R.color.plot_fill_color),
+				activity.getResources().getColor(R.color.plot_line_color));
         
+        // create a formatter for average label
+        float hOffset = 50;
+        float vOffset = -10;
+        avgLabelFormatter = new PointLabelFormatter(
+        		activity.getResources().getColor(R.color.plot_avgline_color),
+        		hOffset,
+        		vOffset);
+
         // create a formatter to use for drawing the average line
         avgFormatter = new LineAndPointFormatter(
-        		getResources().getColor(R.color.plot_avgline_color),
+        		activity.getResources().getColor(R.color.plot_avgline_color),
         		null,
         		null,
-        		(PointLabelFormatter)null);
+        		avgLabelFormatter);
         
         // white background for the plot
         plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
@@ -138,19 +154,15 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
         plot.getGraphWidget().setMarginBottom(margin);
         
         // define plot axis labels
-        plot.setRangeLabel(units.getLiquidVolumeLabel());
-        plot.setDomainLabel(getString(R.string.months_label));
+        plot.setRangeLabel(units.getDistanceLabel());
+        plot.setDomainLabel(activity.getString(R.string.months_label));
         
         // specify format of axis value labels
-        plot.setRangeValueFormat(new DecimalFormat("####0.0"));
+        plot.setRangeValueFormat(ylabels);
         plot.setDomainValueFormat(xlabels);
         
         // plot the data
         drawPlot();
-
-        // setup to be notified when plot options change
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);;
-		prefs.registerOnSharedPreferenceChangeListener(this);
     }        
     
     /**
@@ -171,10 +183,18 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
         // add a line reflecting data average
         if (average > 0) {
         	plot.addSeries(getAverageSeries(),avgFormatter);
-        }
 
-        // define the plot title
-        setPlotTitle();
+        	// specify format of the average point label 
+        	LineAndPointRenderer<?> lpr = (LineAndPointRenderer<?>)plot.getRenderer(LineAndPointRenderer.class);
+        	if (lpr != null) {
+        		lpr.setPointLabeler(new PointLabeler() {
+        			@Override
+        			public String getLabel(XYSeries series, int index) {
+        				return (index == 0) ? ylabels.format(series.getY(index)) : "";
+        			}
+        		});
+        	}
+        }        
     }
     
     /**
@@ -193,62 +213,47 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
      * preferences.
      */
     private void setPlotFontSizes() {
-    	Context context = getApplicationContext();
-    	PlotFontSize size = new PlotFontSize(this,Settings.KEY_PLOT_FONT_SIZE);
-    	
+    	PlotFontSize size = new PlotFontSize(activity,Settings.KEY_PLOT_FONT_SIZE);
+
+    	// plot title label
+        PaintUtils.setFontSizeDp(activity,
+            	plot.getTitleWidget().getLabelPaint(),size.getSizeDp());
+        plot.getTitleWidget().pack();
+
     	// axis step value labels
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
             	plot.getGraphWidget().getRangeLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
             	plot.getGraphWidget().getDomainLabelPaint(),size.getSizeDp());
         
         // axis origin value labels
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
         		plot.getGraphWidget().getRangeOriginLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
         		plot.getGraphWidget().getDomainOriginLabelPaint(),size.getSizeDp());
 
         // axis title labels
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
                 plot.getRangeLabelWidget().getLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(context,
+        PaintUtils.setFontSizeDp(activity,
                 plot.getDomainLabelWidget().getLabelPaint(),size.getSizeDp());
         plot.getRangeLabelWidget().pack();
         plot.getDomainLabelWidget().pack();
+        
+        // average point label
+        avgLabelFormatter.getTextPaint().setTextSize(PixelUtils.dpToPix(size.getSizeDp()));
     }
     
-    /**
-     * DESCRIPTION:
-     * Sets the title of the plot to reflect the average gas per month used.
-     */
-    private void setPlotTitle() {
-
-    	String title = null;
-    	
-    	if (average > 0) {
-    		title = String.format(App.getLocale(),getString(R.string.title_plot_gallons),
-    				sumy,
-    				units.getLiquidVolumeLabelLowerCase(),
-    				average);
-    	} else {
-    		title = String.format(App.getLocale(),getString(R.string.title_plot_gallons_noavg),
-    				sumy,
-    				units.getLiquidVolumeLabelLowerCase());
-    	}
-
-    	this.title.setText(title);
-    }
-
     /**
      * DESCRIPTION:
      * Sets the boundaries for the X and Y-axis based on the data values.
      */
     private void setPlotAxisBoundaries() {
-
+    	
         //set y-axis boundaries
-    	long boundy = 25;
+    	long boundy = 100;
     	while (maxy >= boundy) boundy *= 2;
-    	plot.setRangeBoundaries(0, (float)boundy, BoundaryMode.FIXED);
+    	plot.setRangeBoundaries(0, boundy, BoundaryMode.FIXED);
     	
     	// set y-axis steps
     	double stepy = ((double)boundy)/10;
@@ -263,14 +268,14 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
         // set x-axis steps
         plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL,1);
         plot.setTicksPerDomainLabel(1);
-
+        
         // determine the number of months being plotted
         long months = maxx - minx + 1;        
         
         // adjust bar thickness based on number of months being plotted
         BarRenderer<?> barRenderer = (BarRenderer<?>)plot.getRenderer(BarRenderer.class);
         if(barRenderer != null) {
-        	Display display = getWindowManager().getDefaultDisplay();
+        	Display display = activity.getWindowManager().getDefaultDisplay();
         	float displayWidth = Utilities.convertPixelsToDp(display.getWidth());
         	float plotWidth = displayWidth * 0.75f;
             float barWidth = plotWidth / months;
@@ -280,7 +285,7 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
         // adjust label size based on number of months being plotted
         xlabels.setAbbreviate(months > 6);
     }
-    
+
     /**
      * DESCRIPTION:
      * Obtains (x,y) values from the current data set for plotting. Also
@@ -295,19 +300,19 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
     	List<Number> xNumbers = new LinkedList<Number>();
     	List<Number> yNumbers = new LinkedList<Number>();
 
-    	// get numbers to plot from gas record monthly data, where (x,y) is:
+    	// get numbers to plot from gas record data, where (x,y) is:
     	// x = sequential index [0..n] with labels mapped to specific months
-    	// y = calculated gallons used for that month
-    	sumy = 0;
-    	miny = Float.MAX_VALUE; 
-    	maxy = Float.MIN_VALUE;
+    	// y = calculated distance driven for that month
+    	sumy = 0;    	
+    	miny = Long.MAX_VALUE; 
+    	maxy = Long.MIN_VALUE;
     	minx = Long.MAX_VALUE; 
     	maxx = Long.MIN_VALUE;
     	xlabels.clear();
     	long x = 0L;
-    	float y = 0f;
-    	for (Date month : PlotActivity.monthly) {
-    		y = PlotActivity.monthly.getTrips(month).getGallons();
+    	long y = 0L;
+    	for (Month month : PlotActivity.monthly) {
+    		y = PlotActivity.monthly.getTrips(month).getDistance();
     		Log.d(tag,"month="+month.toString()+" x="+x+" y="+y);
     		minx = Math.min(minx, x);
     		maxx = Math.max(maxx, x);
@@ -316,7 +321,7 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
     		xNumbers.add(x);
     		yNumbers.add(y);
     		sumy += y;
-    		xlabels.put(x++,getMonthLabel(month));
+    		xlabels.put(x++,month.getLabel());
     	}
 
     	// adjust min/max values if no data
@@ -328,24 +333,11 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
     	if (!yNumbers.isEmpty()) {
     		average = sumy / yNumbers.size();
     	}
-
+    	
     	Log.d(tag,"minx="+minx+" maxx="+maxx);
     	Log.d(tag,"miny="+miny+" maxy="+maxy);
     	Log.d(tag,"sumy="+sumy+" size="+yNumbers.size()+" average="+average);
 
-    	// add current month to series after average calculation was performed
-    	Date month = new Date();
-		y = PlotActivity.monthly.getTrips(month).getGallons();
-		Log.d(tag,"month="+month.toString()+" x="+x+" y="+y);
-		minx = Math.min(minx, x);
-		maxx = Math.max(maxx, x);
-		miny = Math.min(miny, y);
-		maxy = Math.max(maxy, y);
-		xNumbers.add(x);
-		yNumbers.add(y);
-		sumy += y;
-		xlabels.put(x++,getMonthLabel(month));
-    	
         // create a new series from the x and y axis numbers
     	String title = "";
         return new SimpleXYSeries(xNumbers,yNumbers,title);
@@ -374,23 +366,6 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
         return new SimpleXYSeries(xNumbers,yNumbers,title);
     }
     
-    /**
-     * DESCRIPTION:
-     * Called when units of measurement shared preference has changed.
-     * Updates the plot to reflect the new units.
-     */
-    public void onUpdateUnits() {
-    	
-        // get new units of measurement
-        units = new Units(Settings.KEY_UNITS);
-        
-        // update the plot to reflect new units
-        plot.setRangeLabel(units.getLiquidVolumeLabel());
-
-        // redraw the plot
-		redrawPlot();
-    }
-    
 	/**
 	 * DESCRIPTION:
 	 * Called when one or more plot preferences have changed.
@@ -409,24 +384,31 @@ public class GallonsPlotActivity extends Activity implements OnSharedPreferenceC
 			redrawPlot();
         }
 		
-		/*
-		 * NOTE: changes to Settings.KEY_UNITS is handled via call to
-		 * our onUpdateUnits() method by our PlotActivity parent after
-		 * the plot data has been updated.
-		 */
+		if (key.equals(Settings.KEY_UNITS)) {
+			
+	        // get new units of measurement
+	        units = new Units(Settings.KEY_UNITS);
+	        
+	        // update the plot to reflect new units
+	        plot.setRangeLabel(units.getDistanceLabel());
+
+	        // redraw the plot
+			redrawPlot();
+		}
 
 	}
 	
 	/**
-	 * DESCRIPTION:
-	 * Returns a label for a specified month.
-	 * @param date - the month
-	 * @return a label String.
-	 */
-	private String getMonthLabel(Date date) {
-		final String labels[] = getResources().getStringArray(R.array.arrayPlotMonthLabels);
-		return labels[date.getMonth()];
-	}
+     * DESCRIPTION:
+     * Sets the height of the plot view.
+     * @param height - the height in pixels.
+     */
+    public void setHeight(int height) {
+    	ViewGroup.LayoutParams params = plot.getLayoutParams();
+    	params.height = height;
+    	plot.setLayoutParams(params);
+    	plot.redraw();
+    }
 
 }
 

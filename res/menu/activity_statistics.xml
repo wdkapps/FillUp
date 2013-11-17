@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/itemShare"
+        android:title="@string/share_label" 
+        android:icon="@drawable/ic_menu_share" 
+        />
+    
+    <item
+        android:id="@+id/itemSettings"
+        android:icon="@drawable/ic_menu_preferences"
+        android:orderInCategory="100"
+        android:title="@string/menu_settings"
+        />
+
+</menu>

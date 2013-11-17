@@ -32,13 +32,6 @@
           	android:defaultValue="true" />
         
         <ListPreference
-            android:title="@string/pref_title_plot_date_range"
-            android:key="@string/pref_key_plot_date_range"
-            android:defaultValue="4"
-            android:entries="@array/arrayPlotDateRangeEntries"
-            android:entryValues="@array/arrayPlotDateRangeEntryValues" />
-
-        <ListPreference
             android:title="@string/pref_title_plot_font_size"
             android:key="@string/pref_key_plot_font_size"
             android:defaultValue="1"

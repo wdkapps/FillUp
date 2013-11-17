@@ -77,6 +77,14 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gas_record);   
+
+        // get view instances
+        editTextDate = (EditText)findViewById(R.id.editTextDate);
+        editTextOdometer = (EditText)findViewById(R.id.editTextOdometer);
+        editTextGallons = (EditText)findViewById(R.id.editTextGallons);
+        checkBoxFullTank = (CheckBox)findViewById(R.id.checkBoxFullTank);
+        editTextCost = (EditText)findViewById(R.id.editTextCost);
+        editTextNotes = (EditText)findViewById(R.id.editTextNotes);
         
         // update labels to reflect current units
         Units units = new Units(Settings.KEY_UNITS);
@@ -89,14 +97,9 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
         label = (TextView)findViewById(R.id.textViewCost);
         format = getString(R.string.total_cost_label);
         label.setText(String.format(App.getLocale(),format,Utilities.getCurrencySymbol()));
-        
-        // get view instances
-        editTextDate = (EditText)findViewById(R.id.editTextDate);
-        editTextOdometer = (EditText)findViewById(R.id.editTextOdometer);
-        editTextGallons = (EditText)findViewById(R.id.editTextGallons);
-        checkBoxFullTank = (CheckBox)findViewById(R.id.checkBoxFullTank);
-        editTextCost = (EditText)findViewById(R.id.editTextCost);
-        editTextNotes = (EditText)findViewById(R.id.editTextNotes);
+
+        // update hints to reflect current units
+        editTextGallons.setHint(units.getLiquidVolumeLabelLowerCase());
         
         // register as click listener for our buttons
         ImageButton buttonEditDate = (ImageButton)findViewById(R.id.buttonEditDate);

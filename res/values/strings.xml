@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- titles/messages -->
+    <!-- titles -->
     <string name="app_name">FillUp</string>
     <string name="title_activity_main">FillUp</string>
-    <string name="title_activity_gas_log_list">Gas Log</string>
-    <string name="title_activity_get_gas">Get Gas</string>
+    <string name="title_activity_gas_log_list">Fuel Log</string>
+    <string name="title_activity_get_gas">Add Fuel</string>
     <string name="title_activity_plot">Plots</string>
-    <string name="title_activity_mileage_plot">Mileage Plot</string>
-    <string name="title_activity_plot_options">Plot Preferences</string>
-    <string name="title_activity_gallons_plot">Gallons Plot</string>
-    <string name="title_activity_cost_plot">Cost Plot</string>
-    <string name="title_activity_odometer_plot">Odometer Plot</string>
     <string name="title_activity_html_viewer">HTML Viewer</string>
     <string name="title_activity_date_time">Date/Time</string>
+    <string name="title_activity_statistics">Statistics</string>
     <string name="title_mileage_calculation">%1$s Calculation</string>
     <string name="title_mileage_estimate">%1$s Estimate</string>
     <string name="title_cannot_estimate">Cannot Estimate</string>
     <string name="title_units_dialog">Select Units</string>
     <string name="title_confirm_odometer">Odometer Correct?</string>
     <string name="title_confirm_gallons">%1$s Correct?</string>
-    <string name="title_tab_gallons_plot">Gas</string>
-    <string name="title_tab_odometer_plot">Distance</string>
-    <string name="title_tab_cost_plot">Cost</string>
     <string name="title_file_selection_dialog">Select File</string>
     <string name="title_confirm_log_delete_dialog">Delete Log Record</string>
     <string name="title_confirm_export_overwrite_dialog">Export Confirmation</string>
     <string name="title_confirm_export_share_dialog">Export Complete</string>
     <string name="title_chooser_share_csv">Share CSV via &#8230;</string>
-    <string name="title_plot_mileage">%1$.2f %2$s average</string>
-    <string name="title_plot_gallons">%1$.2f %2$s (%3$.2f per month)</string>
-    <string name="title_plot_odometer">%1$d %2$s (%3$.0f per month)</string>
-    <string name="title_plot_cost">%1$s (%2$s per month)</string>    
-    <string name="title_plot_gallons_noavg">%1$.2f %2$s</string>
-    <string name="title_plot_odometer_noavg">%1$d %2$s</string>
-    <string name="title_plot_cost_noavg">%1$s</string>    
+    <string name="title_chooser_share_html">Share HTML via &#8230;</string>
+    <string name="title_confirm_delete_vehicle">Delete Vehicle</string>
+    <string name="title_plot_mileage">Fuel Economy</string>
+    <string name="title_plot_odometer">Distance Driven</string>
+    <string name="title_plot_gallons">Fuel Purchased</string>
+    <string name="title_plot_cost">Fuel Cost</string>
+    <string name="title_plot_price">Fuel Price</string>
+    <string name="title_plot_price_range">Price %1$s (avg)</string>
+    
+    <!-- messages -->
     <string name="message_confirm_export_share_dialog">Do you want to share the exported CSV file?</string>
     <string name="message_confirm_export_overwrite_dialog">\'%1$s\' exists.\nOverwrite it?"</string>
     <string name="message_confirm_log_delete_dialog">Are you sure?</string>
     <string name="message_confirm_odometer">Value is less than the current odometer value in the log for this vehicle (%1$s).</string>
     <string name="message_confirm_gallons">Value is more than the vehicle tank size (%1$s).</string>
-    <string name="title_confirm_delete_vehicle">Delete Vehicle</string>
     <string name="message_confirm_delete_vehicle">Are you sure?</string>
     <string name="message_tank_never_filled">\nCalculations will begin after you fill your tank once to establish a starting point.\n</string>
     <string name="message_insufficient_data">Insufficient Data</string>
     
+    <!-- statistics -->
+    <string name="stats_label_mileage_avg">Fuel Ecomony (avg)</string>
+    <string name="stats_label_mileage_min">Fuel Ecomony (min)</string>
+    <string name="stats_label_mileage_max">Fuel Ecomony (max)</string>
+    <string name="stats_label_distance">Distance Driven</string>
+    <string name="stats_label_gallons">Fuel Purchased</string>
+    <string name="stats_label_cost">Fuel Cost</string>
+    <string name="stats_label_price">Fuel Price (avg)</string>
+    <string name="stats_calc_distance">%1$d %2$s (%3$.0f per month)</string>
+    <string name="stats_calc_distance_noavg">%1$d %2$s</string>
+    <string name="stats_calc_gallons">%1$.2f %2$s (%3$.2f per month)</string>
+    <string name="stats_calc_gallons_noavg">%1$.2f %2$s</string>
+    <string name="stats_calc_cost">%1$s (%2$s per month)</string>    
+    <string name="stats_calc_cost_noavg">%1$s</string>    
+    <string name="stats_report_filename">%1$s_statistics.html</string>    
+    
     <!--  labels -->
-    <string name="get_gas_label">Get Gas</string>
+    <string name="get_gas_label">Add Fuel</string>
     <string name="date_label">Date</string>
     <string name="time_label">Time</string>
     <string name="odometer_label">Odometer</string>
@@ -60,12 +71,12 @@
     <string name="mileage_label">L/100KM</string>
     <string name="import_label">Import</string>
     <string name="export_label">Export</string>
-    <string name="gas_log_label">Gas Log</string>
     <string name="select_vehicle_label">Select</string>
     <string name="vehicles_spinner_prompt">Vehicle</string>
-    <string name="get_gas_button_label">Get Gas</string>
-    <string name="view_log_button_label">View Log</string>
-    <string name="plot_data_label">Plots/Statistics</string>
+    <string name="get_gas_button_label">Add Fuel</string>
+    <string name="view_log_button_label">Log</string>
+    <string name="plot_data_label">Plots</string>
+    <string name="view_statistics_label">Statistics</string>
     <string name="vehicle_add_label">Add Vehicle</string>
     <string name="vehicle_edit_label">Edit Vehicle</string>
     <string name="vehicle_delete_label">Delete Vehicle</string>
@@ -77,13 +88,19 @@
     <string name="cost_label">Cost</string>
     <string name="total_cost_label">Total Cost (%1$s)</string>
     <string name="notes_label">Notes</string>
-    <string name="gasoline_label">Gasoline (%1$s)</string>
-    
+    <string name="gasoline_label">Fuel (%1$s)</string>
+    <string name="share_label">Share</string>
+    <string name="label_range_1month">1m</string>
+    <string name="label_range_6month">6m</string>
+    <string name="label_range_12month">12m</string>
+    <string name="label_range_ytd">YTD</string>
+    <string name="label_range_all">All</string>
+        
     <!-- hints -->
     <string name="hint_odometer">odometer</string>
     <string name="hint_cost">cost</string>
     <string name="hint_notes">notes</string>
-    <string name="hint_gasoline">gasoline</string>
+    <string name="hint_gasoline">fuel</string>
     
     <!-- mileage calculation/estimate dialogs -->
     <string name="mileage_estimate_note">Based on tank size of %1$s %2$s.</string>
@@ -136,6 +153,8 @@
     <string name="toast_invalid_vehicle_tank_size">Invalid vehicle tank size.</string>
     <string name="toast_database_update_failed">Database update failed!</string>
     <string name="toast_invalid_cost_value">Invalid cost value.</string>
+    <string name="toast_create_report_failed">Error occurred creating report file.</string>
+    
     
     <!-- units -->
     <string name="error_label">ERROR</string>
@@ -160,28 +179,28 @@
     <string name="blank_gallons">9999.9</string>
     <string name="blank_mileage">9999.9</string>    -->
 
-	<!-- preference titles and summaries (displayable) -->
-	<string name="pref_summary_unknown">unknown</string>
-	<string name="pref_title_category_settings">Settings</string>
-	<string name="pref_summary_category_settings">Application settings and information</string>
-	<string name="pref_title_units">Units</string>
-	<string name="pref_title_plot_date_range">Range of dates to plot</string>
-	<string name="pref_title_plot_font_size">Font size for plots</string>
-	<string name="pref_title_about">About</string>
-	<string name="pref_summary_about">Display application information</string>
-	<string name="pref_title_pkg_name">Package Name</string>
-	<string name="pref_title_pkg_version">Package Version</string>
-	<string name="pref_title_build_date">Build Date</string>
-	<string name="pref_title_database_version">Database Version</string>
-	<string name="pref_title_license">License</string>
-	<string name="pref_summary_license">Display the software license</string>
-	<string name="pref_title_require_cost">Require Cost</string>
-	<string name="pref_summary_require_cost">When entering gasoline purchase</string>
-	<string name="pref_title_display_cost">Display Cost in Log</string>
-	<string name="pref_summary_display_cost"></string>
-	<string name="pref_title_display_notes">Display Notes in Log</string>
-	<string name="pref_summary_display_notes"></string>
-					
+
+    <!-- preference titles and summaries (displayable) -->
+    <string name="pref_summary_unknown">unknown</string>
+    <string name="pref_title_category_settings">Settings</string>
+    <string name="pref_summary_category_settings">Application settings and information</string>
+    <string name="pref_title_units">Units</string>
+    <string name="pref_title_plot_font_size">Font size for plots</string>
+    <string name="pref_title_about">About</string>
+    <string name="pref_summary_about">Display application information</string>
+    <string name="pref_title_pkg_name">Package Name</string>
+    <string name="pref_title_pkg_version">Package Version</string>
+    <string name="pref_title_build_date">Build Date</string>
+    <string name="pref_title_database_version">Database Version</string>
+    <string name="pref_title_license">License</string>
+    <string name="pref_summary_license">Display the software license</string>
+    <string name="pref_title_require_cost">Require Cost</string>
+    <string name="pref_summary_require_cost">When entering fuel purchase</string>
+    <string name="pref_title_display_cost">Display Cost in Log</string>
+    <string name="pref_summary_display_cost"></string>
+    <string name="pref_title_display_notes">Display Notes in Log</string>
+    <string name="pref_summary_display_notes"></string>
+
     <!-- preference keys (not displayable) -->
     <string name="pref_key_category_settings">settings</string>
     <string name="pref_key_pkg_name">pkg_name</string>
@@ -201,5 +220,7 @@
     <string name="url_license_html">file:///android_asset/license.html</string>
     <string name="url_update_html">file:///android_asset/update.html</string>
     <string name="res_update_html">assets/update.html</string>
+    <string name="asset_stats_top_html">stats_top.html</string>
+    <string name="asset_stats_bottom_html">stats_bottom.html</string>
     
 </resources>

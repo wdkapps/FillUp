@@ -71,24 +71,24 @@ public class PlotDateRange {
     	// convert string to integer
 		this.value = Integer.parseInt(value);
 		
-		// initialize start and end dates to the current date
-		// (using Calendar to make Date math easier)
+		// determine start dates for specified range 
 		Calendar startCalendar = Calendar.getInstance();
-		Calendar endCalendar = Calendar.getInstance();
-		
-		// determine start and end dates for specified range 
+		startCalendar.set(Calendar.DAY_OF_MONTH,1);
+		startCalendar.set(Calendar.HOUR_OF_DAY,0);
+		startCalendar.set(Calendar.MINUTE,0);
+		startCalendar.set(Calendar.SECOND,0);
 		switch (this.value){
 		case ALL:
-			startCalendar.setTimeInMillis(0);
+			// force maximum range to 2 years or plot gets ugly (too much data)
+			startCalendar.add(Calendar.MONTH, -23);
 			break;
 		case PAST_MONTH:
-			startCalendar.add(Calendar.MONTH, -1);
 			break;
 		case PAST_6_MONTHS:
-			startCalendar.add(Calendar.MONTH, -6);
+			startCalendar.add(Calendar.MONTH, -5);
 			break;
 		case PAST_12_MONTHS:
-			startCalendar.add(Calendar.MONTH, -12);
+			startCalendar.add(Calendar.MONTH, -11);
 			break;
 		case YEAR_TO_DATE:
 			startCalendar.set(Calendar.MONTH, Calendar.JANUARY);
@@ -99,6 +99,14 @@ public class PlotDateRange {
 		default:
 			throw new RuntimeException("Invalid PlotDateRange integer value");
 		}
+		
+		// end date is midnight the first day of the next month
+		Calendar endCalendar = Calendar.getInstance();
+		endCalendar.set(Calendar.DAY_OF_MONTH,1);
+		endCalendar.set(Calendar.HOUR_OF_DAY,0);
+		endCalendar.set(Calendar.MINUTE,0);
+		endCalendar.set(Calendar.SECOND,0);
+		endCalendar.add(Calendar.MONTH,1);		
 		
 		// get Dates from Calendars
 		startDate = startCalendar.getTime();
@@ -155,9 +163,9 @@ public class PlotDateRange {
 	 */
 	public boolean contains(Date date) {
 		
-		if (this.value == ALL) {
-			return true;
-		}
+		//if (this.value == ALL) {
+		//	return true;
+		//}
 		
 		return !(date.before(startDate) || date.after(endDate));
 	}

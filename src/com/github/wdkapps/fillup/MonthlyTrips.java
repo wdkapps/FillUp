@@ -19,12 +19,10 @@
 
 package com.github.wdkapps.fillup;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -33,10 +31,10 @@ import java.util.Map;
  * Provides a monthly summation of trip attributes (distance, gallons of
  * gas purchased, etc) for plotting purposes.
  */
-public class MonthlyTrips implements Iterable<Date>{
+public class MonthlyTrips implements Iterable<Month>{
 	
-	/// maps a month (MMYYYY string) to a TripRecord representing trips that were recorded during that month
-	private Map<String,TripRecord> map = new HashMap<String,TripRecord>();
+	/// maps a Month to a TripRecord representing trips that were recorded during that month
+	private Map<Month,TripRecord> map = new HashMap<Month,TripRecord>();
 	
 	/// the earliest date recorded in the map
 	Date earliest = new Date();
@@ -71,7 +69,7 @@ public class MonthlyTrips implements Iterable<Date>{
 	private void add(TripRecord trip) {
 		
 		// get key reflecting the trip date (month)
-		String key = getKey(trip.getEndDate());
+		Month key = new Month(trip.getEndDate());
 		
 		// attempt to get existing trips for that month
 		TripRecord trips = map.get(key);
@@ -91,25 +89,13 @@ public class MonthlyTrips implements Iterable<Date>{
 	
 	/**
 	 * DESCRIPTION:
-	 * Calculates a unique MMYYYY key for the specified trip date.
-	 * @param date
-	 * @return
-	 */
-	private String getKey(Date date) {
-		int month = date.getMonth();
-		int year = date.getYear() + 1900;
-		return String.format(Locale.US,"%02d%04d",month,year);
-	}
-	
-	/**
-	 * DESCRIPTION:
 	 * Returns the trip data for a specified month.
 	 * @param month - the data index.
 	 * @return a TripRecord reflecting trip totals for the specified month.
 	 */
-	public TripRecord getTrips(Date month) {
-		TripRecord trips = map.get(getKey(month));
-		if (trips == null) trips = new TripRecord(month);
+	public TripRecord getTrips(Month month) {
+		TripRecord trips = map.get(month);
+		if (trips == null) trips = new TripRecord(month.getDate());
 		return trips;
 	}
 
@@ -120,49 +106,20 @@ public class MonthlyTrips implements Iterable<Date>{
 	 * @see java.lang.Iterable#iterator()
 	 */
 	@Override
-	public Iterator<Date> iterator() {
+	public Iterator<Month> iterator() {
 
 		// iterate over the configured plot range
 		PlotDateRange range = new PlotDateRange(App.getContext(),Settings.KEY_PLOT_DATE_RANGE);
+		Date start = range.getStartDate();
+		Date end = range.getEndDate();
 		
-		// initialize start date to the current date
-		Calendar startCalendar = Calendar.getInstance();
-		
-		// determine start date for specified range
-		// note: one month less than desired range - current month is handled separately
-		switch (range.getValue()){
-		case PlotDateRange.ALL:
-			startCalendar.setTime(earliest);
-			break;
-		case PlotDateRange.PAST_MONTH:
-			break;
-		case PlotDateRange.PAST_6_MONTHS:
-			startCalendar.add(Calendar.MONTH, -5);
-			break;
-		case PlotDateRange.PAST_12_MONTHS:
-			startCalendar.add(Calendar.MONTH, -11);
-			break;
-		case PlotDateRange.YEAR_TO_DATE:
-			startCalendar.set(Calendar.MONTH, Calendar.JANUARY);
-			startCalendar.set(Calendar.DAY_OF_MONTH, 1);
-			startCalendar.set(Calendar.HOUR_OF_DAY,0);
-			startCalendar.set(Calendar.MINUTE,0);
-			break;
-		default:
-			throw new RuntimeException("Invalid PlotDateRange integer value");
-		}
-
-		// force maximum range to 2 years or plot gets ugly
-		Calendar twoyearsago = Calendar.getInstance();
-		twoyearsago.add(Calendar.MONTH, -23);
-		if (startCalendar.before(twoyearsago)) {
-			startCalendar = twoyearsago;
+		// if plotting all data, start at earliest date we have data for
+		if ((range.getValue() == PlotDateRange.ALL) && start.before(earliest)) {
+			start = earliest;
 		}
 		
 		// return the iterator
-		Date startDate = startCalendar.getTime();
-		Date endDate = new Date();
-		return new MonthIterator(startDate,endDate);
+		return new MonthIterator(start,end);
 	}
 	
 }

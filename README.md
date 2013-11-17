@@ -13,3 +13,4 @@ Build platform:
 
 Dependencies:
 + androidplot-core-0.5.2.jar  (http://www.androidplot.com)
+

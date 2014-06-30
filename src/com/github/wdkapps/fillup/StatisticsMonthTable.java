@@ -148,10 +148,20 @@ public class StatisticsMonthTable implements HtmlData {
 	 * Appends cost statistical data to the table.
 	 */
 	private void appendCostData() {
+		
+		// calculate cost per mile/kilometer
+		double per_mile = 0;
+		if (data.getDistance() > 0) {
+			per_mile = data.getCost()/data.getDistance();
+		}
+		
+		// create table row
 		String label = getString(R.string.stats_label_cost);
-		String value = String.format(App.getLocale(),
-				getString(R.string.stats_calc_cost_noavg),
-    			currencyFormatter.format(data.getCost()));
+		String value = String.format(App.getLocale(),getString(R.string.stats_calc_cost_noavg),
+    				currencyFormatter.format(data.getCost()),
+    				currencyFormatter.format(per_mile),
+    				units.getDistanceRatioLabel()); 
+		value = value.replace("(","<br/>(");
 		appendTableRow(new String[]{label,value});
 	}
 

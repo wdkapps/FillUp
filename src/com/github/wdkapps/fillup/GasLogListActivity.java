@@ -20,6 +20,8 @@
 package com.github.wdkapps.fillup;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 import android.app.Activity;
@@ -29,6 +31,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -50,7 +53,7 @@ import android.widget.ListView;
 public class GasLogListActivity 
 extends Activity 
 implements ConfirmationDialog.Listener, 
-	FileSelectionDialog.Listener, 
+	StorageSelectionDialog.Listener, 
 	OnItemClickListener, 
 	OnSharedPreferenceChangeListener 
 {
@@ -161,11 +164,7 @@ implements ConfirmationDialog.Listener,
     		return true;
     	
     	case R.id.itemImport:
-    	   	if (ExternalStorage.isReadable()) {
-    	   		showDialog(DIALOG_SELECT_IMPORT_FILE_ID);
-        	} else {
-        		Utilities.toast(this,getString(R.string.toast_external_storage_not_readable));
-        	}
+    		showDialog(DIALOG_SELECT_STORAGE_LOCATION_ID);
     		return true;
 
     	case R.id.itemExport:
@@ -302,7 +301,16 @@ implements ConfirmationDialog.Listener,
      * DESCRIPTION:
      * Imports data from an ASCII CSV file into the log.
      */
-    protected void importData(File file) {
+    protected void importData(Uri uri) {
+    	
+        InputStream file;
+		try {
+			file = getContentResolver().openInputStream(uri);
+		} catch (FileNotFoundException e) {
+    		Utilities.toast(this,getString(R.string.toast_import_failed));
+    		return;
+		}
+    	
     	if (!gaslog.importData(vehicle, file)) {
     		Utilities.toast(this,getString(R.string.toast_import_failed));
     		return;
@@ -327,6 +335,42 @@ implements ConfirmationDialog.Listener,
     	// export file is named after vehicle and stored in external storage directory
     	String file = vehicle.getName()+ ".csv";
     	return new File(dir,file);
+    }
+    
+    /**
+     * DESCRIPTION:
+     * Allow user to select a file to import using an installed cloud application.
+     */
+    private void showCloudStorageChooser() {
+        try {
+            Intent target = new Intent(Intent.ACTION_GET_CONTENT); 
+            // text/csv better, but need */* for google drive, else cannot select file
+            target.setType("*/*");  
+            target.addCategory(Intent.CATEGORY_OPENABLE);
+            startActivityForResult(target,CHOOSE_IMPORT_FILE);
+        } catch (android.content.ActivityNotFoundException ex) {
+    		Utilities.toast(this,getString(R.string.toast_activity_not_found));
+        }
+    }
+    
+    /**
+     * DESCRIPTION:
+     * Allow the user to select a file to import from internal storage.
+     */
+    private void showInternalStorageChooser() {
+
+    	if (ExternalStorage.isReadable()) {
+    		Intent intent = new Intent(this, FileSelectionActivity.class);
+    		File root = Environment.getExternalStorageDirectory();
+    		File path = Environment.getExternalStoragePublicDirectory(DOWNLOAD_SERVICE);
+    		intent.putExtra(FileSelectionActivity.ROOT,root.getAbsolutePath());
+    		intent.putExtra(FileSelectionActivity.PATH,path.getAbsolutePath());
+    		intent.putExtra(FileSelectionActivity.EXT,".csv");
+    		startActivityForResult(intent,CHOOSE_IMPORT_FILE);
+    	} else {
+    		Utilities.toast(this,getString(R.string.toast_external_storage_not_readable));
+    	}
+
     }
     
     /**
@@ -487,6 +531,7 @@ implements ConfirmationDialog.Listener,
 	 */
 	private static final int EDIT_ROW_REQUEST = 1;
 	private static final int GET_GAS_REQUEST = 2;
+	private static final int CHOOSE_IMPORT_FILE = 3;
     
     /**
      * DESCRIPTION:
@@ -519,6 +564,16 @@ implements ConfirmationDialog.Listener,
         	}
         	break;
         	
+        case CHOOSE_IMPORT_FILE:
+        	if (resultCode == Activity.RESULT_OK) {
+                Uri uri = intent.getData();
+    			importData(uri);
+        	} else {
+        		Utilities.toast(this,getString(R.string.toast_canceled));
+        	}
+
+        	break;
+        	
         default:
         	Utilities.toast(this,"Invalid request code.");
         }
@@ -532,7 +587,7 @@ implements ConfirmationDialog.Listener,
     protected static final int DIALOG_CONFIRM_DELETE_ID = 1;
     protected static final int DIALOG_SHOW_CALCULATION_ID = 2;
     protected static final int DIALOG_CONFIRM_EXPORT_OVERWRITE_ID = 3;
-    protected static final int DIALOG_SELECT_IMPORT_FILE_ID = 4;
+    protected static final int DIALOG_SELECT_STORAGE_LOCATION_ID = 4;
     protected static final int DIALOG_SHOW_ESTIMATE_ID = 5;
     protected static final int DIALOG_TANK_NEVER_FILLED_ID = 6;
     protected static final int DIALOG_CONFIRM_EXPORT_SHARE_ID = 7;
@@ -578,10 +633,8 @@ implements ConfirmationDialog.Listener,
         	dialog = ConfirmationDialog.create(this,this,id,title,message);
             break;
             
-        case DIALOG_SELECT_IMPORT_FILE_ID:
-        	File path = getExportFile().getParentFile();
-        	FileSelectionDialog fsd = new FileSelectionDialog(this,this,id,path,".csv");
-        	dialog = fsd.create();
+        case DIALOG_SELECT_STORAGE_LOCATION_ID:
+        	dialog = StorageSelectionDialog.create(this,this,DIALOG_SELECT_STORAGE_LOCATION_ID);
         	break;
         	
         case DIALOG_TANK_NEVER_FILLED_ID:
@@ -636,18 +689,22 @@ implements ConfirmationDialog.Listener,
 	 * @see com.github.wdkapps.fillup.FileSelectionDialog.Listener#onFileSelectionDialogResponse(int, java.io.File)
 	 */
 	@Override
-	public void onFileSelectionDialogResponse(int id, File file) {
+	public void onStorageSelectionDialogResponse(int id, StorageSelectionDialog.Result result, String value) {
 
 		removeDialog(id);
 		
-		if (file == null) {
+		if (result == StorageSelectionDialog.Result.RESULT_CANCEL) {
 			Utilities.toast(this,getString(R.string.toast_canceled));
 			return;
 		}
 		
 		switch(id) {
-		case DIALOG_SELECT_IMPORT_FILE_ID:
-			importData(file);
+		case DIALOG_SELECT_STORAGE_LOCATION_ID:
+			if (value.equals("cloud")) {
+				showCloudStorageChooser();
+			} else {
+				showInternalStorageChooser();
+			}
 			break;
 		default:
 			Utilities.toast(this,"Invalid dialog id.");

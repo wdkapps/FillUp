@@ -45,6 +45,7 @@ public class Units implements Serializable {
 	public static final int LITERS_PER_100_KILOMETERS = 2; 
 	public static final int UK_MPG_MILES_LITERS = 3;
 	public static final int UK_MPG_KILOMETERS_LITERS = 4;
+	public static final int KILOMETERS_PER_GALLON = 5;
 
 	/// the currently selected preference value 
 	private final int value;
@@ -110,6 +111,7 @@ public class Units implements Serializable {
 		case LITERS_PER_100_KILOMETERS: id = R.string.liters_label; break;
 		case UK_MPG_MILES_LITERS: id = R.string.liters_label; break;
 		case UK_MPG_KILOMETERS_LITERS: id = R.string.liters_label; break;
+		case KILOMETERS_PER_GALLON: id = R.string.gallons_label;
 		}
 		return App.getContext().getResources().getString(id);
 	}
@@ -138,6 +140,26 @@ public class Units implements Serializable {
 		case LITERS_PER_100_KILOMETERS: id = R.string.per_liter_label; break;
 		case UK_MPG_MILES_LITERS: id = R.string.per_liter_label; break;
 		case UK_MPG_KILOMETERS_LITERS: id = R.string.per_liter_label; break;
+		case KILOMETERS_PER_GALLON: id = R.string.per_gallon_label;
+		}
+		return App.getContext().getResources().getString(id);
+	}
+	
+	/**
+	 * DESCRIPTION:
+	 * Returns the distance ratio label appropriate for the currently
+	 * selected Units preference value (example: "per mile"). 
+	 * @return label String.
+	 */
+	public String getDistanceRatioLabel() {
+		int id = R.string.error_label;
+		switch(value) {
+		case MILES_PER_GALLON: id = R.string.per_mile_label; break;
+		case KILOMETERS_PER_LITER: id = R.string.per_kilometer_label; break;
+		case LITERS_PER_100_KILOMETERS: id = R.string.per_kilometer_label; break;
+		case UK_MPG_MILES_LITERS: id = R.string.per_mile_label; break;
+		case UK_MPG_KILOMETERS_LITERS: id = R.string.per_kilometer_label; break;
+		case KILOMETERS_PER_GALLON: id = R.string.per_kilometer_label;
 		}
 		return App.getContext().getResources().getString(id);
 	}
@@ -156,6 +178,7 @@ public class Units implements Serializable {
 		case LITERS_PER_100_KILOMETERS: id = R.string.kilometers_label; break;
 		case UK_MPG_MILES_LITERS: id = R.string.miles_label; break;
 		case UK_MPG_KILOMETERS_LITERS: id = R.string.kilometers_label; break;
+		case KILOMETERS_PER_GALLON: id = R.string.kilometers_label;
 		} 
 		return App.getContext().getResources().getString(id);
 	}
@@ -184,6 +207,7 @@ public class Units implements Serializable {
 		case LITERS_PER_100_KILOMETERS: id = R.string.liters_per_100km_label; break;
 		case UK_MPG_MILES_LITERS: id = R.string.mpg_label; break;
 		case UK_MPG_KILOMETERS_LITERS: id = R.string.mpg_label; break;
+		case KILOMETERS_PER_GALLON: id = R.string.kpg_label;
 		}
 		return App.getContext().getResources().getString(id);
 	}
@@ -198,6 +222,7 @@ public class Units implements Serializable {
 		float tanksize = 0f;
 		switch(value) {
 		case MILES_PER_GALLON: 
+		case KILOMETERS_PER_GALLON:
 			tanksize = 16.0f; // gallons 
 			break; 
 		case KILOMETERS_PER_LITER: 

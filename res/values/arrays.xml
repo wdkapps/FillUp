@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  ENGLISH -->
     
     <string-array name="arrayUnitsEntries">
         <item>Miles per gallon\n(MPG)</item>
@@ -7,7 +8,8 @@
         <item>Liters per 100 kilometers\n(L/100KM)</item>
         <item>UK MPG (imperial)\nmiles, liters</item>
         <item>UK MPG (imperial)\nkilometers, liters</item>
-    </string-array>
+        <item>Kilometers per gallon\n(KPG)</item>
+        </string-array>
     
     <string-array name="arrayUnitsEntryValues">
         <item>0</item>
@@ -15,7 +17,8 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
-    </string-array>
+        <item>5</item>
+        </string-array>
     
     <string-array name="arrayPlotDateRangeEntries">
         <item>Past month</item>
@@ -60,6 +63,16 @@
         <item>OCT</item>
         <item>NOV</item>
         <item>DEC</item>
+    </string-array>
+    
+    <string-array name="arrayStorageEntries">
+        <item>Internal storage</item>
+        <item>Cloud storage</item>
+    </string-array>
+    
+    <string-array name="arrayStorageEntryValues">
+        <item>internal</item>
+        <item>cloud</item>
     </string-array>
     
 </resources>

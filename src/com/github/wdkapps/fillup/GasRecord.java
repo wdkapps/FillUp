@@ -51,7 +51,7 @@ public class GasRecord implements Serializable {
 	// define maximum values (for display reasons)
 	public static final int MAX_ODOMETER = 9999999;
 	public static final float MAX_GALLONS = 9999.99f;
-	public static final double MAX_COST = 9999.99d;
+	public static final double MAX_COST = 999999.99d;
 	
     /// get a locale specific date formatter 
     private static final java.text.DateFormat dateFormatter = 
@@ -83,6 +83,9 @@ public class GasRecord implements Serializable {
     	// configure fraction digits for the formatter
     	costFormatter.setMaximumFractionDigits(fractionDigits);
     	costFormatter.setMinimumFractionDigits(fractionDigits);
+    	
+    	// don't display commas (ie. 1000.00 instead of 1,000.00)
+    	costFormatter.setGroupingUsed(false);
     }
     
     /// record id for database use (primary key)
@@ -141,8 +144,8 @@ public class GasRecord implements Serializable {
 	 * @param that - the existing GasRecord instance to copy.
 	 */
 	public GasRecord(GasRecord that) {
-		this.id = Integer.valueOf(that.id);
-		this.vid = Integer.valueOf(that.vid);
+		this.id = that.id;
+		this.vid = that.vid;
 		this.date = new Date();
 		this.date.setTime(that.date.getTime());
 		this.gallons = Float.valueOf(that.gallons);
@@ -413,16 +416,6 @@ public class GasRecord implements Serializable {
 	
 	/**
 	 * DESCRIPTION:
-	 * Getter method for the calculated cost per gallon value.
-	 * @return Double - the cost per gallon value.
-	 */
-	public Double getCostPerGallon() {
-		if (gallons == 0) return 0d;
-		return cost/gallons;
-	}
-	
-	/**
-	 * DESCRIPTION:
 	 * Getter method for the cost attribute as a String value.
 	 * @return String - the cost value.
 	 */
@@ -451,6 +444,16 @@ public class GasRecord implements Serializable {
 			throw new NumberFormatException("Value out of range.");
 		}
 		setCost(value);
+	}
+
+	/**
+	 * DESCRIPTION:
+	 * Getter method for the calculated cost per gallon value.
+	 * @return Double - the cost per gallon value.
+	 */
+	public Double getCostPerGallon() {
+		if (gallons == 0) return 0d;
+		return cost/gallons;
 	}
 	
 	/**

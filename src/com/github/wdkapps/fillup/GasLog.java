@@ -22,8 +22,9 @@ package com.github.wdkapps.fillup;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -613,7 +614,7 @@ public class GasLog {
      * @param file - the ASCII CSV data file to import.
      * @return boolean flag indicating success/failure (true=success)
      */
-    public boolean importData(Vehicle vehicle, File file) {
+    public boolean importData(Vehicle vehicle, InputStream file) {
     	
     	final String tag = TAG+".importData()";
     	
@@ -624,7 +625,7 @@ public class GasLog {
 		int num = 0;
     	BufferedReader reader = null;
     	try {
-    		reader = new BufferedReader(new FileReader(file));
+    		reader = new BufferedReader(new InputStreamReader(file));
     		
     		String line;
     		do {

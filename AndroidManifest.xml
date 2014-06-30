@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.wdkapps.fillup"
-    android:versionCode="13"
-    android:versionName="1.5" >
+    android:versionCode="15"
+    android:versionName="1.6" >
 
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="10" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -58,6 +59,10 @@
         <activity
             android:name="com.github.wdkapps.fillup.StatisticsActivity"
             android:label="@string/title_activity_statistics" >
+        </activity>
+        <activity
+            android:name="com.github.wdkapps.fillup.FileSelectionActivity"
+            android:label="@string/title_activity_fileselect" >
         </activity>
     </application>
 

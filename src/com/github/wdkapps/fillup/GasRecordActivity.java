@@ -24,14 +24,15 @@ import java.util.Date;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 /**
@@ -40,7 +41,7 @@ import android.widget.TextView;
  * allow the user to enter/edit values. The record is passed in/out
  * of the Activity via the Android Intent mechanism.
  */
-public class GasRecordActivity extends Activity implements ConfirmationDialog.Listener, View.OnClickListener {
+public class GasRecordActivity extends Activity implements ConfirmationDialog.Listener, View.OnFocusChangeListener {
 	
 	/// key name for the GasRecord to pass via Intent
 	public final static String RECORD = GasRecordActivity.class.getName() + ".RECORD";
@@ -63,9 +64,9 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
 	/// the Activity's widgets (Views)
 	private EditText editTextDate;
 	private EditText editTextOdometer;
+	private EditText editTextCost;
 	private EditText editTextGallons;
 	private CheckBox checkBoxFullTank;
-	private EditText editTextCost;
 	private EditText editTextNotes;
 	
     /**
@@ -81,9 +82,9 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
         // get view instances
         editTextDate = (EditText)findViewById(R.id.editTextDate);
         editTextOdometer = (EditText)findViewById(R.id.editTextOdometer);
+        editTextCost = (EditText)findViewById(R.id.editTextCost);
         editTextGallons = (EditText)findViewById(R.id.editTextGallons);
         checkBoxFullTank = (CheckBox)findViewById(R.id.checkBoxFullTank);
-        editTextCost = (EditText)findViewById(R.id.editTextCost);
         editTextNotes = (EditText)findViewById(R.id.editTextNotes);
         
         // update labels to reflect current units
@@ -101,10 +102,6 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
         // update hints to reflect current units
         editTextGallons.setHint(units.getLiquidVolumeLabelLowerCase());
         
-        // register as click listener for our buttons
-        ImageButton buttonEditDate = (ImageButton)findViewById(R.id.buttonEditDate);
-        buttonEditDate.setOnClickListener(this);
-        
         // disallow newline in notes field
         editTextNotes.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -116,6 +113,11 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
                 }
             }
         });
+        
+        // listen for changes to text values (so we can re-display as formatted values)
+        editTextOdometer.setOnFocusChangeListener(this);
+        editTextCost.setOnFocusChangeListener(this);
+        editTextGallons.setOnFocusChangeListener(this);
         
         // get parameters from intent
         Intent intent = getIntent();
@@ -140,32 +142,119 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     
     /**
      * DESCRIPTION:
-     * Set the widget values based on the initial GasRecord data values 
-     * obtained via Activity Intent.
+     * Sets the text displayed in the odometer EditText to 
+     * reflect the gas record value.
+     */
+    private void setOdometerText() {
+        if (record.getOdometer() == 0) {
+        	editTextOdometer.setText("");
+        } else {
+        	String value = record.getOdometerString();
+        	editTextOdometer.setText(value);
+            editTextOdometer.setSelection(value.length());
+        }
+    }
+
+    /**
+     * DESCRIPTION:
+     * Sets the text displayed in the cost EditText to 
+     * reflect the gas record value.
+     */
+    private void setCostText() {
+        if (record.getCost() == 0) {
+        	editTextCost.setText("");
+        } else {
+        	String value = record.getCostString();
+        	editTextCost.setText(value);
+            editTextCost.setSelection(value.length());
+        }
+    }
+    
+    /**
+     * DESCRIPTION:
+     * Sets the text displayed in the gallons EditText to 
+     * reflect the gas record value.
+     */
+    private void setGallonsText() {
+        if (record.getGallons() == 0) {
+        	editTextGallons.setText("");
+        } else {
+        	String value = record.getGallonsString();
+        	editTextGallons.setText(value);
+            editTextGallons.setSelection(value.length());
+        }
+    }
+        
+    /**
+     * DESCRIPTION:
+     * Retrieves the text displayed in the odometer EditText and 
+     * stores the value in the gas record.
+     */
+    private boolean getOdometerText() {
+    	boolean valid = true;
+    	String value = editTextOdometer.getText().toString();
+    	try {
+    		record.setOdometer(value);
+    	} catch (NumberFormatException e) {
+    		valid = false;
+    	}
+    	return valid;
+    }
+        
+    /**
+     * DESCRIPTION:
+     * Retrieves the text displayed in the cost EditText and 
+     * stores the value in the gas record.
+     */
+    private boolean getCostText() {
+    	boolean valid = true;
+    	String value = editTextCost.getText().toString().trim();
+    	try {
+    		if (!value.isEmpty()) {
+    			record.setCost(value);
+    		} else if (Settings.isCostRequired()) {
+    			valid = false;
+        } else {
+    			record.setCost(0d);
+    		}
+    	} catch (NumberFormatException e) {
+    		valid = false;
+    	}
+
+    	return valid;
+    }
+
+    /**
+     * DESCRIPTION:
+     * Retrieves the text displayed in the gallons EditText and 
+     * stores the value in the gas record.
+     */
+    private boolean getGallonsText() {
+    	boolean valid = true;
+    	String value = editTextGallons.getText().toString();
+		try {
+			record.setGallons(value);
+		} catch (NumberFormatException e) {
+			valid = false;
+        }
+    	return valid;
+    }
+
+    /**
+     * DESCRIPTION:
+     * Set the widget values based on the initial GasRecord data values. 
      */
     protected void setData() {
     	
     	editTextDate.setText(record.getDateTimeString());
     	
-        if (record.getOdometer() == 0) {
-        	editTextOdometer.setText("");
-        } else {
-        	editTextOdometer.setText(record.getOdometerString());
-        }
-        
-        if (record.getGallons() == 0) {
-        	editTextGallons.setText("");
-        } else {
-        	editTextGallons.setText(record.getGallonsString());
-        }
-        
+    	setOdometerText();
+    	
+    	setCostText();
+    	
+    	setGallonsText();
+    	
         checkBoxFullTank.setChecked(record.isFullTank());
-        
-        if (record.getCost() == 0) {
-        	editTextCost.setText("");
-        } else {
-        	editTextCost.setText(record.getCostString());
-        }
         
         editTextNotes.setText(record.getNotes());
     }
@@ -179,50 +268,55 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
      */
     protected boolean getData() {
     	
-    	String value = editTextOdometer.getText().toString();
-    	try {
-    		record.setOdometer(value);
-    	} catch (NumberFormatException e) {
-    		Utilities.toast(this,getString(R.string.toast_invalid_odometer_value));
+		Units units = new Units(Settings.KEY_UNITS);
+		String message;
+    	
+		// reset any previous errors
+		editTextOdometer.setError(null);
+		editTextCost.setError(null);
+		editTextGallons.setError(null);
+		
+		// odometer
+    	if (!getOdometerText()) {
+    		editTextOdometer.setError(getString(R.string.toast_invalid_odometer_value));
+    		editTextOdometer.requestFocus();
     		return false;
     	}
     	
-    	value = editTextGallons.getText().toString();
-    	try {
-    		record.setGallons(value);
-    	} catch (NumberFormatException e) {
-    		Units units = new Units(Settings.KEY_UNITS);
-    		String message = getString(R.string.toast_invalid_gallons_value);
-    		message = String.format(message, units.getLiquidVolumeLabel());
-    		Utilities.toast(this,message);
+    	// cost
+    	if (!getCostText()) {
+    		editTextCost.setError(getString(R.string.toast_invalid_cost_value));
+    		editTextCost.requestFocus();
+    		return false;
+    	}
+    	
+    	// gallons
+    	if (!getGallonsText()) {
+    		message = getString(R.string.toast_invalid_gallons_value);
+    		message = String.format(message, units.getLiquidVolumeLabelLowerCase());
+    		editTextGallons.setError(message);
+    		editTextGallons.requestFocus();
     		return false;
     	}
    	
+    	// tank full
     	record.setFullTank(checkBoxFullTank.isChecked());
     	
-    	// if the is tank not full any more, reset the hidden calculation flag
+    	// if the tank is not full any more, reset the hidden calculation flag
     	if (!record.isFullTank()) {
     		record.setHiddenCalculation(false);
     	}
     	
-    	value = editTextCost.getText().toString().trim();
-    	try {
-    		if (!value.isEmpty()) {
-    			record.setCost(value);
-    		} else if (Settings.isCostRequired()) {
-    			throw new NumberFormatException("cost is required");
-    		} else {
-    			record.setCost(0d);
-    		}
-    	} catch (NumberFormatException e) {
-    		String message = getString(R.string.toast_invalid_cost_value);
-    		Utilities.toast(this,message);
-    		return false;
-    	}
-
-    	value = editTextNotes.getText().toString();
+    	// notes
+    	String value = editTextNotes.getText().toString();
     	record.setNotes(value);
     	
+    	// display calculated cost per gallon as a toast
+    	value = Utilities.getCurrencyString(record.getCostPerGallon());
+    	message = String.format("%s %s",value,units.getLiquidVolumeRatioLabel());
+    	Utilities.toast(this,message);
+
+    	// success - valid data set!
     	return true;
     }
     
@@ -270,6 +364,12 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
      */
     public void clickedOk(View view) {
     	
+    	// dismiss the soft keyboard
+    	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    	if (imm != null) {
+    		imm.hideSoftInputFromWindow(editTextOdometer.getWindowToken(), 0);
+    	}
+    	
     	// validate the data set
     	if (!getData()) return;
     	
@@ -279,6 +379,18 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     	// success
   		returnResult(Activity.RESULT_OK);
     }
+
+	/**
+	 * DESCRIPTION:
+	 * Called when the EDIT DATE button is clicked.
+     * @param view
+	 */
+	public void clickedEditDate(View view) {
+		// start an Activity to edit the date/time
+		Intent intent = new Intent(this, DateTimeActivity.class);
+		intent.putExtra(DateTimeActivity.MILLISECONDS, record.getDate().getTime());
+		startActivityForResult(intent,EDIT_DATE_TIME_REQUEST);
+	}
 
 	/**
 	 * DESCRIPTION:
@@ -363,29 +475,6 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
 
 	/**
 	 * DESCRIPTION:
-	 * Called when a View (i.e Button) that this Activity is a registered 
-	 * listener for is clicked. 
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
-	 */
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		
-		case R.id.buttonEditDate:
-	        // start an Activity to edit the date/time
-	    	Intent intent = new Intent(this, DateTimeActivity.class);
-	    	intent.putExtra(DateTimeActivity.MILLISECONDS, record.getDate().getTime());
-	    	startActivityForResult(intent,EDIT_DATE_TIME_REQUEST);
-			break;
-			
-		default:
-			Utilities.toast(this,"Invalid view id.");
-		}
-		
-	}
-   
-	/**
-	 * DESCRIPTION:
 	 * Request code constants for onActivityResult()
 	 * @see #onActivityResult(int, int, Intent)
 	 */
@@ -419,5 +508,30 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
         	Utilities.toast(this,"Invalid Request Code.");
         }
     }
+
+	/**
+	 * DESCRIPTION:
+	 * Called when the focus state of a view has changed.
+	 * @see android.view.View.OnFocusChangeListener#onFocusChange(android.view.View, boolean)
+	 */
+	@Override
+	public void onFocusChange(View view, boolean hasFocus) {
+
+		// do nothing if view is getting focus
+		if (hasFocus) return;
+
+		// losing focus...get the new value and if valid, re-display it correctly formatted
+		switch (view.getId()) {
+		case R.id.editTextOdometer:
+			if (getOdometerText()) setOdometerText();
+			break;
+		case R.id.editTextCost:
+			if (getCostText()) setCostText();
+			break;
+		case R.id.editTextGallons:
+			if (getGallonsText()) setGallonsText();
+			break;
+		}
+	}
 
 }

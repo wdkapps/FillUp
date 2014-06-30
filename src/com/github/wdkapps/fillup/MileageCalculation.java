@@ -111,6 +111,7 @@ public class MileageCalculation implements Serializable {
 			switch (units.getValue()) {
 			
 			case Units.MILES_PER_GALLON:
+			case Units.KILOMETERS_PER_GALLON:	
 			case Units.KILOMETERS_PER_LITER:
 				mileage = distance/gasolineUsed;
 				break;

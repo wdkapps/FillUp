@@ -168,18 +168,26 @@ public class StatisticsSummaryTable implements HtmlData {
 	 */
 	private void appendCostData() {
 
-		// calculate monthly average
+		// calculate cost per month
 		int months = data.size();
-		double average = 0;
+		double per_month = 0;
 		if (months > 0) {
-			average = total.getCost()/months;
+			per_month = total.getCost()/months;
+		}
+		
+		// calculate cost per mile/kilometer
+		double per_mile = 0;
+		if (total.getDistance() > 0) {
+			per_mile = total.getCost()/total.getDistance();
 		}
 		
 		// create table row
 		String label = getString(R.string.stats_label_cost);
 		String value = String.format(App.getLocale(),getString(R.string.stats_calc_cost),
     				currencyFormatter.format(total.getCost()),
-    				currencyFormatter.format(average)); 
+    				currencyFormatter.format(per_month),
+    				currencyFormatter.format(per_mile),
+    				units.getDistanceRatioLabel()); 
 		value = value.replace("(","<br/>(");
 		appendTableRow(new String[]{label,value});
 	}

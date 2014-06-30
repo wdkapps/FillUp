@@ -56,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/textViewDate"
+                android:onClick="clickedEditDate"
                 android:contentDescription="@string/edit_description" 
                 android:src="@drawable/ic_btn_edit" />
             
@@ -90,10 +91,28 @@
             </EditText>
 
             <TextView
-                android:id="@+id/textViewGallons"
+                android:id="@+id/textViewCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/editTextOdometer"
+                android:text="@string/total_cost_label" />
+
+            <EditText
+                android:id="@+id/editTextCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewCost"
+                android:hint="@string/hint_cost"
+                android:digits="0123456789.,"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:imeOptions="actionNext"  />
+            
+            <TextView
+                android:id="@+id/textViewGallons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextCost"
                 android:text="@string/gasoline_label" />
 
             <EditText
@@ -116,28 +135,10 @@
                 android:text="@string/full_tank_label" />
 
             <TextView
-                android:id="@+id/textViewCost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/checkBoxFullTank"
-                android:text="@string/total_cost_label" />
-
-            <EditText
-                android:id="@+id/editTextCost"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textViewCost"
-                android:hint="@string/hint_cost"
-                android:digits="0123456789.,"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:imeOptions="actionNext"  />
-
-            <TextView
                 android:id="@+id/textViewNotes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextCost"
+                android:layout_below="@id/checkBoxFullTank"
                 android:text="@string/notes_label" />
 
             <EditText

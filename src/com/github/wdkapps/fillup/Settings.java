@@ -96,6 +96,18 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 	        }
 	    });
 		
+		// display the help information when clicked (html)
+		key = getResources().getString(R.string.pref_key_help);
+		preference = (Preference)findPreference(key);
+		preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			public boolean onPreferenceClick(Preference preference) {
+				Intent intent = new Intent(activity, HtmlViewerActivity.class);
+				intent.putExtra(HtmlViewerActivity.URL,getString(R.string.url_help_html));
+				activity.startActivity(intent);
+				return true;
+			}
+		});
+		
 		// register for notification of changes
 		SharedPreferences sharedPreferences = getPreferenceScreen().getSharedPreferences();
 		sharedPreferences.registerOnSharedPreferenceChangeListener(this);
@@ -202,7 +214,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		Context context = App.getContext();
 		String key = context.getString(R.string.pref_key_require_cost);
     	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-    	return prefs.getBoolean(key, false);
+    	return prefs.getBoolean(key, true);
     }
 
     /**

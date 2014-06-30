@@ -6,18 +6,30 @@
     android:padding="5dp"
     android:orientation="horizontal" >
 
+    <!-- 
+    NOTE: 
+    Using btn_toggle_bg, with modified 9 patch png from sdk  
+    to correct a problem where on/off indicators are not displayed
+    on ToggleButton for higher density screens like the nexus 7.
+    see: http://www.basic4ppc.com/android/forum/threads/toggle-buttons.19889/
+    used: SDK/tools/draw9patch to edit the btn_toggle_on/off.9.png files 
+    that were copied from the sdk.
+    -->
+    
     <ToggleButton
         android:id="@+id/button1"
         android:layout_width="@dimen/range_button_width"
         android:layout_height="wrap_content"
-        android:textOn="@string/label_range_1month"
+        android:background="@drawable/btn_toggle_bg"
         android:textOff="@string/label_range_1month"
+        android:textOn="@string/label_range_1month"
         android:textSize="@dimen/range_button_text_size" />
 
     <ToggleButton
         android:id="@+id/button6"
         android:layout_width="@dimen/range_button_width"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_toggle_bg"
         android:textOn="@string/label_range_6month"
         android:textOff="@string/label_range_6month"
         android:textSize="@dimen/range_button_text_size" />
@@ -26,6 +38,7 @@
         android:id="@+id/button12"
         android:layout_width="@dimen/range_button_width"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_toggle_bg"
         android:textOn="@string/label_range_12month"
         android:textOff="@string/label_range_12month"
         android:textSize="@dimen/range_button_text_size" />
@@ -34,6 +47,7 @@
         android:id="@+id/buttonYTD"
         android:layout_width="@dimen/range_button_width"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_toggle_bg"
         android:textOn="@string/label_range_ytd"
         android:textOff="@string/label_range_ytd"
         android:textSize="@dimen/range_button_text_size" />
@@ -42,6 +56,7 @@
         android:id="@+id/buttonAll"
         android:layout_width="@dimen/range_button_width"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_toggle_bg"
         android:textOn="@string/label_range_all"
         android:textOff="@string/label_range_all"
         android:textSize="@dimen/range_button_text_size" />

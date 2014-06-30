@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- SPANISH -->
+    <!--  FRENCH -->
     
     <string-array name="arrayUnitsEntries">
-        <item>Millas por galón\n(MPG)</item>
-        <item>Kilómetros por litro\n(KM/L)</item>
-        <item>Litros por 100 kilómetros\n(L/100KM)</item>
-        <item>RU MPG (imperial)\nmillas, litros</item>
-        <item>RU MPG (imperial)\nkilómetros, litros</item>
-        <item>Kilómetros por galón\n(KPG)</item>
-    </string-array>
+        <item>Miles par gallon\n(MPG)</item>
+        <item>Kilomètres par litre\n(KM/L)</item>
+        <item>Litres aux 100 kilomètres\n(L/100KM)</item>
+        <item>RU MPG (impérial)\nmiles, litres</item>
+        <item>RU MPG (impérial)\nkilomètres, litres</item>
+        <item>Kilomètres par gallon\n(KPG)</item>
+        </string-array>
     
     <string-array name="arrayUnitsEntryValues">
         <item>0</item>
@@ -18,14 +18,14 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
-    </string-array>
+        </string-array>
     
     <string-array name="arrayPlotDateRangeEntries">
-        <item>Último mes</item>
-        <item>Últimos 6 meses</item>
-        <item>Últimos 12 meses</item>
-        <item>De un año a la fecha</item>
-        <item>Todos los datos</item>
+        <item>Dernier mois</item>
+        <item>Derniers 6 mois</item>
+        <item>Derniers 12 mois</item>
+        <item>Year to date</item>
+        <item>Toutes les données</item>
     </string-array>
     
     <string-array name="arrayPlotDateRangeEntryValues">
@@ -37,10 +37,10 @@
     </string-array>
     
     <string-array name="arrayPlotFontSizeEntries">
-        <item>Pequeño</item>
-        <item>Medio</item>
-        <item>Grande</item>
-        <item>X-Grande</item>
+        <item>Petit</item>
+        <item>Moyen</item>
+        <item>Grand</item>
+        <item>Extra Grand</item>
     </string-array>
     
     <string-array name="arrayPlotFontSizeEntryValues">
@@ -51,28 +51,28 @@
     </string-array>
     
     <string-array name="arrayPlotMonthLabels">
-        <item>ene.</item>
-        <item>feb.</item>
-        <item>mar.</item>
-        <item>abr.</item>
-        <item>may.</item>
-        <item>jun.</item>
-        <item>jul.</item>
-        <item>ago.</item>
-        <item>sep.</item>
-        <item>oct.</item>
-        <item>nov.</item>
-        <item>dic.</item>
+        <item>janv.</item>
+        <item>févr</item>
+        <item>mars</item>
+        <item>avril</item>
+        <item>mai</item>
+        <item>juin</item>
+        <item>juil</item>
+        <item>août</item>
+        <item>sept</item>
+        <item>oct</item>
+        <item>nov</item>
+        <item>déc</item>
     </string-array>
-
+    
     <string-array name="arrayStorageEntries">
-        <item>Almacenamiento interno</item>
-        <item>Almacenamiento de la Red</item>
+        <item>Stockage interne</item>
+        <item>Stockage en réseau</item>
     </string-array>
     
     <string-array name="arrayStorageEntryValues">
         <item>internal</item>
         <item>cloud</item>
     </string-array>
-        
+    
 </resources>

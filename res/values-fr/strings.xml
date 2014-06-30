@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- FRENCH -->
+
+    <!-- titles -->
+    <string name="app_name">FillUp</string>
+    <string name="title_activity_main">FillUp</string>
+    <string name="title_activity_gas_log_list">Historique</string>
+    <string name="title_activity_get_gas">Ajouter du carburant</string>
+    <string name="title_activity_plot">Graphiques</string>
+    <string name="title_activity_html_viewer">HTML Viewer</string>
+    <string name="title_activity_date_time">Date/Heure</string>
+    <string name="title_activity_statistics">Statistiques</string>
+    <string name="title_mileage_calculation">Consommation %1$s</string>
+    <string name="title_mileage_estimate">Estimation %1$s</string>
+    <string name="title_cannot_estimate">Estimation impossible</string>
+    <string name="title_units_dialog">Choisir les unités</string>
+    <string name="title_confirm_odometer">Odomètre exact?</string>
+    <string name="title_confirm_gallons">%1$s exact?</string>
+    <string name="title_file_selection_dialog">Choisir un fichier</string>
+    <string name="title_confirm_log_delete_dialog">Supprimer un enregistrement</string>
+    <string name="title_confirm_export_overwrite_dialog">Confirmer l\'export</string>
+    <string name="title_confirm_export_share_dialog">Export terminé</string>
+    <string name="title_chooser_share_csv">Partager CSV via &#8230;</string>
+    <string name="title_chooser_share_html">Partager HTML via &#8230;</string>
+    <string name="title_select_import_csv">Choisir le fichier CSV &#8230;</string>
+    <string name="title_confirm_delete_vehicle">Supprimer le véhicule</string>
+    <string name="title_plot_mileage">Consommation de carburant</string>
+    <string name="title_plot_odometer">Distance parcourue</string>
+    <string name="title_plot_gallons">Carburant acheté</string>
+    <string name="title_plot_cost">Dépenses de carburant</string>
+    <string name="title_plot_price">Prix du carburant</string>
+    <string name="title_plot_price_range">Prix %1$s (moy)</string>
+    <string name="title_storage_selection_dialog">Emplacement du fichier CSV &#8230;</string>
+    
+    <!-- messages -->
+    <string name="message_confirm_export_share_dialog">Voulez-vous partager le fichier CSV exporté?</string>
+    <string name="message_confirm_export_overwrite_dialog">\'%1$s\' existe déjà.\nL\'écraser?"</string>
+    <string name="message_confirm_log_delete_dialog">Êtes-vous sûr?</string>
+    <string name="message_confirm_odometer">La valeur est plus petite que la valeur courante de l\'odomètre dans l\'historique du véhicule (%1$s).</string>
+    <string name="message_confirm_gallons">La valeur est plus grande que la contenance du réservoir du véhicule (%1$s).</string>
+    <string name="message_confirm_delete_vehicle">Êtes-vous sûr?</string>
+    <string name="message_tank_never_filled">\nLa consommation sera donnée après avoir rempli le réservoir pour établir une référence.\n</string>
+    <string name="message_insufficient_data">Données insuffisantes</string>
+    
+    <!-- statistics -->
+    <string name="stats_label_mileage_avg">Consommation de carburant (moy)</string>
+    <string name="stats_label_mileage_min">Consommation de carburant (min)</string>
+    <string name="stats_label_mileage_max">Consommation de carburant (max)</string>
+    <string name="stats_label_distance">Distance parcourue</string>
+    <string name="stats_label_gallons">Carburant acheté</string>
+    <string name="stats_label_cost">Dépenses de carburant</string>
+    <string name="stats_label_price">Prix du carburant (moy)</string>
+    <string name="stats_calc_distance">%1$d %2$s (%3$.0f par mois)</string>
+    <string name="stats_calc_distance_noavg">%1$d %2$s</string>
+    <string name="stats_calc_gallons">%1$.2f %2$s (%3$.2f par mois)</string>
+    <string name="stats_calc_gallons_noavg">%1$.2f %2$s</string>
+    <string name="stats_calc_cost">%1$s (%2$s par mois) (%3$s %4$s)</string>    
+    <string name="stats_calc_cost_noavg">%1$s (%2$s %3$s)</string>    
+    <string name="stats_report_filename">%1$s_statistiques.html</string>    
+    
+    <!--  labels -->
+    <string name="get_gas_label">Ajouter du carburant</string>
+    <string name="date_label">Date</string>
+    <string name="time_label">Heure</string>
+    <string name="odometer_label">Odomètre</string>
+    <string name="odometer_units_label">Odomètre (%1$s)</string>
+    <string name="full_tank_label">Réservoir plein</string>
+    <string name="ok_label">OK</string>
+    <string name="cancel_label">Annuler</string>
+    <string name="yes_label">Oui</string>
+    <string name="no_label">Non</string>
+    <string name="view_log_button_text">Voir l\'historique</string>
+    <string name="mileage_label">L/100Km</string>
+    <string name="import_label">Importer</string>
+    <string name="export_label">Exporter</string>
+    <string name="select_vehicle_label">Choisir</string>
+    <string name="vehicles_spinner_prompt">Voiture</string>
+    <string name="get_gas_button_label">Ajouter du carburant</string>
+    <string name="view_log_button_label">Historique</string>
+    <string name="plot_data_label">Graphiques</string>
+    <string name="view_statistics_label">Statistiques</string>
+    <string name="vehicle_add_label">Ajouter un véhicule</string>
+    <string name="vehicle_edit_label">Editer le véhicule</string>
+    <string name="vehicle_delete_label">Supprimer le véhicule</string>
+    <string name="vehicle_name_label">Nom</string>
+    <string name="vehicle_tanksize_label">Contenance du réservoir (%1$s)</string>
+    <string name="menu_settings">Paramètres</string>
+    <string name="months_label">Mois</string> 
+    <string name="cost_label">Prix</string>
+    <string name="total_cost_label">Prix total (%1$s)</string>
+    <string name="notes_label">Notes</string>
+    <string name="gasoline_label">Carburant (%1$s)</string>
+    <string name="share_label">Partager</string>
+    <string name="label_range_1month">1m</string>
+    <string name="label_range_6month">6m</string>
+    <string name="label_range_12month">12m</string>
+    <string name="label_range_ytd">YTD</string>
+    <string name="label_range_all">Tout</string>
+        
+    <!-- hints -->
+    <string name="hint_odometer">odomètre</string>
+    <string name="hint_cost">coût</string>
+    <string name="hint_notes">notes</string>
+    <string name="hint_gasoline">carburant</string>
+    
+    <!-- mileage calculation/estimate dialogs -->
+    <string name="mileage_estimate_note">Basé sur la contenance du réservoir de %1$s %2$s.</string>
+    <string name="mileage_estimate_drove">Parcouru %1$d %2$s.\n</string>
+    <string name="mileage_estimate_used">Utilisé %1$s %2$s.\n</string>
+    <string name="mileage_estimate_none">\nPas d\'estimation.\n</string>
+    <string name="mileage_estimate_tanksize_info">Editer les données du véhicule si\nla contenance du réservoir est incorrecte.</string>
+    <string name="mileage_estimate_initial">Le réservoir n\'est pas plein.\nAjuster la jauge\npour l\'estimation.</string>
+    <string name="mileage_calculation_drove">Parcouru %1$d %2$s.\n</string>
+    <string name="mileage_calculation_used">Utilisé %1$s %2$s.\n</string>
+    <string name="mileage_calculation_none">\nPas de calcul.\n</string>
+
+    <!-- descriptions -->
+    <string name="add_description">[ajouter]</string>
+    <string name="edit_description">[éditer]</string>
+    <string name="delete_description">[supprimer]</string>
+    <string name="fuel_gauge_description">[jauge de carburant]</string>
+    <string name="close_dialog_description">[fermer la fenêtre]</string>
+    <string name="description_filename">[choisir un fichier]</string>
+    
+    <!--  menu items -->
+    <string name="menuitem_title_edit">Editer</string>
+    <string name="menuitem_title_delete">Supprimer</string>
+    <string name="menuitem_title_show_estimate">Voir les estimations</string>
+    <string name="menuitem_title_show_calculation">Voir les données</string>
+    <string name="menuitem_title_hide_calculation">Cacher la consommation</string>
+    <string name="menuitem_title_help">Aide</string>   
+    
+    <!-- toast messages -->
+    <string name="toast_data_saved">Données sauvées.</string>
+    <string name="toast_error_saving_data">Erreur lors de la sauvegarde des données.</string>
+    <string name="toast_select_a_vehicle">Choisir un véhicule.</string>
+    <string name="toast_add_failed">L\'ajout à échoué.</string>
+    <string name="toast_edit_failed">L\'édition a échouée.</string>
+    <string name="toast_delete_failed">La suppression a échouée.</string>
+    <string name="toast_canceled">Annulé.</string>
+    <string name="toast_external_storage_not_readable">Lecture impossible sur le stockage externe.</string>
+    <string name="toast_external_storage_not_writable">Ecriture impossible sur le stockage externe.</string>
+    <string name="toast_no_data_to_export">Pas de données à exporter.</string>
+    <string name="toast_failed">Echec.</string>
+    <string name="toast_import_failed">L\'import a échoué.</string>
+    <string name="toast_import_complete">Import terminé.</string>
+    <string name="toast_export_failed">L\'export a échoué.</string>
+    <string name="toast_export_complete">Export terminé.</string>
+    <string name="toast_duplicate_vehicle_name">Dupliquer le nom du véhicule.</string>
+    <string name="toast_duplicate_odometer_value">Dupliquer la valeur de l\'odomètre.</string>
+    <string name="toast_stopped_at_csv_line">Arrêt à la ligne %1$d du CSV.</string>
+    <string name="toast_invalid_odometer_value">Valeur de l\'odomètre invalide.</string>
+    <string name="toast_invalid_gallons_value">Valeur %1$s invalide.</string>
+    <string name="toast_invalid_vehicle_name">Nom du véhicule invalide.</string>
+    <string name="toast_invalid_vehicle_tank_size">Contenance du réservoir invalide.</string>
+    <string name="toast_database_update_failed">Echec de la mise à jour de la base de données!</string>
+    <string name="toast_invalid_cost_value">Prix invalide.</string>
+    <string name="toast_create_report_failed">Erreur lors de la création du rapport.</string>
+    <string name="toast_activity_not_found">Il n\'y a pas d\'applications appropriés installés.</string>
+    <string name="toast_error">ERREUR</string>
+    
+    <!-- units -->
+    <string name="error_label">ERREUR</string>
+    <string name="per_gallon_label">par gallon</string>
+    <string name="per_liter_label">par litre</string>
+    <string name="per_mile_label">par mile</string>
+    <string name="per_kilometer_label">par km</string>
+    <string name="gallons_label">Gallons</string>
+    <string name="liters_label">Litres</string>
+    <string name="miles_label">Miles</string>
+    <string name="kilometers_label">Kilomètres</string>
+    <string name="mpg_label">MPG</string>
+    <string name="kpg_label">KPG</string>
+    <string name="km_per_liter_label">Km/L</string>
+    <string name="liters_per_100km_label">L/100Km</string>
+    <string name="blank_date"></string>
+    <string name="blank_odometer"></string>
+    <string name="blank_gallons"></string>
+    <string name="blank_mileage"></string>
+
+
+
+
+
+
+
+
+
+
+    <!-- preference titles and summaries (displayable) -->
+    <string name="pref_summary_unknown">inconnu</string>
+    <string name="pref_title_category_settings">Paramètres</string>
+    <string name="pref_summary_category_settings">Paramètres de l\'Application et information</string>
+    <string name="pref_title_units">Unités</string>
+    <string name="pref_title_plot_font_size">Taille des polices pour les graphiques</string>
+    <string name="pref_title_about">A propos</string>
+    <string name="pref_summary_about">Afficher les informations de l\'application</string>
+    <string name="pref_title_pkg_name">Nom du Package</string>
+    <string name="pref_title_pkg_version">Version du Package</string>
+    <string name="pref_title_build_date">Date du Build</string>
+    <string name="pref_title_database_version">Version de la base de données</string>
+    <string name="pref_title_license">Licence</string>
+    <string name="pref_summary_license">Afficher la licence du logiciel</string>
+    <string name="pref_title_require_cost">Demander un prix</string>
+    <string name="pref_summary_require_cost">Lors de la saisie de l\'achat de carburant</string>
+    <string name="pref_title_display_cost">Afficher le prix dans l\'historique</string>
+    <string name="pref_summary_display_cost"></string>
+    <string name="pref_title_display_notes">Afficher les notes dans l\'historique</string>
+    <string name="pref_summary_display_notes"></string>
+	<string name="pref_title_help">Aide</string>
+	<string name="pref_summary_help">Afficher l\'aide de l\'application</string>
+    
+	<!-- file paths -->
+    <string name="url_help_html">file:///android_asset/help.html</string>
+    <string name="asset_stats_top_html">stats_top_fr.html</string>
+	
+</resources>

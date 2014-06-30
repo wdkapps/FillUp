@@ -23,6 +23,7 @@
     <string name="title_confirm_export_share_dialog">Exportación Es Completa</string>
     <string name="title_chooser_share_csv">Compartir CSV con &#8230;</string>
     <string name="title_chooser_share_html">Compartir HTML con &#8230;</string>
+    <string name="title_select_import_csv">Seleccionar datos de CSV &#8230;</string>
     <string name="title_confirm_delete_vehicle">Borrar Vehículo</string>
     <string name="title_plot_mileage">Economía de Combustible</string>
     <string name="title_plot_odometer">Distancia Conducida</string>
@@ -30,6 +31,7 @@
     <string name="title_plot_cost">Costo del Combustible</string>
     <string name="title_plot_price">Precio del Combustible</string>
     <string name="title_plot_price_range">Precio %1$s (promedio)</string>
+    <string name="title_storage_selection_dialog">Locaccion de CSV&#8230;</string>
     
 	<!-- messages -->
     <string name="message_confirm_export_share_dialog">¿Quieres compartir los datos de CSV?</string>
@@ -50,8 +52,11 @@
     <string name="stats_label_cost">Costo del Combustible</string>
     <string name="stats_label_price">Precio del Combustible (promedio)</string>
     <string name="stats_calc_distance">%1$d %2$s (%3$.0f por mes)</string>
+    <string name="stats_calc_distance_noavg">%1$d %2$s</string>
     <string name="stats_calc_gallons">%1$.2f %2$s (%3$.2f por mes)</string>
-    <string name="stats_calc_cost">%1$s (%2$s por mes)</string>
+    <string name="stats_calc_gallons_noavg">%1$.2f %2$s</string>
+    <string name="stats_calc_cost">%1$s (%2$s por mes) (%3$s %4$s)</string>
+    <string name="stats_calc_cost_noavg">%1$s (%2$s %3$s)</string>    
     <string name="stats_report_filename">%1$s_estadísticas.html</string>    
     
     <!-- labels -->
@@ -80,7 +85,6 @@
     <string name="vehicle_delete_label">Borrar Vehículo</string>
     <string name="vehicle_name_label">Nombre de Vehículo</string>
     <string name="vehicle_tanksize_label">Tamaño del tanque (%1$s)</string>
-    <string name="path_label">Camino</string>
     <string name="menu_settings">Configuraciones</string>    
     <string name="months_label">Meses</string> 
     <string name="cost_label">Coste</string>
@@ -88,6 +92,10 @@
     <string name="notes_label">Notas</string>
     <string name="gasoline_label">Combustible (%1$s)</string>
     <string name="share_label">Compartir</string>
+    <string name="label_range_1month">1m</string>
+    <string name="label_range_6month">6m</string>
+    <string name="label_range_12month">12m</string>
+    <string name="label_range_ytd">YTD</string>
     <string name="label_range_all">Todo</string>
     
     <!-- hints -->
@@ -113,6 +121,7 @@
     <string name="delete_description">[borrar]</string>
     <string name="fuel_gauge_description">[indicador de combustible]</string>
     <string name="close_dialog_description">[cierra de diálogo]</string>
+    <string name="description_filename">[seleccionar los datos]</string>
     
     <!--  menu items -->
     <string name="menuitem_title_edit">Editar</string>
@@ -130,8 +139,8 @@
     <string name="toast_edit_failed">Fallado editar.</string>
     <string name="toast_delete_failed">Fallado borrar.</string>
     <string name="toast_canceled">Canceladó.</string>
-    <string name="toast_external_storage_not_readable">No se puede leer de memoria de almacenamiento externo.</string>
-    <string name="toast_external_storage_not_writable">No se puede escribir de memoria de almacenamiento externo.</string>
+    <string name="toast_external_storage_not_readable">No se puede leer de memoria del device.</string>
+    <string name="toast_external_storage_not_writable">No se puede escribir de memoria del device.</string>
     <string name="toast_no_data_to_export">No hay datos para expotar.</string>
     <string name="toast_failed">Fracasado.</string>
     <string name="toast_import_failed">Error durante la importación.</string>
@@ -148,16 +157,21 @@
     <string name="toast_database_update_failed">¡Error de la actualización de la base de datos!</string>
     <string name="toast_invalid_cost_value">Datos Coste inválido.</string>
     <string name="toast_create_report_failed">Error de crear archivo de informe.</string>
+    <string name="toast_activity_not_found">No hay aplicaciones adecuadas instaladas.</string>
+    <string name="toast_error">ERROR</string>
     
     <!-- units -->
     <string name="error_label">ERROR</string>
     <string name="per_gallon_label">por galón</string>
     <string name="per_liter_label">por litro</string>
+    <string name="per_mile_label">por milla</string>
+    <string name="per_kilometer_label">por km</string>
     <string name="gallons_label">Galones</string>
     <string name="liters_label">Litros</string>
     <string name="miles_label">Millas</string>
     <string name="kilometers_label">Kilómetros</string>
     <string name="mpg_label">MPG</string>
+    <string name="kpg_label">KPG</string>
     <string name="km_per_liter_label">KM/L</string>
     <string name="liters_per_100km_label">L/100KM</string>
     <string name="blank_date"></string>
@@ -185,7 +199,9 @@
 	<string name="pref_summary_display_cost"></string>
 	<string name="pref_title_display_notes">Mostrar Notas en registro</string>
 	<string name="pref_summary_display_notes"></string>
-
+	<string name="pref_title_help">Ayudar</string>
+	<string name="pref_summary_help">Mostrar información ayuda de la aplicación</string>
+	
     <!-- file paths -->
     <string name="url_help_html">file:///android_asset/help-es.html</string>
     <string name="asset_stats_top_html">stats_top_es.html</string>

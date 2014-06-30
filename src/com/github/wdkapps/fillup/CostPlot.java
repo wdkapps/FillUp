@@ -24,14 +24,13 @@ import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.androidplot.series.XYSeries;
+import com.androidplot.xy.XYSeries;
 import com.androidplot.util.PaintUtils;
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.BarFormatter;
 import com.androidplot.xy.BarRenderer;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.LineAndPointRenderer;
 import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.PointLabeler;
 import com.androidplot.xy.SimpleXYSeries;
@@ -179,15 +178,12 @@ public class CostPlot implements OnSharedPreferenceChangeListener {
         	plot.addSeries(getAverageSeries(),avgFormatter);
 
         	// specify format of the average point label 
-        	LineAndPointRenderer<?> lpr = (LineAndPointRenderer<?>)plot.getRenderer(LineAndPointRenderer.class);
-        	if (lpr != null) {
-        		lpr.setPointLabeler(new PointLabeler() {
-        			@Override
-        			public String getLabel(XYSeries series, int index) {
-        				return (index == 0) ? ylabels.format(series.getY(index)) : "";
-        			}
-        		});
-        	}
+        	avgFormatter.setPointLabeler(new PointLabeler() {
+        		@Override
+        		public String getLabel(XYSeries series, int index) {
+        			return (index == 0) ? ylabels.format(series.getY(index)) : "";
+        		}
+        	});
         }
     }
     
@@ -210,27 +206,20 @@ public class CostPlot implements OnSharedPreferenceChangeListener {
     	PlotFontSize size = new PlotFontSize(activity,Settings.KEY_PLOT_FONT_SIZE);
 
     	// plot title label
-        PaintUtils.setFontSizeDp(activity,
-            	plot.getTitleWidget().getLabelPaint(),size.getSizeDp());
+        PaintUtils.setFontSizeDp(plot.getTitleWidget().getLabelPaint(),size.getSizeDp());
         plot.getTitleWidget().pack();
 
     	// axis step value labels
-        PaintUtils.setFontSizeDp(activity,
-            	plot.getGraphWidget().getRangeLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(activity,
-            	plot.getGraphWidget().getDomainLabelPaint(),size.getSizeDp());
+        PaintUtils.setFontSizeDp(plot.getGraphWidget().getRangeLabelPaint(),size.getSizeDp());
+        PaintUtils.setFontSizeDp(plot.getGraphWidget().getDomainLabelPaint(),size.getSizeDp());
         
         // axis origin value labels
-        PaintUtils.setFontSizeDp(activity,
-        		plot.getGraphWidget().getRangeOriginLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(activity,
-        		plot.getGraphWidget().getDomainOriginLabelPaint(),size.getSizeDp());
+        PaintUtils.setFontSizeDp(plot.getGraphWidget().getRangeOriginLabelPaint(),size.getSizeDp());
+        PaintUtils.setFontSizeDp(plot.getGraphWidget().getDomainOriginLabelPaint(),size.getSizeDp());
 
         // axis title labels
-        PaintUtils.setFontSizeDp(activity,
-                plot.getRangeLabelWidget().getLabelPaint(),size.getSizeDp());
-        PaintUtils.setFontSizeDp(activity,
-                plot.getDomainLabelWidget().getLabelPaint(),size.getSizeDp());
+        PaintUtils.setFontSizeDp(plot.getRangeLabelWidget().getLabelPaint(),size.getSizeDp());
+        PaintUtils.setFontSizeDp(plot.getDomainLabelWidget().getLabelPaint(),size.getSizeDp());
         plot.getRangeLabelWidget().pack();
         plot.getDomainLabelWidget().pack();
         

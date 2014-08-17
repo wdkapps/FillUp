@@ -36,4 +36,7 @@
     <!-- BLUE LINK -->
     <color name="link_color">#1e90ff</color> <!--  light blue -->
     
+    <color name="calc_text_color">#e0e0e0</color> <!--  light grey -->
+    <color name="calc_hint_color">#a0a0a0</color> <!--  darker grey -->
+    
 </resources>

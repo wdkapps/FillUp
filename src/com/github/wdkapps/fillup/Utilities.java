@@ -19,8 +19,6 @@
 
 package com.github.wdkapps.fillup;
 
-import java.text.NumberFormat;
-
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
@@ -67,30 +65,4 @@ public class Utilities {
         return px;
     }
     
-    /**
-     * DESCRIPTION:
-     * Returns the symbol for the currency in the current locale. 
-     * @return the currency symbol as a String.
-     */
-    public static String getCurrencySymbol() {
-    	NumberFormat nf = NumberFormat.getCurrencyInstance();
-  		return nf.getCurrency().getSymbol(); 
-    }
-    
-    /**
-     * DESCRIPTION:
-     * Returns a String formatted as currency in the current locale.
-     * <p>
-     * NOTE: A new NumberFormat instance is created each time this
-     * method is called. This avoids NumberFormat thread safety issues 
-     * at the cost of performance. Call this method sparingly!
-     * </p>
-     * @param value - the currency value to be formatted (as a double)
-     * @return the value as a currency String
-     */
-    public static String getCurrencyString(double value) {
-        NumberFormat nf = NumberFormat.getCurrencyInstance();
-        return nf.format(value);
-    }
-
 }

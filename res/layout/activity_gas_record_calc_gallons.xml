@@ -1,0 +1,193 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <!-- BAR WITH OK/CANCEL BUTTONS ACCROSS BOTTOM -->
+    <RelativeLayout
+        android:id="@+id/buttonBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" 
+        android:background="@color/dialog_buttonbar_bg"
+        android:gravity="right"
+        android:padding="4dip" >
+
+        <ImageButton
+            android:id="@+id/buttonMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@string/mode_description"
+            android:onClick="clickedMode"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:src="@drawable/ic_btn_mode" />
+        
+        <Button
+            android:id="@+id/buttonOK"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/buttonCancel"
+            android:onClick="clickedOk"
+            android:text="@string/ok_label" />
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="100dip"
+            android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+            android:onClick="clickedCancel"
+            android:text="@string/cancel_label" />
+    </RelativeLayout>
+    
+    <!-- SCROLL VIEW CONTAINING ALL FORM FIELDS -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:layout_alignParentTop="true" 
+        android:layout_above="@id/buttonBar" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dip" >
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"  
+                android:text="@string/date_label" />
+
+            <ImageButton
+                android:id="@+id/buttonEditDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/textViewDate"
+                android:onClick="clickedEditDate"
+                android:contentDescription="@string/edit_description" 
+                android:src="@drawable/ic_btn_edit" />
+            
+            <EditText
+                android:id="@+id/editTextDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDate" 
+                android:layout_toLeftOf="@id/buttonEditDate" 
+                android:focusable="false" 
+                android:focusableInTouchMode="false"
+                android:clickable="false" 
+                android:inputType="datetime" />
+            
+            <TextView
+                android:id="@+id/textViewOdometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buttonEditDate"
+                android:text="@string/odometer_units_label" />
+
+            <EditText
+                android:id="@+id/editTextOdometer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewOdometer"
+                android:ems="10"
+                android:inputType="number" 
+                android:hint="@string/hint_odometer"
+                android:imeOptions="actionNext" >
+                <requestFocus />
+            </EditText>
+            
+            <TextView
+                android:id="@+id/textViewPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextOdometer"
+                android:text="@string/price_label" />
+
+            <EditText
+                android:id="@+id/editTextPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewPrice"
+                android:digits="0123456789.,"
+                android:ems="10"
+                android:hint="@string/hint_price"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal" />
+            
+            <TextView
+                android:id="@+id/textViewCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextPrice"
+                android:text="@string/total_cost_label" />
+
+            <EditText
+                android:id="@+id/editTextCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewCost"
+                android:hint="@string/hint_cost"
+                android:digits="0123456789.,"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:imeOptions="actionNext"  />
+            
+			<TextView
+                android:id="@+id/textViewGallons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextCost"
+                android:text="@string/gasoline_label" /><EditText
+                android:id="@+id/editTextGallons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewGallons"
+                android:cursorVisible="false"
+                android:inputType="numberDecimal"
+                android:digits="0123456789.,"
+                android:ems="10"
+                android:enabled="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:clickable="false"
+                android:longClickable="false"
+                android:hint="@string/hint_gasoline"
+                android:textColor="@color/calc_text_color"
+                android:textColorHint="@color/calc_hint_color" />
+
+			<CheckBox
+                android:id="@+id/checkBoxFullTank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextGallons"
+                android:layout_alignParentRight="true"
+                android:text="@string/full_tank_label" />
+
+            <TextView
+                android:id="@+id/textViewNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/checkBoxFullTank"
+                android:text="@string/notes_label" />
+
+            <EditText
+                android:id="@+id/editTextNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewNotes"
+                android:hint="@string/hint_notes"
+                android:inputType="text|textShortMessage|textAutoCorrect|textCapSentences|textMultiLine"
+                android:maxLength="80"
+                android:lines="3"
+                android:maxLines="3"
+                android:minLines="3" 
+                android:imeOptions="flagNoEnterAction|actionDone"/>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

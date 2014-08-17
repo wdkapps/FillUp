@@ -20,12 +20,19 @@
 package com.github.wdkapps.fillup;
 
 import java.text.Format;
-import java.text.NumberFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.androidplot.xy.XYSeries;
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
+import android.view.ViewGroup;
+
 import com.androidplot.util.PaintUtils;
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.BarFormatter;
@@ -36,16 +43,8 @@ import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.PointLabeler;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
+import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
-
-import android.os.Bundle;
-import android.app.Activity;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.graphics.Color;
-import android.util.Log;
-import android.view.Display;
-import android.view.ViewGroup;
 
 /**
  * DESCRIPTION:
@@ -101,7 +100,7 @@ public class PricePlot implements OnSharedPreferenceChangeListener {
     private MappedLabelFormat xlabels = new MappedLabelFormat();
     
     /// formatter for y-axis labels
-    private static final Format ylabels = NumberFormat.getCurrencyInstance();  
+    private Format ylabels = CurrencyManager.getInstance().getSymbolicFormatter();  
     
     /**
      * DESCRIPTION:

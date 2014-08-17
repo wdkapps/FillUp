@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--  ENGLISH -->
+    <!--  GERMAN -->
     
     <string-array name="arrayUnitsEntries">
-        <item>Miles per gallon\n(MPG)</item>
-        <item>Kilometers per liter\n(KM/L)</item>
-        <item>Liters per 100 kilometers\n(L/100KM)</item>
-        <item>UK MPG (imperial)\nmiles, liters</item>
-        <item>UK MPG (imperial)\nkilometers, liters</item>
-        <item>Kilometers per gallon\n(KPG)</item>
-        </string-array>
+        <item>Meilen pro Gallone\n(MPG)</item>
+        <item>Kilometer pro Liter\n(KM/L)</item>
+        <item>Liter auf 100 Kilometer\n(L/100KM)</item>
+        <item>UK MPG (imperisch)\nMeilen, Liter</item>
+        <item>UK MPG (imperisch)\nKilometer, Liter</item>
+        <item>Kilometer pro Gallone\n(KPG)</item>
+    </string-array>
     
     <string-array name="arrayUnitsEntryValues">
         <item>0</item>
@@ -18,14 +18,14 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
-        </string-array>
+    </string-array>
     
     <string-array name="arrayPlotDateRangeEntries">
-        <item>Past month</item>
-        <item>Past 6 months</item>
-        <item>Past 12 months</item>
-        <item>Year to date</item>
-        <item>All data</item>
+        <item>Letzer Monat</item>
+        <item>Letzten 6 Monate</item>
+        <item>Letzten 12 Monate</item>
+        <item>seit Jahresbeginn</item>
+        <item>Alle Daten</item>
     </string-array>
     
     <string-array name="arrayPlotDateRangeEntryValues">
@@ -37,10 +37,10 @@
     </string-array>
     
     <string-array name="arrayPlotFontSizeEntries">
-        <item>Small</item>
-        <item>Medium</item>
-        <item>Large</item>
-        <item>X-Large</item>
+        <item>Klein</item>
+        <item>Normal</item>
+        <item>Groß</item>
+        <item>Riesig</item>
     </string-array>
     
     <string-array name="arrayPlotFontSizeEntryValues">
@@ -51,23 +51,23 @@
     </string-array>
     
     <string-array name="arrayPlotMonthLabels">
-        <item>JAN</item>
-        <item>FEB</item>
-        <item>MAR</item>
-        <item>APR</item>
-        <item>MAY</item>
-        <item>JUN</item>
-        <item>JUL</item>
-        <item>AUG</item>
-        <item>SEP</item>
-        <item>OCT</item>
-        <item>NOV</item>
-        <item>DEC</item>
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>März</item>
+        <item>Apr</item>
+        <item>Mai</item>
+        <item>Juni</item>
+        <item>Juli</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Okt</item>
+        <item>Nov</item>
+        <item>Dez</item>
     </string-array>
     
     <string-array name="arrayStorageEntries">
-        <item>Internal storage</item>
-        <item>Cloud storage</item>
+        <item>Interner Speicher</item>
+        <item>Cloud Speicher</item>
     </string-array>
     
     <string-array name="arrayStorageEntryValues">
@@ -76,9 +76,9 @@
     </string-array>
     
     <string-array name="arrayDataEntryModeEntries">
-        <item>Enter \'Total Cost\' and \'Fuel Amount\'</item>
-        <item>Enter \'Fuel Price\' and \'Total Cost\'</item>
-        <item>Enter \'Fuel Price\' and \'Fuel Amount\'</item>
+        <item>Eingeben \'Gesamtkosten\' und \'Kraftstoffbetrag\'</item>
+        <item>Eingeben \'Kraftstoffpreis\' und \'Gesamtkosten\'</item>
+        <item>Eingeben \'Kraftstoffpreis\' und \'Kraftstoffbetrag\'</item>
     </string-array>
     
     <string-array name="arrayDataEntryModeValues">

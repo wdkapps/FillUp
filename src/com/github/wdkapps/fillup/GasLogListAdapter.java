@@ -19,7 +19,6 @@
 
 package com.github.wdkapps.fillup;
 
-import java.text.NumberFormat;
 import java.util.List;
 
 import android.app.Activity;
@@ -43,9 +42,6 @@ public class GasLogListAdapter extends ArrayAdapter<GasRecord> {
 	/// a list of gasoline records for display 
 	private final List<GasRecord> records;
 	
-    /// formatter for cost as a locale dependent currency
-    private static final NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();  
-    
     /// currently configured units of measurement
     private Units units;
     
@@ -139,8 +135,8 @@ public class GasLogListAdapter extends ArrayAdapter<GasRecord> {
 		} else {
 			String cost = String.format("<b>%s</b>: %s (%s %s)",
 					App.getContext().getString(R.string.cost_label),
-					currencyFormat.format(record.getCost()),
-					currencyFormat.format(record.getCostPerGallon()),
+					CurrencyManager.getInstance().getSymbolicFormatter().format(record.getCost()),
+					CurrencyManager.getInstance().getSymbolicFractionalFormatter().format(record.getPrice()),
 					units.getLiquidVolumeRatioLabel());
 			rowCost.setText(Html.fromHtml(cost));
 			rowCost.setVisibility(View.VISIBLE);

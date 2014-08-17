@@ -20,15 +20,11 @@
 package com.github.wdkapps.fillup;
 
 import java.io.Serializable;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
-
-import android.util.Log;
 
 /**
  * DESCRIPTION:
@@ -45,13 +41,11 @@ public class GasRecord implements Serializable {
 
 	private static final long serialVersionUID = -2409546847119346248L;
 	
-	/// for logging
-	private static final String TAG = GasRecord.class.getName();
-	
 	// define maximum values (for display reasons)
 	public static final int MAX_ODOMETER = 9999999;
-	public static final float MAX_GALLONS = 9999.99f;
-	public static final double MAX_COST = 999999.99d;
+	public static final float MAX_GALLONS = 9999.999f;
+	public static final double MAX_COST = 999999.999d;
+	public static final double MAX_PRICE = 999999.999d;
 	
     /// get a locale specific date formatter 
     private static final java.text.DateFormat dateFormatter = 
@@ -67,27 +61,6 @@ public class GasRecord implements Serializable {
     private static final SimpleDateFormat csvDateTimeFormatter = 
     		new SimpleDateFormat("MM/dd/yyyy HH:mm",Locale.US);
     
-    // get a locale specific currency formatter and initialize it
-    // note: does not include currency symbol
-    private static final NumberFormat costFormatter = NumberFormat.getInstance(App.getLocale());
-    static {
-    	// determine number of fraction digits to display for locale
-    	int fractionDigits = 2;
-    	try {
-    		Currency currency = Currency.getInstance(App.getLocale());
-    		fractionDigits = currency.getDefaultFractionDigits();
-    	} catch(IllegalArgumentException ex) {
-    		Log.e(TAG,"currency formatter configuration failed",ex);
-    	}
-
-    	// configure fraction digits for the formatter
-    	costFormatter.setMaximumFractionDigits(fractionDigits);
-    	costFormatter.setMinimumFractionDigits(fractionDigits);
-    	
-    	// don't display commas (ie. 1000.00 instead of 1,000.00)
-    	costFormatter.setGroupingUsed(false);
-    }
-    
     /// record id for database use (primary key)
     private Integer id;
     
@@ -99,6 +72,9 @@ public class GasRecord implements Serializable {
 	
     /// odometer reading at the time of purchase 
     private Integer odometer;
+    
+    /// gasoline price per gallon 
+    private Double price;
     
     /// amount of gasoline purchased 
     private Float gallons;
@@ -132,6 +108,7 @@ public class GasRecord implements Serializable {
     	gallons = Float.valueOf(0.0f);
     	odometer = Integer.valueOf(0);
     	cost = Double.valueOf(0.0d);
+    	price = Double.valueOf(0.0d);
     	notes = "";
         fulltank = false;
         hidden = false;
@@ -151,6 +128,7 @@ public class GasRecord implements Serializable {
 		this.gallons = Float.valueOf(that.gallons);
 		this.odometer = Integer.valueOf(that.odometer);
 		this.cost = Double.valueOf(that.cost);
+		this.price = Double.valueOf(that.price);
 		this.notes = new String(that.notes);
 		this.fulltank = Boolean.valueOf(that.fulltank);
 		this.hidden = Boolean.valueOf(that.hidden);
@@ -204,6 +182,7 @@ public class GasRecord implements Serializable {
 			setHiddenCalculation(values[4]);
 			setCost(values[5]);
 			setNotes(values[6]);
+			calculatePrice();
 			break;
 			
 		case 6:  // db_version<5 with calculation
@@ -215,13 +194,50 @@ public class GasRecord implements Serializable {
 			setHiddenCalculation(values[4]);
 			setCost(0d);
 			setNotes("");
+			calculatePrice();
 			break;
 			
 		default:
 			throw new ParseException("Invalid CSV length",values.length);
 		}
 	}
+	
+	/**
+	 * DESCRIPTION:
+	 * Calculates price based on the current values for cost and gallons.
+ 	 * @throws NumberFormatException if the calculated value is not a valid price value.
+	 */
+	public void calculatePrice() {
+		Double value = 0d;
+		if (gallons != 0) {
+			value = (double)(cost/gallons);
+		}
+		setPrice(value.toString());
+	}
+	
+	/**
+	 * DESCRIPTION:
+	 * Calculates gallons based on the current values for cost and price.
+	 * @throws NumberFormatException if the calculated value is not a valid gallons value.
+	 */
+	public void calculateGallons() {
+		Float value = 0f;
+		if (price != 0) {
+			value = (float)(cost/price);
+		}
+		setGallons(value.toString());
+	}
 
+	/**
+	 * DESCRIPTION:
+	 * Calculates cost based on the current values for gallons and price.
+	 * @throws NumberFormatException if the calculated value is not a valid cost value.
+	 */
+	public void calculateCost() {
+		Double value = price * gallons;
+		setCost(value.toString());
+	}
+	
 	/**
 	 * DESCRIPTION:
 	 * Getter method for the id attribute.
@@ -379,7 +395,7 @@ public class GasRecord implements Serializable {
 	 * @return String - the gallons value.
 	 */
 	public String getGallonsString() {
-		return String.format(App.getLocale(),"%.2f",gallons);
+		return String.format(App.getLocale(),"%.3f",gallons);
 	}
 
 	/**
@@ -398,6 +414,7 @@ public class GasRecord implements Serializable {
 	 * @throws NumberFormatException if the String is not a valid gallons value.
 	 */
 	public void setGallons(String gallons) throws NumberFormatException {
+		this.gallons = 0f;
 		Float value = Float.valueOf(gallons.replace(',','.'));
 		if ((value <= 0) || (value > MAX_GALLONS)) {
 			throw new NumberFormatException("Value out of range.");
@@ -420,7 +437,7 @@ public class GasRecord implements Serializable {
 	 * @return String - the cost value.
 	 */
 	public String getCostString() {
-		return costFormatter.format(cost);
+		return CurrencyManager.getInstance().getNumericFormatter().format(cost);
 	}
 
 	/**
@@ -439,6 +456,7 @@ public class GasRecord implements Serializable {
 	 * @throws NumberFormatException if the String is not a valid cost value.
 	 */
 	public void setCost(String cost) throws NumberFormatException {
+		this.cost = 0d;
 		Double value = Double.valueOf(cost.replace(',','.'));
 		if ((value < 0) || (value > MAX_COST)) {
 			throw new NumberFormatException("Value out of range.");
@@ -448,12 +466,56 @@ public class GasRecord implements Serializable {
 
 	/**
 	 * DESCRIPTION:
-	 * Getter method for the calculated cost per gallon value.
+	 * Getter method for the calculated price per gallon value.
 	 * @return Double - the cost per gallon value.
 	 */
-	public Double getCostPerGallon() {
-		if (gallons == 0) return 0d;
-		return cost/gallons;
+	public Double getPrice() {
+		return price;
+	}
+	
+	/**
+	 * DESCRIPTION:
+	 * Getter method for the price per gallon attribute as a String value.
+	 * @return String - the price value.
+	 */
+	public String getPriceString() {
+		return CurrencyManager.getInstance().getNumericFractionalFormatter().format(price);
+	}
+
+	/**
+	 * DESCRIPTION:
+	 * Setter method for the price per gallon attribute.
+	 * <p>
+	 * NOTE: 
+	 * Price is not a persistent attribute. It is a calculated  
+	 * ratio of cost and gallons. This setter method is provided
+	 * to assist data entry.
+	 * </p>
+	 * @param price - the price attribute as a Double.
+	 */
+	private void setPrice(Double price) {
+		this.price = price;
+	}
+	
+	/**
+	 * DESCRIPTION:
+	 * Setter method for the price per gallon attribute.
+	 * <p>
+	 * NOTE: 
+	 * Price is not a persistent attribute. It is a calculated  
+	 * ratio of cost and gallons. This setter method is provided
+	 * to assist data entry.
+	 * </p>
+	 * @param price - the price attribute as a String value.
+	 * @throws NumberFormatException if the String is not a valid price value.
+	 */
+	public void setPrice(String price) {
+		this.price = 0d;
+		Double value = Double.valueOf(price.replace(',','.'));
+		if ((value < 0) || (value > MAX_PRICE)) {
+			throw new NumberFormatException("Value out of range.");
+		}
+		setPrice(value);
 	}
 	
 	/**
@@ -596,6 +658,7 @@ public class GasRecord implements Serializable {
 				", cost=" + cost +
 				", notes=" + notes + 
 				", calc=" + calc + 
+				", price=" + price +
 				"]";
 	}
 
@@ -609,7 +672,7 @@ public class GasRecord implements Serializable {
 
 		// create the array (only once for performance)
 		if (hash == null) {
-			hash = new Object[9];
+			hash = new Object[10];
 		}
 		
 		// populate the array
@@ -622,6 +685,7 @@ public class GasRecord implements Serializable {
     	hash[6] = notes;
         hash[7] = fulltank;
         hash[8] = hidden;
+        hash[9] = price;
         return hash;
 	}
 

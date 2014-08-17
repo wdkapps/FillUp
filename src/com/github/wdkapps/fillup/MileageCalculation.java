@@ -145,7 +145,7 @@ public class MileageCalculation implements Serializable {
 	 * @return String - quantity of gas used.
 	 */
 	public String getGasolineUsedString() {
-		return String.format(App.getLocale(),"%.2f", getGasolineUsed());
+		return String.format(App.getLocale(),"%.3f", getGasolineUsed());
 	}
 	
 	/**

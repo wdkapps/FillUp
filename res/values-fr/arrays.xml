@@ -74,5 +74,17 @@
         <item>internal</item>
         <item>cloud</item>
     </string-array>
+
+    <string-array name="arrayDataEntryModeEntries">
+        <item>Entrer \'Coût Total\' et \'Quantité du Carburant\'</item>
+        <item>Entrer \'Prix du Carburant\' et \'Coût Total\'</item>
+        <item>Entrer \'Prix du Carburant\' et \'Quantité du Carburant\'</item>
+    </string-array>
+    
+    <string-array name="arrayDataEntryModeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
     
 </resources>

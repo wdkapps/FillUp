@@ -47,6 +47,9 @@ public class StartupActivity extends Activity implements UnitsDialog.Listener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_startup);
 		
+		// currency manager initialization can be time consuming...get it out of the way at startup
+		CurrencyManager.getInstance();
+		
 		// special case: display update information
 		if (isUpdateFirstStart()) {
 			showUpdateInformation();

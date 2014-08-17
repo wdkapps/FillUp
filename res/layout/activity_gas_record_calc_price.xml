@@ -3,20 +3,31 @@
     android:layout_height="fill_parent" >
 
     <!-- BAR WITH OK/CANCEL BUTTONS ACCROSS BOTTOM -->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/buttonBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" 
         android:background="@color/dialog_buttonbar_bg"
         android:gravity="right"
-        android:orientation="horizontal"
         android:padding="4dip" >
 
+        <ImageButton
+            android:id="@+id/buttonMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@string/mode_description"
+            android:onClick="clickedMode"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:src="@drawable/ic_btn_mode" />
+        
         <Button
             android:id="@+id/buttonOK"
             android:layout_width="100dip"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/buttonCancel"
             android:onClick="clickedOk"
             android:text="@string/ok_label" />
 
@@ -24,9 +35,10 @@
             android:id="@+id/buttonCancel"
             android:layout_width="100dip"
             android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
             android:onClick="clickedCancel"
             android:text="@string/cancel_label" />
-    </LinearLayout>
+    </RelativeLayout>
     
     <!-- SCROLL VIEW CONTAINING ALL FORM FIELDS -->
     <ScrollView
@@ -89,7 +101,7 @@
                 android:imeOptions="actionNext" >
                 <requestFocus />
             </EditText>
-
+            
             <TextView
                 android:id="@+id/textViewCost"
                 android:layout_width="wrap_content"
@@ -108,7 +120,7 @@
                 android:inputType="numberDecimal"
                 android:imeOptions="actionNext"  />
             
-            <TextView
+			<TextView
                 android:id="@+id/textViewGallons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -126,11 +138,35 @@
                 android:hint="@string/hint_gasoline"
                 android:imeOptions="actionNext" />
 
+            <TextView
+                android:id="@+id/textViewPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextGallons"
+                android:text="@string/price_label" />
+
+            <EditText
+                android:id="@+id/editTextPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewPrice"
+                android:digits="0123456789.,"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:hint="@string/hint_price"
+                android:enabled="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:clickable="false"
+                android:longClickable="false"
+                android:textColor="@color/calc_text_color" 
+                android:textColorHint="@color/calc_hint_color" /> 
+            
             <CheckBox
                 android:id="@+id/checkBoxFullTank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextGallons"
+                android:layout_below="@id/editTextPrice"
                 android:layout_alignParentRight="true"
                 android:text="@string/full_tank_label" />
 

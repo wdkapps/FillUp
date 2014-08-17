@@ -19,7 +19,6 @@
 
 package com.github.wdkapps.fillup;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -58,9 +57,6 @@ public class StatisticsSummaryTable implements HtmlData {
 	/// end of line string
 	private static final String newline = System.getProperty("line.separator");
 	
-    /// formatter for y-axis labels
-    private static final NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();  
-	
 	/**
 	 * DESCRIPTION:
 	 * Constructs an instance of StatisticsReportTable.
@@ -69,7 +65,7 @@ public class StatisticsSummaryTable implements HtmlData {
 	 */
 	public StatisticsSummaryTable(List<TripRecord> data,  String title) {
 		this.data = data;
-		this.title = "SUMMARY: "+title;
+		this.title = getString(R.string.stats_summary_prefix) + title;
 		this.total = new TripRecord(new Date());
 		for (TripRecord trip : data) { 
 			this.total.append(trip);
@@ -184,9 +180,9 @@ public class StatisticsSummaryTable implements HtmlData {
 		// create table row
 		String label = getString(R.string.stats_label_cost);
 		String value = String.format(App.getLocale(),getString(R.string.stats_calc_cost),
-    				currencyFormatter.format(total.getCost()),
-    				currencyFormatter.format(per_month),
-    				currencyFormatter.format(per_mile),
+    				CurrencyManager.getInstance().getSymbolicFormatter().format(total.getCost()),
+    				CurrencyManager.getInstance().getSymbolicFormatter().format(per_month),
+    				CurrencyManager.getInstance().getSymbolicFractionalFormatter().format(per_mile),
     				units.getDistanceRatioLabel()); 
 		value = value.replace("(","<br/>(");
 		appendTableRow(new String[]{label,value});
@@ -225,7 +221,7 @@ public class StatisticsSummaryTable implements HtmlData {
 		if (total.getGallons() > 0) {
 			double price = total.getCost()/total.getGallons();
 			value = String.format("%s %s",
-					currencyFormatter.format(price),
+					CurrencyManager.getInstance().getSymbolicFormatter().format(price),
 					units.getLiquidVolumeRatioLabel());
 		}
 		appendTableRow(new String[]{label,value});

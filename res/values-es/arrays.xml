@@ -75,4 +75,17 @@
         <item>cloud</item>
     </string-array>
         
+    <string-array name="arrayDataEntryModeEntries">
+        <item>Entra \'Coste Total\' y \'Cantidad de Combustible\'</item>
+        <item>Entra \'Precio del Combustible\' y \'Coste Total\'</item>
+        <item>Entra \'Precio del Combustible\' y \'Cantidad de Combustible\'</item>
+    </string-array>
+    
+    <string-array name="arrayDataEntryModeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    
 </resources>

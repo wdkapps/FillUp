@@ -1,6 +1,6 @@
 /*
  * *****************************************************************************
- * Copyright 2013 William D. Kraemer
+ * Copyright 2013,2014 William D. Kraemer
  *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@
 package com.github.wdkapps.fillup;
 
 import java.util.Date;
+
+import com.github.wdkapps.fillup.DataEntryModeDialog.Result;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -41,7 +43,11 @@ import android.widget.TextView;
  * allow the user to enter/edit values. The record is passed in/out
  * of the Activity via the Android Intent mechanism.
  */
-public class GasRecordActivity extends Activity implements ConfirmationDialog.Listener, View.OnFocusChangeListener {
+public class GasRecordActivity extends Activity 
+implements 
+ConfirmationDialog.Listener, 
+DataEntryModeDialog.Listener, 
+View.OnFocusChangeListener {
 	
 	/// key name for the GasRecord to pass via Intent
 	public final static String RECORD = GasRecordActivity.class.getName() + ".RECORD";
@@ -64,10 +70,17 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
 	/// the Activity's widgets (Views)
 	private EditText editTextDate;
 	private EditText editTextOdometer;
+	private EditText editTextPrice;
 	private EditText editTextCost;
 	private EditText editTextGallons;
 	private CheckBox checkBoxFullTank;
 	private EditText editTextNotes;
+	
+	/// listens for EditText changes so that calculations can be refreshed 
+	private GasRecordWatcher watcher = null;
+	
+	/// the current data entry mode
+	private DataEntryMode mode;
 	
     /**
      * DECRIPTION:
@@ -77,11 +90,56 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gas_record);   
+        
+        if (savedInstanceState == null) {
+
+        	// get parameters from intent
+            Intent intent = getIntent();
+            record = (GasRecord)intent.getSerializableExtra(RECORD);
+            current_odometer = intent.getIntExtra(CURRENT_ODOMETER, -1);
+            tank_size = intent.getFloatExtra(TANK_SIZE, 99999999f);
+            
+        } else {
+        	
+        	// restore the saved state
+    		record = (GasRecord)savedInstanceState.getSerializable("record");
+    		current_odometer = savedInstanceState.getInt("current_odometer");
+    		tank_size = savedInstanceState.getFloat("tank_size");
+    		
+        }
+        
+        loadForm();
+    }
+
+    /**
+     * DESCRIPTION:
+     * Loads and initializes a UI form (layout) based on the current data entry mode.
+     */
+    private void loadForm() {
+    	
+        if (watcher != null) {
+        	watcher.destroy();
+        	watcher = null;
+        }
+        
+        // load form layout for current data entry mode
+        mode = new DataEntryMode(Settings.KEY_DATA_ENTRY_MODE);
+        switch (mode.getValue()) {
+        case DataEntryMode.CALCULATE_COST:
+        	setContentView(R.layout.activity_gas_record_calc_cost);
+        	break;
+        case DataEntryMode.CALCULATE_GALLONS:
+        	setContentView(R.layout.activity_gas_record_calc_gallons);
+        	break;
+        case DataEntryMode.CALCULATE_PRICE:
+        	setContentView(R.layout.activity_gas_record_calc_price);
+        	break;
+        }
 
         // get view instances
         editTextDate = (EditText)findViewById(R.id.editTextDate);
         editTextOdometer = (EditText)findViewById(R.id.editTextOdometer);
+        editTextPrice = (EditText)findViewById(R.id.editTextPrice);
         editTextCost = (EditText)findViewById(R.id.editTextCost);
         editTextGallons = (EditText)findViewById(R.id.editTextGallons);
         checkBoxFullTank = (CheckBox)findViewById(R.id.checkBoxFullTank);
@@ -97,10 +155,15 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
         label.setText(String.format(App.getLocale(),format,units.getLiquidVolumeLabelLowerCase()));
         label = (TextView)findViewById(R.id.textViewCost);
         format = getString(R.string.total_cost_label);
-        label.setText(String.format(App.getLocale(),format,Utilities.getCurrencySymbol()));
-
+        label.setText(String.format(App.getLocale(),format,CurrencyManager.getInstance().getCurrencySymbol()));
+        label = (TextView)findViewById(R.id.textViewPrice);
+        format = getString(R.string.price_label);
+        label.setText(String.format(App.getLocale(),format,units.getLiquidVolumeRatioLabel()));
+        
         // update hints to reflect current units
         editTextGallons.setHint(units.getLiquidVolumeLabelLowerCase());
+        format = getString(R.string.hint_price);
+        editTextPrice.setHint(String.format(App.getLocale(),format,units.getLiquidVolumeRatioLabel()));
         
         // disallow newline in notes field
         editTextNotes.addTextChangedListener(new TextWatcher() {
@@ -114,20 +177,28 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
             }
         });
         
-        // listen for changes to text values (so we can re-display as formatted values)
-        editTextOdometer.setOnFocusChangeListener(this);
+        // copy data: record => form
+        setData();
+        
+        // listen for changes to text values (so we can recalculate)
+        watcher = createGasRecordWatcher();
+        editTextPrice.setOnFocusChangeListener(this);
         editTextCost.setOnFocusChangeListener(this);
         editTextGallons.setOnFocusChangeListener(this);
-        
-        // get parameters from intent
-        Intent intent = getIntent();
-        record = (GasRecord)intent.getSerializableExtra(RECORD);
-        current_odometer = intent.getIntExtra(CURRENT_ODOMETER, -1);
-        tank_size = intent.getFloatExtra(TANK_SIZE, 99999999f);
-        
-        // display initial values
-        setData();
     }
+    
+	/**
+	 * DESCRIPTION:
+	 * Saves the activity state before before screen rotation, etc.
+	 * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putSerializable("record", record);
+		savedInstanceState.putInt("current_odometer",current_odometer);
+		savedInstanceState.putFloat("tank_size",tank_size);
+	}
 
     /**
      * DESCRIPTION:
@@ -137,7 +208,8 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //getMenuInflater().inflate(R.menu.activity_gas_record, menu);
-        return true;
+        //return true;
+    	return false;
     }
     
     /**
@@ -155,6 +227,22 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
         }
     }
 
+    /**
+     * DESCRIPTION:
+     * Sets the text displayed in the price EditText to 
+     * reflect the gas record value.
+     */
+    private void setPriceText() {
+        if (record.getPrice() == 0) {
+        	editTextPrice.setText("");
+        } else {
+        	String value = record.getPriceString();
+        	editTextPrice.setText(value);
+            editTextPrice.setSelection(value.length());
+        }
+    	
+    }
+    
     /**
      * DESCRIPTION:
      * Sets the text displayed in the cost EditText to 
@@ -184,7 +272,27 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
             editTextGallons.setSelection(value.length());
         }
     }
-        
+
+    /**
+     * DESCRIPTION:
+     * Sets the text displayed in the appropriate EditText to 
+     * reflect the calculated value.
+     */
+    private void setCalculatedText() {
+		switch (mode.getValue()) {
+		case DataEntryMode.CALCULATE_COST:
+			setCostText();
+			break;
+		case DataEntryMode.CALCULATE_PRICE:
+			setPriceText();
+			break;
+		case DataEntryMode.CALCULATE_GALLONS:
+			setGallonsText();
+			break;
+		}
+    	
+    }
+    
     /**
      * DESCRIPTION:
      * Retrieves the text displayed in the odometer EditText and 
@@ -210,17 +318,31 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     	boolean valid = true;
     	String value = editTextCost.getText().toString().trim();
     	try {
-    		if (!value.isEmpty()) {
-    			record.setCost(value);
-    		} else if (Settings.isCostRequired()) {
-    			valid = false;
-        } else {
-    			record.setCost(0d);
-    		}
+   			record.setCost(value);
     	} catch (NumberFormatException e) {
     		valid = false;
     	}
+    	
+		if (!Settings.isCostRequired()) {
+			valid = true;
+		}
 
+    	return valid;
+    }
+
+    /**
+     * DESCRIPTION:
+     * Retrieves the text displayed in the price EditText and 
+     * stores the value in the gas record.
+     */
+    private boolean getPriceText() {
+    	boolean valid = true;
+		String value = editTextPrice.getText().toString();
+    	try {
+    		record.setPrice(value);
+    	} catch (NumberFormatException e) {
+    		valid = false;
+    	}
     	return valid;
     }
 
@@ -239,16 +361,69 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
         }
     	return valid;
     }
+    
+    /**
+     * DESCRIPTION:
+     * Calculate the cost, price, or gallons value based on 
+     * current data entry mode.
+     * @return false if calculation is not valid
+     */
+    private boolean getCalculatedValue() {
+    	boolean valid = true;
+    	try {
+    		switch (mode.getValue()) {
+    		case DataEntryMode.CALCULATE_COST:
+    			record.calculateCost();
+    			break;
+    		case DataEntryMode.CALCULATE_PRICE:
+    			record.calculatePrice();
+    			break;
+    		case DataEntryMode.CALCULATE_GALLONS:
+    			record.calculateGallons();
+    			break;
+    		}
+		} catch (NumberFormatException e) {
+			valid = false;
+        }
+		return valid;
+    }
 
     /**
      * DESCRIPTION:
-     * Set the widget values based on the initial GasRecord data values. 
+     * Indicate that a calculation error has occurred during data validation.
+     */
+    private void setCalculationError() {
+    	String message;
+		switch (mode.getValue()) {
+		case DataEntryMode.CALCULATE_COST:
+			message = getString(R.string.toast_invalid_cost_calculation);
+			editTextPrice.setError(message);
+			editTextGallons.setError(message);
+			break;
+		case DataEntryMode.CALCULATE_PRICE:
+			message = getString(R.string.toast_invalid_price_calculation);
+			editTextCost.setError(message);
+			editTextGallons.setError(message);
+			break;
+		case DataEntryMode.CALCULATE_GALLONS:
+			message = getString(R.string.toast_invalid_gallons_calculation);
+			editTextPrice.setError(message);
+			editTextCost.setError(message);
+			break;
+		}
+    }
+    
+    /**
+     * DESCRIPTION:
+     * Set the form values based on the GasRecord data values. 
      */
     protected void setData() {
     	
     	editTextDate.setText(record.getDateTimeString());
     	
     	setOdometerText();
+    	
+    	setPriceText();
     	
     	setCostText();
     	
@@ -261,10 +436,10 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
 
     /**
      * DESCRIPTION:
-     * Get the current data values from the widgets after user edit,
+     * Get the current data values from the form after user edit,
      * validate them, and update the GasRecord being edited.
      * 
-     * @return boolean - indicates if edited data is valid (valid=true)
+     * @return boolean - indicates if form data is valid (valid=true)
      */
     protected boolean getData() {
     	
@@ -273,6 +448,7 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     	
 		// reset any previous errors
 		editTextOdometer.setError(null);
+		editTextPrice.setError(null);
 		editTextCost.setError(null);
 		editTextGallons.setError(null);
 		
@@ -283,22 +459,41 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     		return false;
     	}
     	
-    	// cost
-    	if (!getCostText()) {
-    		editTextCost.setError(getString(R.string.toast_invalid_cost_value));
-    		editTextCost.requestFocus();
-    		return false;
+    	// price
+    	if (mode.isCalculatePrice() == false) {
+    		if (!getPriceText()) {
+    			editTextPrice.setError(getString(R.string.toast_invalid_price_value));
+    			editTextPrice.requestFocus();
+    			return false;
+    		}
     	}
     	
+    	// cost
+    	if (mode.isCalculateCost() == false) {
+    		if (!getCostText()) {
+    			editTextCost.setError(getString(R.string.toast_invalid_cost_value));
+    			editTextCost.requestFocus();
+    			return false;
+    		}
+    	}    	
+    	
     	// gallons
-    	if (!getGallonsText()) {
-    		message = getString(R.string.toast_invalid_gallons_value);
-    		message = String.format(message, units.getLiquidVolumeLabelLowerCase());
-    		editTextGallons.setError(message);
-    		editTextGallons.requestFocus();
-    		return false;
+    	if (mode.isCalculateGallons() == false) {
+    		if (!getGallonsText()) {
+    			message = getString(R.string.toast_invalid_gallons_value);
+    			message = String.format(message, units.getLiquidVolumeLabelLowerCase());
+    			editTextGallons.setError(message);
+    			editTextGallons.requestFocus();
+    			return false;
+    		}
     	}
-   	
+    	
+    	// get calculated value
+		if (!getCalculatedValue()) {
+			setCalculationError();
+			return false;
+		}
+
     	// tank full
     	record.setFullTank(checkBoxFullTank.isChecked());
     	
@@ -311,11 +506,6 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     	String value = editTextNotes.getText().toString();
     	record.setNotes(value);
     	
-    	// display calculated cost per gallon as a toast
-    	value = Utilities.getCurrencyString(record.getCostPerGallon());
-    	message = String.format("%s %s",value,units.getLiquidVolumeRatioLabel());
-    	Utilities.toast(this,message);
-
     	// success - valid data set!
     	return true;
     }
@@ -364,13 +554,9 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
      */
     public void clickedOk(View view) {
     	
-    	// dismiss the soft keyboard
-    	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-    	if (imm != null) {
-    		imm.hideSoftInputFromWindow(editTextOdometer.getWindowToken(), 0);
-    	}
+    	hideSoftKeyboard();
     	
-    	// validate the data set
+    	// validate the form data
     	if (!getData()) return;
     	
     	// confirm values that are in range, but possibly wrong
@@ -379,6 +565,41 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     	// success
   		returnResult(Activity.RESULT_OK);
     }
+    
+	/**
+	 * DESCRIPTION:
+	 * Called when the MODE button has been clicked to change
+	 * data entry mode.
+	 * @param view
+	 */
+	public void clickedMode(View view) {
+		hideSoftKeyboard();
+		showDialog(DIALOG_SELECT_DATA_ENTRY_MODE);
+    }
+	
+	/**
+	 * DESCRIPTION:
+	 * Called when user selects a data entry mode value from the dialog.
+	 * @see com.github.wdkapps.fillup.DataEntryModeDialog.Listener#onDataEntryModeDialogResponse(int, com.github.wdkapps.fillup.DataEntryModeDialog.Result)
+	 */
+	@Override
+	public void onDataEntryModeDialogResponse(int id, Result result) {
+		
+		if (result == Result.RESULT_CANCEL) return;
+
+		// copy current data: form => record
+    	getOdometerText();
+    	if (!mode.isCalculateCost()) getCostText();
+    	if (!mode.isCalculatePrice()) getPriceText();
+    	if (!mode.isCalculateGallons()) getGallonsText();
+    	record.setFullTank(checkBoxFullTank.isChecked());
+    	record.setNotes(editTextNotes.getText().toString());
+
+    	// load form for selected mode
+    	loadForm();
+		
+	}
+
 
 	/**
 	 * DESCRIPTION:
@@ -434,6 +655,7 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
      */
     protected static final int DIALOG_CONFIRM_ODOMETER_LOW_ID = 1;
     protected static final int DIALOG_CONFIRM_GALLONS_HIGH_ID = 2;
+    protected static final int DIALOG_SELECT_DATA_ENTRY_MODE = 3;
 
     /**
      * DESCRIPTION:
@@ -467,6 +689,10 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
     				tank_size, units.getLiquidVolumeLabelLowerCase());
     		message = String.format(message,value);
         	dialog = ConfirmationDialog.create(this,this,id,title,message);
+        	break;
+        	
+    	case DIALOG_SELECT_DATA_ENTRY_MODE:
+    		dialog = DataEntryModeDialog.create(this,this,DIALOG_SELECT_DATA_ENTRY_MODE,mode);
         	break;
         	
     	}
@@ -516,22 +742,59 @@ public class GasRecordActivity extends Activity implements ConfirmationDialog.Li
 	 */
 	@Override
 	public void onFocusChange(View view, boolean hasFocus) {
-
-		// do nothing if view is getting focus
-		if (hasFocus) return;
-
-		// losing focus...get the new value and if valid, re-display it correctly formatted
-		switch (view.getId()) {
-		case R.id.editTextOdometer:
-			if (getOdometerText()) setOdometerText();
-			break;
-		case R.id.editTextCost:
-			if (getCostText()) setCostText();
-			break;
-		case R.id.editTextGallons:
-			if (getGallonsText()) setGallonsText();
-			break;
+		if (!hasFocus) {
+			// losing focus...reformat the displayed text if it is valid
+			switch (view.getId()) {
+			case R.id.editTextPrice:
+				if (getPriceText()) setPriceText();
+				break;
+			case R.id.editTextCost:
+				if (getCostText()) setCostText();
+				break;
+			case R.id.editTextGallons:
+				if (getGallonsText()) setGallonsText();
+				break;
+			}
 		}
+
 	}
+	
+	/**
+	 * DESCRIPTION:
+	 * Creates a container for TextWatcher instances that listen for and handle changes for the
+	 * EditText fields.
+	 * @return TextWatcher
+	 */
+	private GasRecordWatcher createGasRecordWatcher() {
+		return new GasRecordWatcher(mode,editTextPrice,editTextCost,editTextGallons) {
+			public void priceChanged() {
+				getPriceText();
+				getCalculatedValue();
+				setCalculatedText();
+			}
+			public void costChanged() {
+				getCostText();
+				getCalculatedValue();
+				setCalculatedText();
+			}
+			public void gallonsChanged() {
+				getGallonsText();
+				getCalculatedValue();
+				setCalculatedText();
+			}
+			
+		};
+	}
+
+    /**
+     * DESCRIPTION:
+     * Dismisses the soft keyboard.
+     */
+    private void hideSoftKeyboard() {
+    	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    	if (imm != null) {
+    		imm.hideSoftInputFromWindow(editTextOdometer.getWindowToken(), 0);
+    	}
+    }
 
 }

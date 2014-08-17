@@ -32,6 +32,7 @@
     <string name="title_plot_price">Prix du carburant</string>
     <string name="title_plot_price_range">Prix %1$s (moy)</string>
     <string name="title_storage_selection_dialog">Emplacement du fichier CSV &#8230;</string>
+    <string name="title_data_entry_mode_dialog">Mode d\'Entrée de Données</string>
     
     <!-- messages -->
     <string name="message_confirm_export_share_dialog">Voulez-vous partager le fichier CSV exporté?</string>
@@ -58,6 +59,7 @@
     <string name="stats_calc_cost">%1$s (%2$s par mois) (%3$s %4$s)</string>    
     <string name="stats_calc_cost_noavg">%1$s (%2$s %3$s)</string>    
     <string name="stats_report_filename">%1$s_statistiques.html</string>    
+    <string name="stats_summary_prefix">SOMMAIRE: </string>    
     
     <!--  labels -->
     <string name="get_gas_label">Ajouter du carburant</string>
@@ -87,23 +89,26 @@
     <string name="vehicle_tanksize_label">Contenance du réservoir (%1$s)</string>
     <string name="menu_settings">Paramètres</string>
     <string name="months_label">Mois</string> 
-    <string name="cost_label">Prix</string>
-    <string name="total_cost_label">Prix total (%1$s)</string>
+    <string name="cost_label">Coût</string>
+    <string name="total_cost_label">Coût Total (%1$s)</string>
+	<string name="price_label">Prix du Carburant (%1$s)</string>
     <string name="notes_label">Notes</string>
-    <string name="gasoline_label">Carburant (%1$s)</string>
+    <string name="gasoline_label">Quantité du Carburant (%1$s)</string>
     <string name="share_label">Partager</string>
     <string name="label_range_1month">1m</string>
     <string name="label_range_6month">6m</string>
     <string name="label_range_12month">12m</string>
     <string name="label_range_ytd">YTD</string>
     <string name="label_range_all">Tout</string>
+    <string name="default_currency">Prédéfinie</string>
         
     <!-- hints -->
     <string name="hint_odometer">odomètre</string>
     <string name="hint_cost">coût</string>
     <string name="hint_notes">notes</string>
     <string name="hint_gasoline">carburant</string>
-    
+ 	<string name="hint_price">prix %1$s</string>
+   
     <!-- mileage calculation/estimate dialogs -->
     <string name="mileage_estimate_note">Basé sur la contenance du réservoir de %1$s %2$s.</string>
     <string name="mileage_estimate_drove">Parcouru %1$d %2$s.\n</string>
@@ -122,6 +127,7 @@
     <string name="fuel_gauge_description">[jauge de carburant]</string>
     <string name="close_dialog_description">[fermer la fenêtre]</string>
     <string name="description_filename">[choisir un fichier]</string>
+    <string name="mode_description">[mode d\'entrée de données]</string>
     
     <!--  menu items -->
     <string name="menuitem_title_edit">Editer</string>
@@ -155,9 +161,13 @@
     <string name="toast_invalid_vehicle_name">Nom du véhicule invalide.</string>
     <string name="toast_invalid_vehicle_tank_size">Contenance du réservoir invalide.</string>
     <string name="toast_database_update_failed">Echec de la mise à jour de la base de données!</string>
-    <string name="toast_invalid_cost_value">Prix invalide.</string>
+    <string name="toast_invalid_cost_value">Coût Total invalide.</string>
     <string name="toast_create_report_failed">Erreur lors de la création du rapport.</string>
     <string name="toast_activity_not_found">Il n\'y a pas d\'applications appropriés installés.</string>
+    <string name="toast_invalid_price_value">Carburant incorrect valeur prix.</string>
+    <string name="toast_invalid_price_calculation">Impossible de calculer prix du carburant en utilisant ces valeurs</string>
+    <string name="toast_invalid_cost_calculation">Impossible de calculer le coût total en utilisant ces valeurs</string>
+    <string name="toast_invalid_gallons_calculation">Impossible de calculer quantité de carburant en utilisant ces valeurs</string>
     <string name="toast_error">ERREUR</string>
     
     <!-- units -->
@@ -202,15 +212,16 @@
     <string name="pref_title_database_version">Version de la base de données</string>
     <string name="pref_title_license">Licence</string>
     <string name="pref_summary_license">Afficher la licence du logiciel</string>
-    <string name="pref_title_require_cost">Demander un prix</string>
+    <string name="pref_title_require_cost">Demander un coût</string>
     <string name="pref_summary_require_cost">Lors de la saisie de l\'achat de carburant</string>
-    <string name="pref_title_display_cost">Afficher le prix dans l\'historique</string>
+    <string name="pref_title_display_cost">Afficher le coût dans l\'historique</string>
     <string name="pref_summary_display_cost"></string>
     <string name="pref_title_display_notes">Afficher les notes dans l\'historique</string>
     <string name="pref_summary_display_notes"></string>
 	<string name="pref_title_help">Aide</string>
 	<string name="pref_summary_help">Afficher l\'aide de l\'application</string>
-    
+    <string name="pref_title_currency">Devise</string>    
+
 	<!-- file paths -->
     <string name="url_help_html">file:///android_asset/help.html</string>
     <string name="asset_stats_top_html">stats_top_fr.html</string>

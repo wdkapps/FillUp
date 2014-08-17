@@ -32,6 +32,7 @@
     <string name="title_plot_price">Fuel Price</string>
     <string name="title_plot_price_range">Price %1$s (avg)</string>
     <string name="title_storage_selection_dialog">CSV file location&#8230;</string>
+    <string name="title_data_entry_mode_dialog">Data Entry Mode</string>
     
     <!-- messages -->
     <string name="message_confirm_export_share_dialog">Do you want to share the exported CSV file?</string>
@@ -44,20 +45,21 @@
     <string name="message_insufficient_data">Insufficient Data</string>
     
     <!-- statistics -->
-    <string name="stats_label_mileage_avg">Fuel Ecomony (avg)</string>
-    <string name="stats_label_mileage_min">Fuel Ecomony (min)</string>
-    <string name="stats_label_mileage_max">Fuel Ecomony (max)</string>
+    <string name="stats_label_mileage_avg">Fuel Economy (avg)</string>
+    <string name="stats_label_mileage_min">Fuel Economy (min)</string>
+    <string name="stats_label_mileage_max">Fuel Economy (max)</string>
     <string name="stats_label_distance">Distance Driven</string>
     <string name="stats_label_gallons">Fuel Purchased</string>
     <string name="stats_label_cost">Fuel Cost</string>
     <string name="stats_label_price">Fuel Price (avg)</string>
     <string name="stats_calc_distance">%1$d %2$s (%3$.0f per month)</string>
     <string name="stats_calc_distance_noavg">%1$d %2$s</string>
-    <string name="stats_calc_gallons">%1$.2f %2$s (%3$.2f per month)</string>
-    <string name="stats_calc_gallons_noavg">%1$.2f %2$s</string>
+    <string name="stats_calc_gallons">%1$.3f %2$s (%3$.3f per month)</string>
+    <string name="stats_calc_gallons_noavg">%1$.3f %2$s</string>
     <string name="stats_calc_cost">%1$s (%2$s per month) (%3$s %4$s)</string>    
     <string name="stats_calc_cost_noavg">%1$s (%2$s %3$s)</string>    
-    <string name="stats_report_filename">%1$s_statistics.html</string>    
+    <string name="stats_report_filename">%1$s_statistics.html</string>
+    <string name="stats_summary_prefix">SUMMARY: </string>    
     
     <!--  labels -->
     <string name="get_gas_label">Add Fuel</string>
@@ -89,20 +91,23 @@
     <string name="months_label">Months</string> 
     <string name="cost_label">Cost</string>
     <string name="total_cost_label">Total Cost (%1$s)</string>
+	<string name="price_label">Fuel Price (%1$s)</string>
     <string name="notes_label">Notes</string>
-    <string name="gasoline_label">Fuel (%1$s)</string>
+    <string name="gasoline_label">Fuel Amount (%1$s)</string>
     <string name="share_label">Share</string>
     <string name="label_range_1month">1m</string>
     <string name="label_range_6month">6m</string>
     <string name="label_range_12month">12m</string>
     <string name="label_range_ytd">YTD</string>
     <string name="label_range_all">All</string>
+    <string name="default_currency">Default</string>
         
     <!-- hints -->
     <string name="hint_odometer">odometer</string>
     <string name="hint_cost">cost</string>
     <string name="hint_notes">notes</string>
     <string name="hint_gasoline">fuel</string>
+	<string name="hint_price">price %1$s</string>
     
     <!-- mileage calculation/estimate dialogs -->
     <string name="mileage_estimate_note">Based on tank size of %1$s %2$s.</string>
@@ -122,6 +127,7 @@
     <string name="fuel_gauge_description">[fuel gauge]</string>
     <string name="close_dialog_description">[close dialog]</string>
     <string name="description_filename">[select a file]</string>
+    <string name="mode_description">[data entry mode]</string>
     
     <!--  menu items -->
     <string name="menuitem_title_edit">Edit</string>
@@ -150,14 +156,18 @@
     <string name="toast_duplicate_vehicle_name">Duplicate vehicle name.</string>
     <string name="toast_duplicate_odometer_value">Duplicate odometer value.</string>
     <string name="toast_stopped_at_csv_line">Stopped at csv line %1$d.</string>
-    <string name="toast_invalid_odometer_value">Invalid Odometer value.</string>
+    <string name="toast_invalid_odometer_value">Invalid odometer value.</string>
     <string name="toast_invalid_gallons_value">Invalid %1$s value.</string>
     <string name="toast_invalid_vehicle_name">Invalid vehicle name.</string>
     <string name="toast_invalid_vehicle_tank_size">Invalid vehicle tank size.</string>
     <string name="toast_database_update_failed">Database update failed!</string>
-    <string name="toast_invalid_cost_value">Invalid cost value.</string>
+    <string name="toast_invalid_cost_value">Invalid total cost value.</string>
     <string name="toast_create_report_failed">Error occurred creating report file.</string>
     <string name="toast_activity_not_found">There are no suitable applications installed.</string>
+    <string name="toast_invalid_price_value">Invalid fuel price value.</string>
+    <string name="toast_invalid_price_calculation">Unable to calculate fuel price using these values</string>
+    <string name="toast_invalid_cost_calculation">Unable to calculate total cost using these values</string>
+    <string name="toast_invalid_gallons_calculation">Unable to calculate fuel amount using these values</string>
     <string name="toast_error">ERROR</string>
     
     <!-- units -->
@@ -210,7 +220,8 @@
     <string name="pref_summary_display_notes"></string>
 	<string name="pref_title_help">Help</string>
 	<string name="pref_summary_help">Display application help information</string>
-    
+    <string name="pref_title_currency">Currency</string>
+    	
     <!-- preference keys (not displayable) -->
     <string name="pref_key_category_settings">settings</string>
     <string name="pref_key_pkg_name">pkg_name</string>
@@ -225,6 +236,8 @@
     <string name="pref_key_require_cost">require_cost</string>
     <string name="pref_key_display_cost">display_cost</string>
     <string name="pref_key_display_notes">display_notes</string>
+    <string name="pref_key_data_entry_mode">data_entry_mode</string>
+    <string name="pref_key_currency">currency</string>
     
     <!-- file paths -->
     <string name="url_help_html">file:///android_asset/help.html</string>

@@ -19,7 +19,6 @@
 
 package com.github.wdkapps.fillup;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -52,9 +51,6 @@ public class StatisticsMonthTable implements HtmlData {
 	
 	/// end of line string
 	private static final String newline = System.getProperty("line.separator");
-	
-    /// formatter for y-axis labels
-    private static final NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();  
 	
 	/**
 	 * DESCRIPTION:
@@ -158,8 +154,8 @@ public class StatisticsMonthTable implements HtmlData {
 		// create table row
 		String label = getString(R.string.stats_label_cost);
 		String value = String.format(App.getLocale(),getString(R.string.stats_calc_cost_noavg),
-    				currencyFormatter.format(data.getCost()),
-    				currencyFormatter.format(per_mile),
+					CurrencyManager.getInstance().getSymbolicFormatter().format(data.getCost()),
+    				CurrencyManager.getInstance().getSymbolicFractionalFormatter().format(per_mile),
     				units.getDistanceRatioLabel()); 
 		value = value.replace("(","<br/>(");
 		appendTableRow(new String[]{label,value});
@@ -188,7 +184,7 @@ public class StatisticsMonthTable implements HtmlData {
 		if (data.getGallons() > 0) {
 			double price = data.getCost()/data.getGallons();
 			value = String.format("%s %s",
-					currencyFormatter.format(price),
+					CurrencyManager.getInstance().getSymbolicFormatter().format(price),
 					units.getLiquidVolumeRatioLabel());
 		}
 		appendTableRow(new String[]{label,value});

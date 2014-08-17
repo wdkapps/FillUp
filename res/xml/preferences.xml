@@ -12,6 +12,10 @@
             android:defaultValue="0"
             android:entries="@array/arrayUnitsEntries"
             android:entryValues="@array/arrayUnitsEntryValues" />
+
+        <ListPreference
+            android:title="@string/pref_title_currency"
+            android:key="@string/pref_key_currency" />
         
         <CheckBoxPreference
           	android:title="@string/pref_title_require_cost"

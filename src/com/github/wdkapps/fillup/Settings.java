@@ -30,6 +30,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -46,6 +47,8 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 	public static final String KEY_UNITS = "units";
 	public static final String KEY_PLOT_DATE_RANGE = "plot_date_range";
 	public static final String KEY_PLOT_FONT_SIZE = "plot_font_size";
+	public static final String KEY_DATA_ENTRY_MODE = "data_entry_mode";
+	public static final String KEY_CURRENCY = "currency";
 	
 	/// tag string for logging
 	private static final String TAG = Settings.class.getName(); 
@@ -63,6 +66,14 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		String key;
 		Preference preference;
 		final Activity activity = this;
+		
+		// populate list of available currencies
+		CharSequence[] entries = CurrencyManager.getInstance().getPrefEntries();
+		CharSequence[] entryValues = CurrencyManager.getInstance().getPrefEntryValues();
+		key = getResources().getString(R.string.pref_key_currency);
+		ListPreference lp = (ListPreference)findPreference(key);
+		lp.setEntries(entries);
+		lp.setEntryValues(entryValues);
 		
 		// display the package name
 		key = getResources().getString(R.string.pref_key_pkg_name);
@@ -115,6 +126,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		// initialize summary for each shared preference to reflect the selected value
 		onSharedPreferenceChanged(sharedPreferences,KEY_UNITS);
 		onSharedPreferenceChanged(sharedPreferences,KEY_PLOT_FONT_SIZE);
+		onSharedPreferenceChanged(sharedPreferences,KEY_CURRENCY);
 	}
 	
 	/**
@@ -125,7 +137,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
 		
-		final String tag = TAG + "onSharedPreferenceChanged()";
+		final String tag = TAG + ".onSharedPreferenceChanged()";
 		
 		// get preference instance for the specified key
 		Preference pref = getPreferenceScreen().findPreference(key);
@@ -141,6 +153,8 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		} else if (key.equals(KEY_PLOT_FONT_SIZE)) {
   			PlotFontSize size = new PlotFontSize(this,key);
             pref.setSummary(size.getSummary());
+        } else if (key.equals(KEY_CURRENCY)) {
+        	pref.setSummary(CurrencyManager.getInstance().getPrefSummary());
         }
 		
 	}
@@ -243,4 +257,31 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
     	return prefs.getBoolean(key, true);
     }
     
+    /**
+     * DESCRIPTION:
+     * Retrieve a String value from the preferences.
+     * @param key - the name of the preference to retrieve
+     * @param defaultValue - vale to return if preference does not exist
+     * @return String
+     */
+    public static String getString(String key, String defaultValue) {
+		Context context = App.getContext();
+    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    	return prefs.getString(key,defaultValue);
+    }
+    
+    /**
+     * DESCRIPTION:
+     * Set a String value in the preferences.
+     * @param key - the name of the preference to set
+     * @param value - the new value for the preference
+     */
+    public static void setString(String key, String value) {
+		Context context = App.getContext();
+    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(key,value);
+		editor.commit();
+    }
+
 }

@@ -248,6 +248,7 @@ public class GasLog {
      * @return a GasRecord instance (null if no data).
      */
     private GasRecord getRecordFromCursor(Cursor c) {
+    	final String tag = TAG+".getRecordFromCursor()";
     	GasRecord record = null;
     	if (c != null) {
     		int id = c.getInt(c.getColumnIndex(RECORD_ID));
@@ -270,6 +271,12 @@ public class GasLog {
     		record.setHiddenCalculation(hidden == 1);
     		record.setCost(cost);
     		record.setNotes(notes);
+    		
+    		try {
+    			record.calculatePrice();
+    		} catch (NumberFormatException e) {
+    			Log.e(tag,e.getMessage());
+    		}
     	}
     	return record;
     }

@@ -114,7 +114,9 @@ implements VehicleDialog.Listener, ConfirmationDialog.Listener, View.OnClickList
         spinnerVehicles = (Spinner)findViewById(R.id.spinnerVehicles);
         spinnerVehicles.setAdapter(adapter);
         updateVehiclesSpinnerState();
-        
+
+        setSelectedVehicle(Settings.getString(Settings.KEY_ACTIVE_VEHICLE, ""));
+
         // if the activity is not being re-initialized (for example after screen rotate)
         // start by adding a vehicle if there are none currently defined
         if ((savedInstanceState == null) && vehicles.isEmpty()) {
@@ -238,7 +240,8 @@ implements VehicleDialog.Listener, ConfirmationDialog.Listener, View.OnClickList
 		default:
 			Utilities.toast(this,"Invalid view id.");
 		}
-		
+
+		Settings.setString(Settings.KEY_ACTIVE_VEHICLE, getSelectedVehicle().getName());
 	}
 
     /**
@@ -432,6 +435,7 @@ implements VehicleDialog.Listener, ConfirmationDialog.Listener, View.OnClickList
         
     	// select the first vehicle in the list
        	setSelectedVehicle(0);
+        Settings.setString(Settings.KEY_ACTIVE_VEHICLE, getSelectedVehicle().getName());
 
         // success
         return true;

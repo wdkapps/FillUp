@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  ENGLISH -->
+    
+    <string-array name="arrayUnitsEntries">
+        <item>Miles per gallon\n(MPG)</item>
+        <item>Kilometers per liter\n(KM/L)</item>
+        <item>Liters per 100 kilometers\n(L/100KM)</item>
+        <item>UK MPG (imperial)\nmiles, liters</item>
+        <item>UK MPG (imperial)\nkilometers, liters</item>
+        <item>Kilometers per gallon\n(KPG)</item>
+        </string-array>
+    
+    <string-array name="arrayUnitsEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        </string-array>
+    
+    <string-array name="arrayPlotDateRangeEntries">
+        <item>Past month</item>
+        <item>Past 6 months</item>
+        <item>Past 12 months</item>
+        <item>Year to date</item>
+        <item>All data</item>
+    </string-array>
+    
+    <string-array name="arrayPlotDateRangeEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    
+    <string-array name="arrayPlotFontSizeEntries">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+        <item>X-Large</item>
+    </string-array>
+    
+    <string-array name="arrayPlotFontSizeEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    
+    <string-array name="arrayPlotMonthLabels">
+        <item>JAN</item>
+        <item>FEB</item>
+        <item>MAR</item>
+        <item>APR</item>
+        <item>MAY</item>
+        <item>JUN</item>
+        <item>JUL</item>
+        <item>AUG</item>
+        <item>SEP</item>
+        <item>OCT</item>
+        <item>NOV</item>
+        <item>DEC</item>
+    </string-array>
+    
+    <string-array name="arrayStorageEntries">
+        <item>Internal storage</item>
+        <item>Cloud storage</item>
+    </string-array>
+    
+    <string-array name="arrayStorageEntryValues">
+        <item>internal</item>
+        <item>cloud</item>
+    </string-array>
+    
+    <string-array name="arrayDataEntryModeEntries">
+        <item>Enter \'Total Cost\' and \'Fuel Amount\'</item>
+        <item>Enter \'Fuel Price\' and \'Total Cost\'</item>
+        <item>Enter \'Fuel Price\' and \'Fuel Amount\'</item>
+    </string-array>
+    
+    <string-array name="arrayDataEntryModeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    
+</resources>

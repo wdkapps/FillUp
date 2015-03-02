@@ -1,124 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- ENGLISH -->
+    <!-- RUSSIAN -->
 
     <!-- titles -->
     <string name="app_name">FillUp</string>
     <string name="title_activity_main">FillUp</string>
-    <string name="title_activity_gas_log_list">Fuel Log</string>
-    <string name="title_activity_get_gas">Add Fuel</string>
-    <string name="title_activity_plot">Plots</string>
-    <string name="title_activity_html_viewer">HTML Viewer</string>
-    <string name="title_activity_date_time">Date/Time</string>
-    <string name="title_activity_statistics">Statistics</string>
-    <string name="title_activity_fileselect">Select File</string>
-    <string name="title_mileage_calculation">%1$s Calculation</string>
-    <string name="title_mileage_estimate">%1$s Estimate</string>
-    <string name="title_cannot_estimate">Cannot Estimate</string>
-    <string name="title_units_dialog">Select Units</string>
-    <string name="title_confirm_odometer">Odometer Correct?</string>
-    <string name="title_confirm_gallons">%1$s Correct?</string>
-    <string name="title_confirm_log_delete_dialog">Delete Log Record</string>
-    <string name="title_confirm_export_overwrite_dialog">Export Confirmation</string>
-    <string name="title_confirm_export_share_dialog">Export Complete</string>
-    <string name="title_chooser_share_csv">Share CSV via &#8230;</string>
-    <string name="title_chooser_share_html">Share HTML via &#8230;</string>
-    <string name="title_select_import_csv">Select CSV file &#8230;</string>
-    <string name="title_confirm_delete_vehicle">Delete Vehicle</string>
-    <string name="title_plot_mileage">Fuel Economy</string>
-    <string name="title_plot_odometer">Distance Driven</string>
-    <string name="title_plot_gallons">Fuel Purchased</string>
-    <string name="title_plot_cost">Fuel Cost</string>
-    <string name="title_plot_price">Fuel Price</string>
-    <string name="title_plot_price_range">Price %1$s (avg)</string>
-    <string name="title_storage_selection_dialog">CSV file location&#8230;</string>
-    <string name="title_data_entry_mode_dialog">Data Entry Mode</string>
-    
+    <string name="title_activity_gas_log_list">История заправок</string>
+    <string name="title_activity_get_gas">Новая заправка</string>
+    <string name="title_activity_plot">Графики</string>
+    <string name="title_activity_html_viewer">Просмотр HTML</string>
+    <string name="title_activity_date_time">Дата/Время</string>
+    <string name="title_activity_statistics">Статистика</string>
+    <string name="title_activity_fileselect">Выбор файла</string>
+    <string name="title_mileage_calculation">Расчет %1$s </string>
+    <string name="title_mileage_estimate">%1$s оценка</string>
+    <string name="title_cannot_estimate">Не могу оценить</string>
+    <string name="title_units_dialog">Выбор единиц измерения</string>
+    <string name="title_confirm_odometer">Одометр верный?</string>
+    <string name="title_confirm_gallons">%1$s верно?</string>
+    <string name="title_confirm_log_delete_dialog">Удаление записи из истории</string>
+    <string name="title_confirm_export_overwrite_dialog">Подтверждение экспорта</string>
+    <string name="title_confirm_export_share_dialog">Экспорт завершен.</string>
+    <string name="title_chooser_share_csv">Поделиться CSV файлом &#8230;</string>
+    <string name="title_chooser_share_html">Поделиться HTML файлом &#8230;</string>
+    <string name="title_select_import_csv">Выбор CSV файла &#8230;</string>
+    <string name="title_confirm_delete_vehicle">Удалить ТС</string>
+    <string name="title_plot_mileage">Расход топлива</string>
+    <string name="title_plot_odometer">Пройденная дистанция</string>
+    <string name="title_plot_gallons">Потрачено топлива</string>
+    <string name="title_plot_cost">Стоимость топлива</string>
+    <string name="title_plot_price">Стоимость заправок</string>
+    <string name="title_plot_price_range">Цена %1$s (средн)</string>
+    <string name="title_storage_selection_dialog">Расположение CSV файла&#8230;</string>
+    <string name="title_data_entry_mode_dialog">Режим ввода</string>
+
     <!-- messages -->
-    <string name="message_confirm_export_share_dialog">Do you want to share the exported CSV file?</string>
-    <string name="message_confirm_export_overwrite_dialog">\'%1$s\' exists.\nOverwrite it?"</string>
-    <string name="message_confirm_log_delete_dialog">Are you sure?</string>
-    <string name="message_confirm_odometer">Value is less than the current odometer value in the log for this vehicle (%1$s).</string>
-    <string name="message_confirm_gallons">Value is more than the vehicle tank size (%1$s).</string>
-    <string name="message_confirm_delete_vehicle">Are you sure?</string>
-    <string name="message_tank_never_filled">\nCalculations will begin after you fill your tank once to establish a starting point.\n</string>
-    <string name="message_insufficient_data">Insufficient Data</string>
-    
+    <string name="message_confirm_export_share_dialog">Вы хотите поделиться экспортированным CSV файлом?</string>
+    <string name="message_confirm_export_overwrite_dialog">\'%1$s\' существует.\nПерезаписать его?"</string>
+    <string name="message_confirm_log_delete_dialog">Вы уверены?</string>
+    <string name="message_confirm_odometer">Значение меньше чем текущее показание одометра в истории для этого ТС (%1$s).</string>
+    <string name="message_confirm_gallons">Значение больше чем объем бака (%1$s).</string>
+    <string name="message_confirm_delete_vehicle">Вы уверены?</string>
+    <string name="message_tank_never_filled">\nРасчеты начнутся после того как бак будет заправлен полностью, чтобы установить начальную точку.\n</string>
+    <string name="message_insufficient_data">Недостаточно данных.</string>
+
     <!-- statistics -->
-    <string name="stats_label_mileage_avg">Fuel Economy (avg)</string>
-    <string name="stats_label_mileage_min">Fuel Economy (min)</string>
-    <string name="stats_label_mileage_max">Fuel Economy (max)</string>
-    <string name="stats_label_distance">Distance Driven</string>
-    <string name="stats_label_gallons">Fuel Purchased</string>
-    <string name="stats_label_cost">Fuel Cost</string>
-    <string name="stats_label_price">Fuel Price (avg)</string>
-    <string name="stats_calc_distance">%1$d %2$s (%3$.0f per month)</string>
+    <string name="stats_label_mileage_avg">Расход (средн)</string>
+    <string name="stats_label_mileage_min">Расход (мин)</string>
+    <string name="stats_label_mileage_max">Расход (макс)</string>
+    <string name="stats_label_distance">Пройденное расстояние</string>
+    <string name="stats_label_gallons">Потрачено топлива</string>
+    <string name="stats_label_cost">Стоимость топлива</string>
+    <string name="stats_label_price">Цена (средн)</string>
+    <string name="stats_calc_distance">%1$d %2$s (%3$.0f в месяц)</string>
     <string name="stats_calc_distance_noavg">%1$d %2$s</string>
-    <string name="stats_calc_gallons">%1$.3f %2$s (%3$.3f per month)</string>
+    <string name="stats_calc_gallons">%1$.3f %2$s (%3$.3f в месяц)</string>
     <string name="stats_calc_gallons_noavg">%1$.3f %2$s</string>
-    <string name="stats_calc_cost">%1$s (%2$s per month) (%3$s %4$s)</string>    
-    <string name="stats_calc_cost_noavg">%1$s (%2$s %3$s)</string>    
+    <string name="stats_calc_cost">%1$s (%2$s в месяц) (%3$s %4$s)</string>
+    <string name="stats_calc_cost_noavg">%1$s (%2$s %3$s)</string>
     <string name="stats_report_filename">%1$s_statistics.html</string>
-    <string name="stats_summary_prefix">SUMMARY: </string>    
-    
+    <string name="stats_summary_prefix">ИТОГО: </string>
+
     <!--  labels -->
-    <string name="get_gas_label">Add Fuel</string>
-    <string name="date_label">Date</string>
-    <string name="time_label">Time</string>
-    <string name="odometer_label">Odometer</string>
-    <string name="odometer_units_label">Odometer (%1$s)</string>
-    <string name="full_tank_label">Tank Full</string>
+    <string name="get_gas_label">Новая заправка</string>
+    <string name="date_label">Дата</string>
+    <string name="time_label">Время</string>
+    <string name="odometer_label">Одометр</string>
+    <string name="odometer_units_label">Одометр (%1$s)</string>
+    <string name="full_tank_label">Полный бак</string>
     <string name="ok_label">OK</string>
-    <string name="cancel_label">Cancel</string>
-    <string name="yes_label">Yes</string>
-    <string name="no_label">No</string>
+    <string name="cancel_label">Отмена</string>
+    <string name="yes_label">Да</string>
+    <string name="no_label">Нет</string>
     <string name="view_log_button_text">View Log</string>
-    <string name="mileage_label">L/100KM</string>
-    <string name="import_label">Import</string>
-    <string name="export_label">Export</string>
-    <string name="select_vehicle_label">Select</string>
-    <string name="vehicles_spinner_prompt">Vehicle</string>
-    <string name="get_gas_button_label">Add Fuel</string>
-    <string name="view_log_button_label">Log</string>
-    <string name="plot_data_label">Plots</string>
-    <string name="view_statistics_label">Statistics</string>
-    <string name="vehicle_add_label">Add Vehicle</string>
-    <string name="vehicle_edit_label">Edit Vehicle</string>
-    <string name="vehicle_delete_label">Delete Vehicle</string>
-    <string name="vehicle_name_label">Name</string>
-    <string name="vehicle_tanksize_label">Tank Size (%1$s)</string>
-    <string name="menu_settings">Settings</string>
-    <string name="months_label">Months</string> 
-    <string name="cost_label">Cost</string>
-    <string name="total_cost_label">Total Cost (%1$s)</string>
-	<string name="price_label">Fuel Price (%1$s)</string>
-    <string name="notes_label">Notes</string>
-    <string name="gasoline_label">Fuel Amount (%1$s)</string>
+    <string name="mileage_label">л/100км</string>
+    <string name="import_label">Импорт</string>
+    <string name="export_label">Экспорт</string>
+    <string name="select_vehicle_label">Выбор</string>
+    <string name="vehicles_spinner_prompt">ТС</string>
+    <string name="get_gas_button_label">Новая заправка</string>
+    <string name="view_log_button_label">История</string>
+    <string name="plot_data_label">Графики</string>
+    <string name="view_statistics_label">Статистика</string>
+    <string name="vehicle_add_label">Добавить ТС</string>
+    <string name="vehicle_edit_label">Редактировать ТС</string>
+    <string name="vehicle_delete_label">Удалить ТС</string>
+    <string name="vehicle_name_label">Название</string>
+    <string name="vehicle_tanksize_label">Объем бака (%1$s)</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="months_label">Месяцы</string>
+    <string name="cost_label">Стоимость</string>
+    <string name="total_cost_label">Полная стоимость (%1$s)</string>
+    <string name="price_label">Цена (%1$s)</string>
+    <string name="notes_label">Заметки</string>
+    <string name="gasoline_label">Залито топлива (%1$s)</string>
     <string name="share_label">Share</string>
-    <string name="label_range_1month">1m</string>
-    <string name="label_range_6month">6m</string>
-    <string name="label_range_12month">12m</string>
+    <string name="label_range_1month">1м</string>
+    <string name="label_range_6month">6м</string>
+    <string name="label_range_12month">12м</string>
     <string name="label_range_ytd">YTD</string>
-    <string name="label_range_all">All</string>
-    <string name="default_currency">Default</string>
-        
+    <string name="label_range_all">Итого</string>
+    <string name="default_currency">По умолчанию</string>
+
     <!-- hints -->
-    <string name="hint_odometer">odometer</string>
-    <string name="hint_cost">cost</string>
-    <string name="hint_notes">notes</string>
+    <string name="hint_odometer">одометр</string>
+    <string name="hint_cost">стоимость</string>
+    <string name="hint_notes">заметки</string>
     <string name="hint_gasoline">fuel</string>
-	<string name="hint_price">price %1$s</string>
-    
+    <string name="hint_price">цена %1$s</string>
+
     <!-- mileage calculation/estimate dialogs -->
-    <string name="mileage_estimate_note">Based on tank size of %1$s %2$s.</string>
-    <string name="mileage_estimate_drove">Drove %1$d %2$s.\n</string>
-    <string name="mileage_estimate_used">Used %1$s %2$s.\n</string>
-    <string name="mileage_estimate_none">\nNo estimate.\n</string>
-    <string name="mileage_estimate_tanksize_info">Edit vehicle data if\ntank size is incorrect.</string>
-    <string name="mileage_estimate_initial">Tank is not full.\nAdjust gauge\nfor estimate.</string>
-    <string name="mileage_calculation_drove">Drove %1$d %2$s.\n</string>
-    <string name="mileage_calculation_used">Used %1$s %2$s.\n</string>
-    <string name="mileage_calculation_none">\nNo calculation.\n</string>
+    <string name="mileage_estimate_note">Основываясь на объеме бака %1$s %2$s.</string>
+    <string name="mileage_estimate_drove">Пройдено %1$d %2$s.\n</string>
+    <string name="mileage_estimate_used">Использовано %1$s %2$s.\n</string>
+    <string name="mileage_estimate_none">\nНе оценено.\n</string>
+    <string name="mileage_estimate_tanksize_info">Объем бака неверный\nПожалуйста, измените данные ТС.</string>
+    <string name="mileage_estimate_initial">Бак не полный.\nAОтрегулируйте датчик\nдля оценки.</string>
+    <string name="mileage_calculation_drove">Пройдено %1$d %2$s.\n</string>
+    <string name="mileage_calculation_used">Использовано %1$s %2$s.\n</string>
+    <string name="mileage_calculation_none">\nНе расчитано.\n</string>
 
     <!-- descriptions -->
     <string name="add_description">[add]</string>
@@ -128,62 +128,62 @@
     <string name="close_dialog_description">[close dialog]</string>
     <string name="description_filename">[select a file]</string>
     <string name="mode_description">[data entry mode]</string>
-    
+
     <!--  menu items -->
-    <string name="menuitem_title_edit">Edit</string>
-    <string name="menuitem_title_delete">Delete</string>
-    <string name="menuitem_title_show_estimate">View estimate</string>
-    <string name="menuitem_title_show_calculation">View calculation</string>
-    <string name="menuitem_title_hide_calculation">Hide calculation</string>
-    <string name="menuitem_title_help">Help</string>   
-    
+    <string name="menuitem_title_edit">Редактировать</string>
+    <string name="menuitem_title_delete">Удалить</string>
+    <string name="menuitem_title_show_estimate">Посмотреть оценку</string>
+    <string name="menuitem_title_show_calculation">Посмотреть расчет</string>
+    <string name="menuitem_title_hide_calculation">Не учитывать</string>
+    <string name="menuitem_title_help">Помощь</string>
+
     <!-- toast messages -->
-    <string name="toast_data_saved">Data saved.</string>
-    <string name="toast_error_saving_data">Error saving data.</string>
-    <string name="toast_select_a_vehicle">Select a vehicle.</string>
-    <string name="toast_add_failed">Add failed.</string>
-    <string name="toast_edit_failed">Edit failed.</string>
-    <string name="toast_delete_failed">Delete failed.</string>
-    <string name="toast_canceled">Canceled.</string>
-    <string name="toast_external_storage_not_readable">Device storage not readable.</string>
-    <string name="toast_external_storage_not_writable">Device storage not writable.</string>
-    <string name="toast_no_data_to_export">No data to export.</string>
-    <string name="toast_failed">Failed.</string>
-    <string name="toast_import_failed">Import failed.</string>
-    <string name="toast_import_complete">Import complete.</string>
-    <string name="toast_export_failed">Export failed.</string>
-    <string name="toast_export_complete">Export complete.</string>
-    <string name="toast_duplicate_vehicle_name">Duplicate vehicle name.</string>
-    <string name="toast_duplicate_odometer_value">Duplicate odometer value.</string>
-    <string name="toast_stopped_at_csv_line">Stopped at csv line %1$d.</string>
-    <string name="toast_invalid_odometer_value">Invalid odometer value.</string>
-    <string name="toast_invalid_gallons_value">Invalid %1$s value.</string>
-    <string name="toast_invalid_vehicle_name">Invalid vehicle name.</string>
-    <string name="toast_invalid_vehicle_tank_size">Invalid vehicle tank size.</string>
-    <string name="toast_database_update_failed">Database update failed!</string>
-    <string name="toast_invalid_cost_value">Invalid total cost value.</string>
-    <string name="toast_create_report_failed">Error occurred creating report file.</string>
-    <string name="toast_activity_not_found">There are no suitable applications installed.</string>
-    <string name="toast_invalid_price_value">Invalid fuel price value.</string>
-    <string name="toast_invalid_price_calculation">Unable to calculate fuel price using these values</string>
-    <string name="toast_invalid_cost_calculation">Unable to calculate total cost using these values</string>
-    <string name="toast_invalid_gallons_calculation">Unable to calculate fuel amount using these values</string>
-    <string name="toast_error">ERROR</string>
-    
+    <string name="toast_data_saved">Данные сохранены.</string>
+    <string name="toast_error_saving_data">Ошибка при сохранении данных.</string>
+    <string name="toast_select_a_vehicle">Выбор ТС.</string>
+    <string name="toast_add_failed">Ошибка добавления.</string>
+    <string name="toast_edit_failed">Ошибка редактирования.</string>
+    <string name="toast_delete_failed">Ошибка удаления.</string>
+    <string name="toast_canceled">Отменено.</string>
+    <string name="toast_external_storage_not_readable">Не могу прочитать из хранилища.</string>
+    <string name="toast_external_storage_not_writable">Не могу записать в хранилище.</string>
+    <string name="toast_no_data_to_export">Нет данных для экспорта.</string>
+    <string name="toast_failed">Неудачно.</string>
+    <string name="toast_import_failed">Ошибка импорта.</string>
+    <string name="toast_import_complete">Импорт успешно завершен.</string>
+    <string name="toast_export_failed">Ошибка экспорта.</string>
+    <string name="toast_export_complete">Экспорт успешно завершен.</string>
+    <string name="toast_duplicate_vehicle_name">Такое ТС уже существует.</string>
+    <string name="toast_duplicate_odometer_value">Такое значение одометра уже используется.</string>
+    <string name="toast_stopped_at_csv_line">Остановка в csv на строке %1$d.</string>
+    <string name="toast_invalid_odometer_value">Неверное значение одометра.</string>
+    <string name="toast_invalid_gallons_value">Неверное значение %1$s.</string>
+    <string name="toast_invalid_vehicle_name">Неверное имя ТС.</string>
+    <string name="toast_invalid_vehicle_tank_size">Неверный объем бака ТС.</string>
+    <string name="toast_database_update_failed">Ошибка обновления базы данных!</string>
+    <string name="toast_invalid_cost_value">Неверно указана цена.</string>
+    <string name="toast_create_report_failed">Ошибка создания файла отчета.</string>
+    <string name="toast_activity_not_found">Не установлены подходящие приложения.</string>
+    <string name="toast_invalid_price_value">Неверная цена топлива.</string>
+    <string name="toast_invalid_price_calculation">Не могу расчитать цену топлива при таких значениях</string>
+    <string name="toast_invalid_cost_calculation">Не могу расчитать полную стоимость при таких значениях</string>
+    <string name="toast_invalid_gallons_calculation">Не могу расчитать количество топлива при таких значениях</string>
+    <string name="toast_error">ОШИБКА</string>
+
     <!-- units -->
-    <string name="error_label">ERROR</string>
-    <string name="per_gallon_label">per gallon</string>
-    <string name="per_liter_label">per liter</string>
-    <string name="per_mile_label">per mile</string>
-    <string name="per_kilometer_label">per km</string>
-    <string name="gallons_label">Gallons</string>
-    <string name="liters_label">Liters</string>
-    <string name="miles_label">Miles</string>
-    <string name="kilometers_label">Kilometers</string>
+    <string name="error_label">ОШИБКА</string>
+    <string name="per_gallon_label">за галлон</string>
+    <string name="per_liter_label">за литр</string>
+    <string name="per_mile_label">за милю</string>
+    <string name="per_kilometer_label">за километр</string>
+    <string name="gallons_label">Галлоны</string>
+    <string name="liters_label">Литры</string>
+    <string name="miles_label">Мили</string>
+    <string name="kilometers_label">Километры</string>
     <string name="mpg_label">MPG</string>
     <string name="kpg_label">KPG</string>
-    <string name="km_per_liter_label">KM/L</string>
-    <string name="liters_per_100km_label">L/100KM</string>
+    <string name="km_per_liter_label">км/л</string>
+    <string name="liters_per_100km_label">л/100Км</string>
     <string name="blank_date"></string>
     <string name="blank_odometer"></string>
     <string name="blank_gallons"></string>
@@ -199,29 +199,29 @@
 
 
     <!-- preference titles and summaries (displayable) -->
-    <string name="pref_summary_unknown">unknown</string>
-    <string name="pref_title_category_settings">Settings</string>
-    <string name="pref_summary_category_settings">Application settings and information</string>
-    <string name="pref_title_units">Units</string>
-    <string name="pref_title_plot_font_size">Font size for plots</string>
-    <string name="pref_title_about">About</string>
-    <string name="pref_summary_about">Display application version information</string>
-    <string name="pref_title_pkg_name">Package Name</string>
-    <string name="pref_title_pkg_version">Package Version</string>
-    <string name="pref_title_build_date">Build Date</string>
-    <string name="pref_title_database_version">Database Version</string>
-    <string name="pref_title_license">License</string>
-    <string name="pref_summary_license">Display the software license</string>
-    <string name="pref_title_require_cost">Require Cost</string>
-    <string name="pref_summary_require_cost">When entering fuel purchase</string>
-    <string name="pref_title_display_cost">Display Cost in Log</string>
+    <string name="pref_summary_unknown">неизвестно</string>
+    <string name="pref_title_category_settings">Настройки</string>
+    <string name="pref_summary_category_settings">Настройки приложения и информация</string>
+    <string name="pref_title_units">Единицы измерения</string>
+    <string name="pref_title_plot_font_size">Размер шрифта в графиках</string>
+    <string name="pref_title_about">О приложении</string>
+    <string name="pref_summary_about">Показать информацию о версии приложения</string>
+    <string name="pref_title_pkg_name">Имя пакета</string>
+    <string name="pref_title_pkg_version">Версия пакета</string>
+    <string name="pref_title_build_date">Дата сборки</string>
+    <string name="pref_title_database_version">Версия базы данных</string>
+    <string name="pref_title_license">Лицензия</string>
+    <string name="pref_summary_license">Показать лицензию приложения</string>
+    <string name="pref_title_require_cost">Требовать стоимость</string>
+    <string name="pref_summary_require_cost">При вводе заправки</string>
+    <string name="pref_title_display_cost">Стоимость в истории</string>
     <string name="pref_summary_display_cost"></string>
-    <string name="pref_title_display_notes">Display Notes in Log</string>
+    <string name="pref_title_display_notes">Заметки в истории</string>
     <string name="pref_summary_display_notes"></string>
-	<string name="pref_title_help">Help</string>
-	<string name="pref_summary_help">Display application help information</string>
-    <string name="pref_title_currency">Currency</string>
-    	
+    <string name="pref_title_help">Помощь</string>
+    <string name="pref_summary_help">Показать помощь по приложению</string>
+    <string name="pref_title_currency">Валюта</string>
+
     <!-- preference keys (not displayable) -->
     <string name="pref_key_category_settings">settings</string>
     <string name="pref_key_pkg_name">pkg_name</string>
@@ -238,7 +238,7 @@
     <string name="pref_key_display_notes">display_notes</string>
     <string name="pref_key_data_entry_mode">data_entry_mode</string>
     <string name="pref_key_currency">currency</string>
-    
+
     <!-- file paths -->
     <string name="url_help_html">file:///android_asset/help.html</string>
     <string name="url_license_html">file:///android_asset/license.html</string>
@@ -246,5 +246,5 @@
     <string name="res_update_html">assets/update.html</string>
     <string name="asset_stats_top_html">stats_top.html</string>
     <string name="asset_stats_bottom_html">stats_bottom.html</string>
-    
+
 </resources>

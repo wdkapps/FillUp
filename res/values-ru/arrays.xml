@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  RUSSIAN -->
+
+    <string-array name="arrayUnitsEntries">
+        <item>Миль на галлон gallon\n(MPG)</item>
+        <item>Километров на литр\n(KM/L)</item>
+        <item>Литров на 100 километров\n(л/100км)</item>
+        <item>UK MPG (imperial)\nmiles, liters</item>
+        <item>UK MPG (imperial)\nkilometers, liters</item>
+        <item>Километров на галлон\n(KPG)</item>
+    </string-array>
+
+    <string-array name="arrayUnitsEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="arrayPlotDateRangeEntries">
+        <item>Последний месяц</item>
+        <item>Последние полгода</item>
+        <item>Последний год</item>
+        <item>В этом году</item>
+        <item>Все данные</item>
+    </string-array>
+
+    <string-array name="arrayPlotDateRangeEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="arrayPlotFontSizeEntries">
+        <item>Маленький</item>
+        <item>Средний</item>
+        <item>Большой</item>
+        <item>Еще больше</item>
+    </string-array>
+
+    <string-array name="arrayPlotFontSizeEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="arrayPlotMonthLabels">
+        <item>Янв</item>
+        <item>Фев</item>
+        <item>Мар</item>
+        <item>Апр</item>
+        <item>Май</item>
+        <item>Июн</item>
+        <item>Июл</item>
+        <item>Авг</item>
+        <item>Сен</item>
+        <item>Окт</item>
+        <item>Ноя</item>
+        <item>Дек</item>
+    </string-array>
+
+    <string-array name="arrayStorageEntries">
+        <item>Внутреннее хранилище</item>
+        <item>Облачное хранилище</item>
+    </string-array>
+
+    <string-array name="arrayStorageEntryValues">
+        <item>internal</item>
+        <item>cloud</item>
+    </string-array>
+
+    <string-array name="arrayDataEntryModeEntries">
+        <item>Указывать \'Стоимость\' и \'Количество топлива\'</item>
+        <item>Указывать \'Цену\' и \'Стоимость\'</item>
+        <item>Указывать \'Цену\' и \'Количество топлива\'</item>
+    </string-array>
+
+    <string-array name="arrayDataEntryModeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+
+</resources>

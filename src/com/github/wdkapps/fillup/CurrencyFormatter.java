@@ -136,13 +136,12 @@ public class CurrencyFormatter extends Format {
 		
 		final String TAG_ = TAG + ".getDefaultFractionDigits()";
 		
-		Currency currency = Currency.getInstance(locale);
-		
     	int fractionDigits = 2;
     	try {
+    		Currency currency = Currency.getInstance(locale);
     		fractionDigits = currency.getDefaultFractionDigits();
     	} catch(IllegalArgumentException ex) {
-    		Log.e(TAG_,"unable to determine default fraction digits for "+currency.getCurrencyCode(),ex);
+    		Log.e(TAG_,"unable to determine default fraction digits for locale",ex);
     	}
 
     	Log.d(TAG_,"fractionDigits="+fractionDigits);

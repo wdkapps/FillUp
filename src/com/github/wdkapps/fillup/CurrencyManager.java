@@ -172,7 +172,13 @@ public class CurrencyManager implements OnSharedPreferenceChangeListener {
 	 * @return currency symbol as a String
 	 */
 	public String getCurrencySymbol() {
-		return Currency.getInstance(locale).getSymbol(locale);
+		String symbol = "?";
+		try {
+			symbol = Currency.getInstance(locale).getSymbol(locale);
+		} catch (IllegalArgumentException e) {
+			Log.e(TAG+".getCurrencySymbol()","unable to get symbol",e);
+		}
+		return symbol;
 	}
 	
 	/**

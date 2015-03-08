@@ -49,6 +49,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 	public static final String KEY_PLOT_FONT_SIZE = "plot_font_size";
 	public static final String KEY_DATA_ENTRY_MODE = "data_entry_mode";
 	public static final String KEY_CURRENCY = "currency";
+    public static final String KEY_ACTIVE_VEHICLE = "active_vehicle";
 	
 	/// tag string for logging
 	private static final String TAG = Settings.class.getName(); 
@@ -283,5 +284,4 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		editor.putString(key,value);
 		editor.commit();
     }
-
 }

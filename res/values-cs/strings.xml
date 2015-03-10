@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- CZECH -->
+
+    <!-- titles -->
+    <string name="app_name">FillUp</string>
+    <string name="title_activity_main">FillUp</string>
+    <string name="title_activity_gas_log_list">Palivový log</string>
+    <string name="title_activity_get_gas">Přidat palivo</string>
+    <string name="title_activity_plot">Grafy</string>
+    <string name="title_activity_html_viewer">HTML prohlížeč</string>
+    <string name="title_activity_date_time">Datum/Čas</string>
+    <string name="title_activity_statistics">Statistiky</string>
+    <string name="title_activity_fileselect">Vybrat soubor</string>
+    <string name="title_mileage_calculation">%1$s kalkulace</string>
+    <string name="title_mileage_estimate">%1$s odhad</string>
+    <string name="title_cannot_estimate">Nelze odhadnout</string>
+    <string name="title_units_dialog">Vybrat jednotky</string>
+    <string name="title_confirm_odometer">Počítadlo kilometrů je správně?</string>
+    <string name="title_confirm_gallons">%1$s je správně?</string>
+    <string name="title_confirm_log_delete_dialog">Smazat záznam logu</string>
+    <string name="title_confirm_export_overwrite_dialog">Potvrzení exportu</string>
+    <string name="title_confirm_export_share_dialog">Export kompletní</string>
+    <string name="title_chooser_share_csv">Sdílet CSV pomocí</string>
+    <string name="title_chooser_share_html">Sdílet HTML pomocí</string>
+    <string name="title_select_import_csv">Vybrat CSV soubor</string>
+    <string name="title_confirm_delete_vehicle">Smazat vozidlo</string>
+    <string name="title_plot_mileage">Palivová úspora</string>
+    <string name="title_plot_odometer">Najetá vzdálenost</string>
+    <string name="title_plot_gallons">Palivo zakoupeno</string>
+    <string name="title_plot_cost">Náklady na palivo</string>
+    <string name="title_plot_price">Cena paliva</string>
+    <string name="title_plot_price_range">Cena %1$s (prům)</string>
+    <string name="title_storage_selection_dialog">Umístění CSV souboru</string>
+    <string name="title_data_entry_mode_dialog">Typ zadávání dat</string>
+    
+    <!-- messages -->
+    <string name="message_confirm_export_share_dialog">Chcete sdílet exportovaný CSV soubor?</string>
+    <string name="message_confirm_export_overwrite_dialog">\'%1$s\' existuje.\nPřepsat?&quot;</string>
+    <string name="message_confirm_log_delete_dialog">Jste si jisti?</string>
+    <string name="message_confirm_odometer">Hodnota je nižší než aktuální hodnota logu počítadla kilometrů pro toto vozidlo (%1$s).</string>
+    <string name="message_confirm_gallons">Hodnot je vyšší než velikost nádrže vozidla (%1$s).</string>
+    <string name="message_confirm_delete_vehicle">Jste si jisti?</string>
+    <string name="message_tank_never_filled">\nKalkulace se spustí po nastavení výchozího bodu po dalším natankování.\n</string>
+    <string name="message_insufficient_data">Nedostatečná data</string>
+    
+    <!-- statistics -->
+    <string name="stats_label_mileage_avg">Palivová úspora (prům)</string>
+    <string name="stats_label_mileage_min">Palivová úspora (min)</string>
+    <string name="stats_label_mileage_max">Palivová úspora (max)</string>
+    <string name="stats_label_distance">Najetá vzdálenost</string>
+    <string name="stats_label_gallons">Palivo zakoupeno</string>
+    <string name="stats_label_cost">Náklady na palivo</string>
+    <string name="stats_label_price">Cena paliva (prům)</string>
+    <string name="stats_calc_distance">%1$d %2$s (%3$.0f za měsíc)</string>
+    <string name="stats_calc_distance_noavg">%1$d %2$s</string>
+    <string name="stats_calc_gallons">%1$.3f %2$s (%3$.3f za měsíc)</string>
+    <string name="stats_calc_gallons_noavg">%1$.3f %2$s</string>
+    <string name="stats_calc_cost">%1$s (%2$s za měsíc) (%3$s %4$s)</string>    
+    <string name="stats_calc_cost_noavg">%1$s (%2$s %3$s)</string>    
+    <string name="stats_report_filename">%1$s_statistics.html</string>
+    <string name="stats_summary_prefix">SHRNUTÍ:</string>    
+    
+    <!--  labels -->
+    <string name="get_gas_label">Přidat palivo</string>
+    <string name="date_label">Datum</string>
+    <string name="time_label">Čas</string>
+    <string name="odometer_label">Počítadlo kilometrů</string>
+    <string name="odometer_units_label">Počítadlo kilometrů (%1$s)</string>
+    <string name="full_tank_label">Nádrž plná</string>
+    <string name="ok_label">OK</string>
+    <string name="cancel_label">Zrušit</string>
+    <string name="yes_label">Ano</string>
+    <string name="no_label">Ne</string>
+    <string name="view_log_button_text">Zobrazit log</string>
+    <string name="mileage_label">L/100KM</string>
+    <string name="import_label">Import</string>
+    <string name="export_label">Export</string>
+    <string name="select_vehicle_label">Vybrat</string>
+    <string name="vehicles_spinner_prompt">Vozidlo</string>
+    <string name="get_gas_button_label">Přidat palivo</string>
+    <string name="view_log_button_label">Log</string>
+    <string name="plot_data_label">Grafy</string>
+    <string name="view_statistics_label">Statistiky</string>
+    <string name="vehicle_add_label">Přidat vozidlo</string>
+    <string name="vehicle_edit_label">Upravit vozidlo</string>
+    <string name="vehicle_delete_label">Smazat vozidlo</string>
+    <string name="vehicle_name_label">Jméno</string>
+    <string name="vehicle_tanksize_label">Velikost nádrže (%1$s)</string>
+    <string name="menu_settings">Nastavení</string>
+    <string name="months_label">Měsíce</string> 
+    <string name="cost_label">Náklady</string>
+    <string name="total_cost_label">Celkové náklady (%1$s)</string>
+	<string name="price_label">Cena paliva (%1$s)</string>
+    <string name="notes_label">Poznámky</string>
+    <string name="gasoline_label">Množství paliva (%1$s)</string>
+    <string name="share_label">Sdílet</string>
+    <string name="label_range_1month">1m</string>
+    <string name="label_range_6month">6m</string>
+    <string name="label_range_12month">12m</string>
+    <string name="label_range_ytd">ROK</string>
+    <string name="label_range_all">Vše</string>
+    <string name="default_currency">Výchozí</string>
+        
+    <!-- hints -->
+    <string name="hint_odometer">odometer</string>
+    <string name="hint_cost">náklady</string>
+    <string name="hint_notes">poznámky</string>
+    <string name="hint_gasoline">pailvo</string>
+	<string name="hint_price">cena %1$s</string>
+    
+    <!-- mileage calculation/estimate dialogs -->
+    <string name="mileage_estimate_note">Na základě velikosti nádrže %1$s %2$s.</string>
+    <string name="mileage_estimate_drove">Najeto %1$d %2$s.\n</string>
+    <string name="mileage_estimate_used">Použito %1$s %2$s.\n</string>
+    <string name="mileage_estimate_none">\nBez odhadu.\n</string>
+    <string name="mileage_estimate_tanksize_info">Upravit údaje o vozidle pokud\nje velikost nádrže nesprávná.</string>
+    <string name="mileage_estimate_initial">Nádrž není plná.\nUpravit měření\npro odhad.</string>
+    <string name="mileage_calculation_drove">Najeto %1$d %2$s.\n</string>
+    <string name="mileage_calculation_used">Použito %1$s %2$s.\n</string>
+    <string name="mileage_calculation_none">\nBez kalkulace.\n</string>
+
+    <!-- descriptions -->
+    <string name="add_description">[přidat]</string>
+    <string name="edit_description">[upravit]</string>
+    <string name="delete_description">[smazat]</string>
+    <string name="fuel_gauge_description">[palivoměr]</string>
+    <string name="close_dialog_description">[zavřít dialog]</string>
+    <string name="description_filename">[vybrat soubor]</string>
+    <string name="mode_description">[typ zadávání dat]</string>
+    
+    <!--  menu items -->
+    <string name="menuitem_title_edit">Upravit</string>
+    <string name="menuitem_title_delete">Smazat</string>
+    <string name="menuitem_title_show_estimate">Zobrazit odhad</string>
+    <string name="menuitem_title_show_calculation">Zobrazit kalkulaci</string>
+    <string name="menuitem_title_hide_calculation">Skrýt kalkulaci</string>
+    <string name="menuitem_title_help">Pomoc</string>   
+    
+    <!-- toast messages -->
+    <string name="toast_data_saved">Data uložena.</string>
+    <string name="toast_error_saving_data">Chyba při ukládání dat.</string>
+    <string name="toast_select_a_vehicle">Vybrat vozidlo.</string>
+    <string name="toast_add_failed">Přidání selhalo.</string>
+    <string name="toast_edit_failed">Úprava selhala.</string>
+    <string name="toast_delete_failed">Smazání selhalo.</string>
+    <string name="toast_canceled">Zrušeno.</string>
+    <string name="toast_external_storage_not_readable">Nelze číst z úložiště přístroje.</string>
+    <string name="toast_external_storage_not_writable">Nelze zapisovat do úložiště přístroje.</string>
+    <string name="toast_no_data_to_export">Žádná data pro export.</string>
+    <string name="toast_failed">Selhání.</string>
+    <string name="toast_import_failed">Import selhal.</string>
+    <string name="toast_import_complete">Import kompletní.</string>
+    <string name="toast_export_failed">Export selhal.</string>
+    <string name="toast_export_complete">Export kompletní.</string>
+    <string name="toast_duplicate_vehicle_name">Duplicitní jméno vozidla.</string>
+    <string name="toast_duplicate_odometer_value">Duplicitní hodnota počítadla kilometrů.</string>
+    <string name="toast_stopped_at_csv_line">Zastavilo se na řádku %1$d csv souboru.</string>
+    <string name="toast_invalid_odometer_value">Neplatná hodnota počítadla kilometrů.</string>
+    <string name="toast_invalid_gallons_value">Neplatná hodnota %1$s.</string>
+    <string name="toast_invalid_vehicle_name">Neplatné jméno vozidla.</string>
+    <string name="toast_invalid_vehicle_tank_size">Neplatná velikost nádrže vozidla.</string>
+    <string name="toast_database_update_failed">Aktualizace databáze selhala!</string>
+    <string name="toast_invalid_cost_value">Neplatná hodnota celkových nákladů.</string>
+    <string name="toast_create_report_failed">Došlo k chybě při vytváření souboru reportu.</string>
+    <string name="toast_activity_not_found">Nejsou nainstalované odpovídající aplikace.</string>
+    <string name="toast_invalid_price_value">Neplatná hodnota ceny paliva.</string>
+    <string name="toast_invalid_price_calculation">Pomocí těchto hodnot nelze spočítat cenu paliva</string>
+    <string name="toast_invalid_cost_calculation">Pomocí těchto hodnot nelze spočítat celkové náklady</string>
+    <string name="toast_invalid_gallons_calculation">Pomocí těchto hodnot nelze spočítat množství paliva</string>
+    <string name="toast_error">CHYBA</string>
+    
+    <!-- units -->
+    <string name="error_label">CHYBA</string>
+    <string name="per_gallon_label">za galon</string>
+    <string name="per_liter_label">za litr</string>
+    <string name="per_mile_label">na míli</string>
+    <string name="per_kilometer_label">na km</string>
+    <string name="gallons_label">Galonů</string>
+    <string name="liters_label">Litrů</string>
+    <string name="miles_label">Mil</string>
+    <string name="kilometers_label">Kilometrů</string>
+    <string name="mpg_label">MPG</string>
+    <string name="kpg_label">KPG</string>
+    <string name="km_per_liter_label">KM/L</string>
+    <string name="liters_per_100km_label">L/100KM</string>
+    <string name="blank_date"/>
+    <string name="blank_odometer"/>
+    <string name="blank_gallons"/>
+    <string name="blank_mileage"/>
+    
+    <!-- preference titles and summaries (displayable) -->
+    <string name="pref_summary_unknown">neznámý</string>
+    <string name="pref_title_category_settings">Nastavení</string>
+    <string name="pref_summary_category_settings">Informace a nastavení aplikace</string>
+    <string name="pref_title_units">Jednotky</string>
+    <string name="pref_title_plot_font_size">Velikost písma grafů</string>
+    <string name="pref_title_about">O aplikaci</string>
+    <string name="pref_summary_about">Zobrazit informaci o verzi aplikace</string>
+    <string name="pref_title_pkg_name">Jméno balíčku</string>
+    <string name="pref_title_pkg_version">Verze balíčku</string>
+    <string name="pref_title_build_date">Datum sestavení</string>
+    <string name="pref_title_database_version">Verze databáze</string>
+    <string name="pref_title_license">Licence</string>
+    <string name="pref_summary_license">Zobrazit licenci softwaru</string>
+    <string name="pref_title_require_cost">Vyžaduje náklady</string>
+    <string name="pref_summary_require_cost">Při zadávání nákupu paliva</string>
+    <string name="pref_title_display_cost">Zobrazit náklady v logu</string>
+    <string name="pref_summary_display_cost"/>
+    <string name="pref_title_display_notes">Zobrazi poznámky v logu</string>
+    <string name="pref_summary_display_notes"/>
+	<string name="pref_title_help">Pomoc</string>
+	<string name="pref_summary_help">Zobrazit pomoc v aplikaci</string>
+    <string name="pref_title_currency">Měna</string>
+    
+</resources>

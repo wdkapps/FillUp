@@ -115,7 +115,7 @@
     <string name="mileage_estimate_used">Použito %1$s %2$s.\n</string>
     <string name="mileage_estimate_none">\nBez odhadu.\n</string>
     <string name="mileage_estimate_tanksize_info">Upravit údaje o vozidle pokud\nje velikost nádrže nesprávná.</string>
-    <string name="mileage_estimate_initial">Nádrž není plná.\nUpravit měření\npro odhad.</string>
+    <string name="mileage_estimate_initial">Nádrž není plná.\nUpravte ukazatel\npro odhad.</string>
     <string name="mileage_calculation_drove">Najeto %1$d %2$s.\n</string>
     <string name="mileage_calculation_used">Použito %1$s %2$s.\n</string>
     <string name="mileage_calculation_none">\nBez kalkulace.\n</string>

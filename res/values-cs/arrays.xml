@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  CZECH -->
+    
+    <string-array name="arrayUnitsEntries">
+        <item>Mil na galon\n(MPG)</item>
+        <item>Kilometrů na litr\n(KM/L)</item>
+        <item>Litrů na 100 kilometrů\n(L/100KM)</item>
+        <item>UK MPG (imperiální)\nmíle, litry</item>
+        <item>UK MPG (imperiální)\nkilometry, litry</item>
+        <item>Kilometrů na galon\n(KPG)</item>
+        </string-array>
+    
+    <string-array name="arrayUnitsEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        </string-array>
+    
+    <string-array name="arrayPlotDateRangeEntries">
+        <item>Minulý měsíc</item>
+        <item>Posledních 6 měsíců</item>
+        <item>Posledních 12 měsíců</item>
+        <item>Tento rok</item>
+        <item>Všechna data</item>
+    </string-array>
+    
+    <string-array name="arrayPlotDateRangeEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    
+    <string-array name="arrayPlotFontSizeEntries">
+        <item>Malý</item>
+        <item>Střední</item>
+        <item>Velký</item>
+        <item>Extra velký</item>
+    </string-array>
+    
+    <string-array name="arrayPlotFontSizeEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    
+    <string-array name="arrayPlotMonthLabels">
+        <item>LED</item>
+        <item>ÚNO</item>
+        <item>BŘE</item>
+        <item>DUB</item>
+        <item>KVĚ</item>
+        <item>ČEN</item>
+        <item>ČEC</item>
+        <item>SRP</item>
+        <item>ZÁŘ</item>
+        <item>ŘÍJ</item>
+        <item>LIS</item>
+        <item>PRO</item>
+    </string-array>
+    
+    <string-array name="arrayStorageEntries">
+        <item>Vnitřní úložiště</item>
+        <item>Cloudové úložiště</item>
+    </string-array>
+    
+    <string-array name="arrayStorageEntryValues">
+        <item>vnitřní</item>
+        <item>cloud</item>
+    </string-array>
+    
+    <string-array name="arrayDataEntryModeEntries">
+        <item>Zadat \'Celkové náklady\' a \'Množství paliva\'</item>
+        <item>Zadat \'Cenu paliva\' a \'Celkové náklady\'</item>
+        <item>Zadat \'Cenu paliva\' a \'Množství paliva\'</item>
+    </string-array>
+    
+    <string-array name="arrayDataEntryModeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    
+</resources>

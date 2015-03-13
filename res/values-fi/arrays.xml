@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  FINNISH -->
+    
+    <string-array name="arrayUnitsEntries">
+        <item>Mailia per gallona\n(MPG)</item>
+        <item>Kilometriä per litra\n(KM/L)</item>
+        <item>Litraa per 100 kilometriä\n(L/100KM)</item>
+        <item>UK MPG (imperisch)\nMeilen, Liter</item>
+        <item>UK MPG (imperisch)\nKilometer, Liter</item>
+        <item>Kilometriä per gallona\n(KPG)</item>
+    </string-array>
+    
+    <string-array name="arrayUnitsEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    
+    <string-array name="arrayPlotDateRangeEntries">
+        <item>viime kuukausi</item>
+        <item>viimeiset 6 kuukautta</item>
+        <item>viimeiset 12 kuukautta</item>
+        <item>vuoden alusta</item>
+        <item>kaikki</item>
+    </string-array>
+    
+    <string-array name="arrayPlotDateRangeEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    
+    <string-array name="arrayPlotFontSizeEntries">
+        <item>Pieni</item>
+        <item>Normaali</item>
+        <item>Suuri</item>
+        <item>Valtava</item>
+    </string-array>
+    
+    <string-array name="arrayPlotFontSizeEntryValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    
+    <string-array name="arrayPlotMonthLabels">
+        <item>Tam</item>
+        <item>Hel</item>
+        <item>Maa</item>
+        <item>Huh</item>
+        <item>Tou</item>
+        <item>Kes</item>
+        <item>Hei</item>
+        <item>Elo</item>
+        <item>Syy</item>
+        <item>Lok</item>
+        <item>Mar</item>
+        <item>Jou</item>
+    </string-array>
+    
+    <string-array name="arrayStorageEntries">
+        <item>Paikallinen talletus</item>
+        <item>Pilveen tallennnus</item>
+    </string-array>
+    
+    <string-array name="arrayStorageEntryValues">
+        <item>paikallinen</item>
+        <item>pilvi</item>
+    </string-array>
+    
+    <string-array name="arrayDataEntryModeEntries">
+        <item>Syötä \'Kokonaishinta\' ja \'polttoaineen kulutus\'</item>
+        <item>Syötä \'Polttoaineen hinta\' ja \'Kokonaishinta\'</item>
+        <item>Syötä \'Polttoaineen hinta\' ja \'polttoaineen kulutus\'</item>
+    </string-array>
+    
+    <string-array name="arrayDataEntryModeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    
+</resources>

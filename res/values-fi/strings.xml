@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- FINNISH -->
+
+    <!-- titles -->
+    <string name="app_name">FillUp</string>
+    <string name="title_activity_main">FillUp</string>
+    <string name="title_activity_gas_log_list">Logbuch</string>
+    <string name="title_activity_get_gas">Tankkaa</string>
+    <string name="title_activity_plot">Diagrammi</string>
+    <string name="title_activity_html_viewer">HTML Viewer</string>
+    <string name="title_activity_date_time">Pvm/Aika</string>
+    <string name="title_activity_statistics">Statistiikka</string>
+    <string name="title_activity_fileselect">Valitse tiedosto</string>
+    <string name="title_mileage_calculation">%1$s laskelma</string>
+    <string name="title_mileage_estimate">%1$s arvio</string>
+    <string name="title_cannot_estimate">Laskema ei mahdollista</string>
+    <string name="title_units_dialog">Valitse yksikkö</string>
+    <string name="title_confirm_odometer">Kilometrimäärä oikein?</string>
+    <string name="title_confirm_gallons">%1$s oikein?</string>
+    <string name="title_confirm_log_delete_dialog">Poista lokimerkintä</string>
+    <string name="title_confirm_export_overwrite_dialog">Tuonti varmistus</string>
+    <string name="title_confirm_export_share_dialog">Tuonti valmis</string>
+    <string name="title_chooser_share_csv">Jaa CSV &#8230;</string>
+    <string name="title_chooser_share_html">Jaa HTML &#8230;</string>
+    <string name="title_select_import_csv">Valitse CSV tiedosto &#8230;</string>
+    <string name="title_confirm_delete_vehicle">Poista ajoneuvo</string>
+    <string name="title_plot_mileage">Polttoaineen kulutus</string>
+    <string name="title_plot_odometer">Ajettu matka</string>
+    <string name="title_plot_gallons">Ostettu polttoaine</string>
+    <string name="title_plot_cost">Polttoainekustannus</string>
+    <string name="title_plot_price">Polttoaineen hinta</string>
+    <string name="title_plot_price_range">Hinta %1$s (keskim.)</string>
+    <string name="title_storage_selection_dialog">CSV tiedoston sijainti&#8230;</string>
+    <string name="title_data_entry_mode_dialog">Tiedon syöttömuoto</string>
+    
+    <!-- messages -->
+    <string name="message_confirm_export_share_dialog">Haluatko jakaa tuodun CSV tiedoston?</string>
+    <string name="message_confirm_export_overwrite_dialog">\'%1$s\' on olemassa.\nYlikirjoitetaanko?"</string>
+    <string name="message_confirm_log_delete_dialog">Oletko varma?</string>
+    <string name="message_confirm_odometer">Arvo on pienempi kuin tämän ajoneuvon kilometrimäärä lokissa(%1$s).</string>
+    <string name="message_confirm_gallons">Arvo on suurempi kuin tämän ajoneuvon tankin koko(%1$s).</string>
+    <string name="message_confirm_delete_vehicle">Oletko varma?</string>
+    <string name="message_tank_never_filled">\nLaskenta aloitetaan kun olet kerran täyttänyt tankin täyteen.\n</string>
+    <string name="message_insufficient_data">Riittämättömät tiedot</string>
+    
+    <!-- statistics -->
+    <string name="stats_label_mileage_avg">Polttoaineen kulutus (keskim.)</string>
+    <string name="stats_label_mileage_min">Polttoaineen kulutus (min.)</string>
+    <string name="stats_label_mileage_max">Polttoaineen kulutus (max.)</string>
+    <string name="stats_label_distance">Ajettu matka</string>
+    <string name="stats_label_gallons">Ostettu polttoaine</string>
+    <string name="stats_label_cost">Polttoainekulut</string>
+    <string name="stats_label_price">Polttoainehinta (keskim.)</string>
+    <string name="stats_calc_distance">%1$d %2$s (%3$.0f per kuukausi)</string>
+    <string name="stats_calc_distance_noavg">%1$d %2$s</string>
+    <string name="stats_calc_gallons">%1$.2f %2$s (%3$.2f per kuukausi)</string>
+    <string name="stats_calc_gallons_noavg">%1$.2f %2$s</string>
+    <string name="stats_calc_cost">%1$s (%2$s per kuukausi) (%3$s %4$s)</string>    
+    <string name="stats_calc_cost_noavg">%1$s (%2$s %3$s)</string>    
+    <string name="stats_report_filename">%1$s_statistics.html</string>    
+    <string name="stats_summary_prefix">YHTEENSÄ: </string>    
+    
+    <!--  labels -->
+    <string name="get_gas_label">Tankkaa</string>
+    <string name="date_label">Päivämäärä</string>
+    <string name="time_label">Aika</string>
+    <string name="odometer_label">Kilometrilukema</string>
+    <string name="odometer_units_label">Kilometrilukema (%1$s)</string>
+    <string name="full_tank_label">Tankki täysi</string>
+    <string name="ok_label">OK</string>
+    <string name="cancel_label">Peruuta</string>
+    <string name="yes_label">Kyllä</string>
+    <string name="no_label">Ei</string>
+    <string name="view_log_button_text">Näytä lokikirja</string>
+    <string name="mileage_label">l/100KM</string>
+    <string name="import_label">Tuonti</string>
+    <string name="export_label">Vienti</string>
+    <string name="select_vehicle_label">Valitse</string>
+    <string name="vehicles_spinner_prompt">Ajoneuvo</string>
+    <string name="get_gas_button_label">Tankkaus</string>
+    <string name="view_log_button_label">Lokikirja</string>
+    <string name="plot_data_label">Kaavio</string>
+    <string name="view_statistics_label">Statistiikka</string>
+    <string name="vehicle_add_label">Lisää ajoneuvo</string>
+    <string name="vehicle_edit_label">Muokkaa ajoneuvo</string>
+    <string name="vehicle_delete_label">Poista ajoneuvo</string>
+    <string name="vehicle_name_label">Nimi</string>
+    <string name="vehicle_tanksize_label">Tankin koko (%1$s)</string>
+    <string name="menu_settings">Asetukset</string>
+    <string name="months_label">Kuukausi</string> 
+    <string name="cost_label">Hinta</string>
+    <string name="total_cost_label">Kokonaishinta (%1$s)</string>
+	<string name="price_label">Poltoaoneen hinta (%1$s)</string>
+    <string name="notes_label">Muistiinpanoja</string>
+    <string name="gasoline_label">Polttoaoneen määrä (%1$s)</string>
+    <string name="share_label">Jaa</string>
+    <string name="label_range_1month">1kk</string>
+    <string name="label_range_6month">6kk</string>
+    <string name="label_range_12month">12kk</string>
+    <string name="label_range_ytd">va</string>
+    <string name="label_range_all">Kaikki</string>
+    <string name="default_currency">Oletus</string>
+        
+    <!-- hints -->
+    <string name="hint_odometer">Kilometrikukema</string>
+    <string name="hint_cost">Hinta</string>
+    <string name="hint_notes">Muistiinpanoja</string>
+    <string name="hint_gasoline">Polttoaine</string>
+	<string name="hint_price">hinta %1$s</string>
+    
+    <!-- mileage calculation/estimate dialogs -->
+    <string name="mileage_estimate_note">Perustuu tankin koolle %1$s %2$s.</string>
+    <string name="mileage_estimate_drove">%1$d %2$s ajettu.\n</string>
+    <string name="mileage_estimate_used">%1$s %2$s kulutettu.\n</string>
+    <string name="mileage_estimate_none">\nEi arviota\n</string>
+    <string name="mileage_estimate_tanksize_info">Muokkaa ajoneuvon tietoja jos\ntankin koko väärä.</string>
+    <string name="mileage_estimate_initial">Tankki ei ole täysi.\nArvioi poltoainemöäärä\nlaskelman suorittamiseksi.</string>
+    <string name="mileage_calculation_drove">%1$d %2$s ajettu.\n</string>
+    <string name="mileage_calculation_used">%1$s %2$s kulutettu.\n</string>
+    <string name="mileage_calculation_none">\nEi laskelmaa.\n</string>
+
+    <!-- descriptions -->
+    <string name="add_description">[Lisää]</string>
+    <string name="edit_description">[Muokkaa]</string>
+    <string name="delete_description">[Poista]</string>
+    <string name="fuel_gauge_description">[Polttoainemäärä]</string>
+    <string name="close_dialog_description">[sulje dialogi]</string>
+    <string name="description_filename">[Valitse tiedosto]</string>
+    <string name="mode_description">[tiedon syöttömuoto]</string>
+    
+    <!--  menu items -->
+    <string name="menuitem_title_edit">Muokkaa</string>
+    <string name="menuitem_title_delete">Poista</string>
+    <string name="menuitem_title_show_estimate">Näytä arvio</string>
+    <string name="menuitem_title_show_calculation">Näytä laskelma</string>
+    <string name="menuitem_title_hide_calculation">Piilota laskelma</string>
+    <string name="menuitem_title_help">Apua</string>   
+    
+    <!-- toast messages -->
+    <string name="toast_data_saved">Tiedot talletettu.</string>
+    <string name="toast_error_saving_data">Virhe tiedon talletuksessa.</string>
+    <string name="toast_select_a_vehicle">Valitse ajoneuvo.</string>
+    <string name="toast_add_failed">Lisäys epäonnistui.</string>
+    <string name="toast_edit_failed">Muokkaus epäonnistui.</string>
+    <string name="toast_delete_failed">Poisto epäonnistui.</string>
+    <string name="toast_canceled">Peruttu.</string>
+    <string name="toast_external_storage_not_readable">Laitteen muisti ei luettavissa.</string>
+    <string name="toast_external_storage_not_writable">Laitteen muisti ei kirjoitettavissa.</string>
+    <string name="toast_no_data_to_export">Ei tietoja vietäväksi.</string>
+    <string name="toast_failed">Epäonnistui.</string>
+    <string name="toast_import_failed">Tuonti epäonnistui.</string>
+    <string name="toast_import_complete">Tuonti valmis.</string>
+    <string name="toast_export_failed">Vienti epäonnistui.</string>
+    <string name="toast_export_complete">Vienti valmis.</string>
+    <string name="toast_duplicate_vehicle_name">Ajoneuvo on jo olemassa.</string>
+    <string name="toast_duplicate_odometer_value">Kilometrimäärä on jo olemassa.</string>
+    <string name="toast_stopped_at_csv_line">Keskeytyi CSV rivillä %1$d.</string>
+    <string name="toast_invalid_odometer_value">Väärä kilometrimäärä.</string>
+    <string name="toast_invalid_gallons_value">Väärä %1$s arvo.</string>
+    <string name="toast_invalid_vehicle_name">Väärä ajoneuvon nimi.</string>
+    <string name="toast_invalid_vehicle_tank_size">Väärä tankin koko.</string>
+    <string name="toast_database_update_failed">Tietokannan päivitys epäonnistui!</string>
+    <string name="toast_invalid_cost_value">Väärä kokonaishinnan arvo.</string>
+    <string name="toast_create_report_failed">Virhe raporttitiedoston luomisessa.</string>
+    <string name="toast_activity_not_found">Sopivia sovelluksia ei ole asennettuna.</string>
+    <string name="toast_invalid_price_value">Väärä polttoaineen hinnan arvo.</string>
+    <string name="toast_invalid_price_calculation">Ei voi laskea polttoaineen hintaa näillä arvoilla</string>
+    <string name="toast_invalid_cost_calculation">Ei voi laskea kokonaishintaa näillä arvoilla</string>
+    <string name="toast_invalid_gallons_calculation">Ei voi laskea polttoaineen määrää näillä arvoilla</string>
+    <string name="toast_error">VIRHE</string>
+    
+    <!-- units -->
+    <string name="error_label">VIRHE</string>
+    <string name="per_gallon_label">per gallona</string>
+    <string name="per_liter_label">per litra</string>
+    <string name="per_mile_label">per maili</string>
+    <string name="per_kilometer_label">per km</string>
+    <string name="gallons_label">Gallona</string>
+    <string name="liters_label">Litra</string>
+    <string name="miles_label">Maili</string>
+    <string name="kilometers_label">Kilometri</string>
+    <string name="mpg_label">MPG</string>
+    <string name="kpg_label">KPG</string>
+    <string name="km_per_liter_label">KM/L</string>
+    <string name="liters_per_100km_label">L/100KM</string>
+    <string name="blank_date"></string>
+    <string name="blank_odometer"></string>
+    <string name="blank_gallons"></string>
+    <string name="blank_mileage"></string>
+
+
+    <!-- preference titles and summaries (displayable) -->
+    <string name="pref_summary_unknown">tuntematon</string>
+    <string name="pref_title_category_settings">Asetukset</string>
+    <string name="pref_summary_category_settings">Sovelluksen asetukset ja infodrmaatiota</string>
+    <string name="pref_title_units">Yksiköt</string>
+    <string name="pref_title_plot_font_size">Kaavion kirjainkoko</string>
+    <string name="pref_title_about">Tietoja</string>
+    <string name="pref_summary_about">Näytä sovelluksen versio tiedot</string>
+    <string name="pref_title_pkg_name">Paketin nimi</string>
+    <string name="pref_title_pkg_version">Paketin versio</string>
+    <string name="pref_title_build_date">Koonti päivämäärä</string>
+    <string name="pref_title_database_version">Tietokannan versio</string>
+    <string name="pref_title_license">Lisenssi</string>
+    <string name="pref_summary_license">Näytä lisenssi</string>
+    <string name="pref_title_require_cost">Hinta tarvitaan</string>
+    <string name="pref_summary_require_cost">Ilmoitettaessa ostettu polttoaine</string>
+    <string name="pref_title_display_cost">Näytä hinta lokikirjassa</string>
+    <string name="pref_summary_display_cost"></string>
+    <string name="pref_title_display_notes">Näytä muistiinpanot lokikirjassa</string>
+    <string name="pref_summary_display_notes"></string>
+	<string name="pref_title_help">Apua</string>
+	<string name="pref_summary_help">Näytä sovelluksen aputiedot</string>
+    <string name="pref_title_currency">Valuutta</string>
+    
+</resources>

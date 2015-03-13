@@ -6,8 +6,8 @@
         <item>Mailia per gallona\n(MPG)</item>
         <item>Kilometriä per litra\n(KM/L)</item>
         <item>Litraa per 100 kilometriä\n(L/100KM)</item>
-        <item>UK MPG (imperisch)\nMeilen, Liter</item>
-        <item>UK MPG (imperisch)\nKilometer, Liter</item>
+        <item>UK MPG (imperiumi)\nMaili, Litra</item>
+        <item>UK MPG (imperiumi)\nKilometri, Litra</item>
         <item>Kilometriä per gallona\n(KPG)</item>
     </string-array>
     
@@ -66,8 +66,8 @@
     </string-array>
     
     <string-array name="arrayStorageEntries">
-        <item>Paikallinen talletus</item>
-        <item>Pilveen tallennnus</item>
+        <item>Paikallinen tallennus</item>
+        <item>Pilveen tallennus</item>
     </string-array>
     
     <string-array name="arrayStorageEntryValues">
@@ -76,9 +76,9 @@
     </string-array>
     
     <string-array name="arrayDataEntryModeEntries">
-        <item>Syötä \'Kokonaishinta\' ja \'polttoaineen kulutus\'</item>
+        <item>Syötä \'Kokonaishinta\' ja \'polttoaineen määrä\'</item>
         <item>Syötä \'Polttoaineen hinta\' ja \'Kokonaishinta\'</item>
-        <item>Syötä \'Polttoaineen hinta\' ja \'polttoaineen kulutus\'</item>
+        <item>Syötä \'Polttoaineen hinta\' ja \'polttoaineen määrä\'</item>
     </string-array>
     
     <string-array name="arrayDataEntryModeValues">

@@ -170,7 +170,7 @@ public class GasRecord implements Serializable {
 	 */
 	public GasRecord(String csv) throws ParseException, NumberFormatException {
 		this();
-		String[] values = csv.split(",");
+		String[] values = csv.split(",", -1);
 
 		switch(values.length){
 		case 8:  // db_version=5 with calculation

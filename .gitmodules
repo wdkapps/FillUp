@@ -1,0 +1,3 @@
+[submodule "assets/brands_icons"]
+	path = assets/brands_icons
+	url = https://github.com/cardog-ai/icons.git

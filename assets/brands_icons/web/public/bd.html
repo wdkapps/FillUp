@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WebGL Fluid-Like Background</title>
+  <style>
+    html, body {
+      margin: 0; 
+      padding: 0; 
+      overflow: hidden;
+      height: 100%;
+      background-color: #000;
+    }
+    #bg {
+      position: absolute;
+      top: 0; 
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
+
+// Create Scene, Camera, Renderer
+const scene = new THREE.Scene();
+const camera = new THREE.Camera();
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg'), antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+
+// A simple fullscreen quad to run our fragment shader
+const geometry = new THREE.PlaneBufferGeometry(2, 2);
+
+// A helper function for pseudo-random noise (2D or 3D) can be done inside the shader as well
+const fragmentShader = `
+
+  // Classic Perlin or Simplex noise implementations, or domain-warp approach, go here.
+  // For brevity, here's a small 2D noise snippet (feel free to replace with a more advanced noise).
+  // This is a simple, somewhat hacky 2D noise. For better fluid illusions, you can use your favorite noise function.
+
+  precision highp float;
+
+  uniform float uTime;
+  uniform vec2  uResolution;
+
+  // 2D pseudo-random
+  float rand(vec2 co){
+      return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+  }
+
+  // Simple swirling noise pattern
+  float noise(vec2 p) {
+      // Distort coordinates with time to get swirling effect
+      float t = uTime * 0.1;
+      p.x += sin(t) * 0.5;
+      p.y += cos(t) * 0.5;
+      return rand(floor(p * 50.0));
+  }
+
+  void main() {
+      // Normalized pixel coordinates (0..1)
+      vec2 uv = gl_FragCoord.xy / uResolution.xy;
+      // Center the coords around (0,0) for swirling transformations
+      uv = uv * 2.0 - 1.0;
+      uv.x *= uResolution.x / uResolution.y;
+
+      // A swirl transform
+      float angle = length(uv) * 2.0; // radial swirl factor
+      float s = sin(angle), c = cos(angle);
+      mat2 rot = mat2(c, -s, s, c);
+      uv = rot * uv;
+
+      // Sample noise
+      float n = noise(uv * 2.0);
+
+      // Create color based on noise + subtle time-based shift
+      // You can define multiple color stops for a smoother gradient
+      vec3 colorA = vec3(0.6, 0.7, 1.0); // Pastel blue
+      vec3 colorB = vec3(0.8, 0.6, 1.0); // Lavender/purple tone
+
+      // Mix them
+      float mixVal = n;
+      vec3 color = mix(colorA, colorB, mixVal);
+
+      // Optional extra: subtle highlight or metallic sheen
+      float highlight = smoothstep(0.9, 1.0, n);
+      color += highlight * 0.1;  // slight brightening
+
+      gl_FragColor = vec4(color, 1.0);
+  }
+`;
+
+const uniforms = {
+  uTime:       { value: 0.0 },
+  uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+};
+
+const material = new THREE.ShaderMaterial({
+  fragmentShader,
+  uniforms
+});
+
+const quad = new THREE.Mesh(geometry, material);
+scene.add(quad);
+
+// Resize handling
+window.addEventListener('resize', onWindowResize, false);
+function onWindowResize(){
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+}
+
+// Render loop
+function animate(t) {
+  requestAnimationFrame(animate);
+  uniforms.uTime.value = t * 0.001; // convert to seconds
+  renderer.render(scene, camera);
+}
+animate(0);
+</script>
+
+</body>
+</html>

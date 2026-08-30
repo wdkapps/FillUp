@@ -1,0 +1,243 @@
+{
+  "@@locale": "en",
+  "appTitle": "FillUp",
+  "@appTitle": {
+    "description": "The application title"
+  },
+  "vehicleName": "Vehicle Name",
+  "@vehicleName": {
+    "description": "Label for vehicle name field"
+  },
+  "tankSize": "Tank Size",
+  "@tankSize": {
+    "description": "Label for tank size field"
+  },
+  "addVehicle": "Add Vehicle",
+  "@addVehicle": {
+    "description": "Button to add a new vehicle"
+  },
+  "editVehicle": "Edit Vehicle",
+  "@editVehicle": {
+    "description": "Button to edit vehicle"
+  },
+  "deleteVehicle": "Delete Vehicle",
+  "@deleteVehicle": {
+    "description": "Button to delete vehicle"
+  },
+  "date": "Date",
+  "@date": {
+    "description": "Label for date field"
+  },
+  "odometer": "Odometer",
+  "@odometer": {
+    "description": "Label for odometer field"
+  },
+  "gallons": "Gallons",
+  "@gallons": {
+    "description": "Label for gallons field"
+  },
+  "cost": "Cost",
+  "@cost": {
+    "description": "Label for cost field"
+  },
+  "fullTank": "Full Tank",
+  "@fullTank": {
+    "description": "Label for full tank checkbox"
+  },
+  "notes": "Notes",
+  "@notes": {
+    "description": "Label for notes field"
+  },
+  "addRecord": "Add Record",
+  "@addRecord": {
+    "description": "Button to add fuel record"
+  },
+  "editRecord": "Edit Record",
+  "@editRecord": {
+    "description": "Button to edit fuel record"
+  },
+  "deleteRecord": "Delete Record",
+  "@deleteRecord": {
+    "description": "Button to delete fuel record"
+  },
+  "mileage": "Mileage",
+  "@mileage": {
+    "description": "Label for mileage"
+  },
+  "mpg": "MPG",
+  "@mpg": {
+    "description": "Miles per gallon"
+  },
+  "kml": "KM/L",
+  "@kml": {
+    "description": "Kilometers per liter"
+  },
+  "l100km": "L/100KM",
+  "@l100km": {
+    "description": "Liters per 100 kilometers"
+  },
+  "ukmpg": "UK MPG",
+  "@ukmpg": {
+    "description": "UK miles per gallon"
+  },
+  "kpg": "KPG",
+  "@kpg": {
+    "description": "Kilometers per gallon"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings screen title"
+  },
+  "units": "Units",
+  "@units": {
+    "description": "Label for units setting"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Label for language setting"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Label for theme setting"
+  },
+  "light": "Light",
+  "@light": {
+    "description": "Light theme"
+  },
+  "dark": "Dark",
+  "@dark": {
+    "description": "Dark theme"
+  },
+  "system": "System",
+  "@system": {
+    "description": "System theme"
+  },
+  "statistics": "Statistics",
+  "@statistics": {
+    "description": "Statistics screen title"
+  },
+  "charts": "Charts",
+  "@charts": {
+    "description": "Charts screen title"
+  },
+  "import": "Import",
+  "@import": {
+    "description": "Import data"
+  },
+  "export": "Export",
+  "@export": {
+    "description": "Export data"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Confirm button"
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "Yes button"
+  },
+  "no": "No",
+  "@no": {
+    "description": "No button"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Error message"
+  },
+  "success": "Success",
+  "@success": {
+    "description": "Success message"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading indicator"
+  },
+  "noVehicles": "No vehicles added yet",
+  "@noVehicles": {
+    "description": "Message when no vehicles exist"
+  },
+  "noRecords": "No fuel records yet",
+  "@noRecords": {
+    "description": "Message when no fuel records exist"
+  },
+  "selectVehicle": "Select Vehicle",
+  "@selectVehicle": {
+    "description": "Prompt to select a vehicle"
+  },
+  "fuelRecords": "Fuel Records",
+  "@fuelRecords": {
+    "description": "Title for fuel records list"
+  },
+  "plot": "Plot",
+  "@plot": {
+    "description": "Plot screen title"
+  },
+  "mileagePlot": "Mileage Plot",
+  "@mileagePlot": {
+    "description": "Mileage chart title"
+  },
+  "odometerPlot": "Odometer Plot",
+  "@odometerPlot": {
+    "description": "Odometer chart title"
+  },
+  "gallonsPlot": "Gallons Plot",
+  "@gallonsPlot": {
+    "description": "Gallons chart title"
+  },
+  "costPlot": "Cost Plot",
+  "@costPlot": {
+    "description": "Cost chart title"
+  },
+  "pricePlot": "Price Plot",
+  "@pricePlot": {
+    "description": "Price chart title"
+  },
+  "startDate": "Start Date",
+  "@startDate": {
+    "description": "Start date for date range"
+  },
+  "endDate": "End Date",
+  "@endDate": {
+    "description": "End date for date range"
+  },
+  "apply": "Apply",
+  "@apply": {
+    "description": "Apply button"
+  },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Reset button"
+  },
+  "share": "Share",
+  "@share": {
+    "description": "Share button"
+  },
+  "about": "About",
+  "@about": {
+    "description": "About screen"
+  },
+  "help": "Help",
+  "@help": {
+    "description": "Help screen"
+  },
+  "version": "Version",
+  "@version": {
+    "description": "App version"
+  }
+}

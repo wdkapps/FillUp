@@ -1,0 +1,35 @@
+# Source files
+src/
+scripts/
+
+# Tests
+__tests__/
+*.test.ts
+
+# Configuration
+tsconfig.json
+jest.config.js
+.eslintrc.js
+
+# Development
+node_modules/
+coverage/
+.vscode/
+.idea/
+
+# Misc
+.DS_Store
+.env*
+*.log
+
+# Development files
+.turbo/
+tests/
+*.spec.ts
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo 

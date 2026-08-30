@@ -1,0 +1,53 @@
+import * as React from 'react';
+import Svg, {
+  Path,
+  G,
+  Circle,
+  Rect,
+  Ellipse,
+  Line,
+  Polygon,
+  Polyline,
+  Defs,
+  ClipPath,
+  LinearGradient,
+  RadialGradient,
+  Stop,
+  Use,
+  Symbol,
+  Mask,
+  Pattern,
+  Image,
+  ForeignObject,
+  TSpan,
+  TextPath,
+  Text,
+  SvgProps
+} from 'react-native-svg';
+
+export interface VolvoLogoHorizontalDarkProps extends SvgProps {
+  /** Size of the icon (sets both width and height) */
+  size?: number;
+}
+
+/**
+ * VolvoLogoHorizontalDark icon component for React Native
+ */
+const VolvoLogoHorizontalDark = ({ size, width, height, ...props }: VolvoLogoHorizontalDarkProps) => {
+  const computedWidth = size ?? width ?? 24;
+  const computedHeight = size ?? height ?? 24;
+  return (
+    <Svg
+      viewBox="0 0 512 512"
+      width={computedWidth}
+      height={computedHeight}
+      {...props}
+    >
+      <Path fill="#fff" d="M50 230.446v7.565h12.339l24.147 45.537H116.2l24.146-45.613 12.337-.078.027-7.411h-36.913v7.437h9.83l-17.051 32.373-18.44-32.26 13.45-.061-.024-7.489zM288.139 230.446v7.565h12.335l24.147 45.537h29.715l24.147-45.613 12.338-.078.023-7.411h-36.907v7.437h9.826l-17.05 32.373-18.443-32.26 13.454-.061-.025-7.489zM227.425 230.446v7.564h12.337l.021 37.177h-13.007v8.287l13.015.074h61.601V258.83h-8.025c-.439 13.087-11.729 16.375-16.485 16.375-4.357 0-12.8-.017-12.8-.017v-37.193l12.151-.061-.016-7.489zM185.346 276.747c-7.393 0-13.383-8.905-13.383-19.895 0-10.993 5.99-19.905 13.383-19.905 7.391 0 13.383 8.912 13.383 19.905 0 10.99-5.992 19.895-13.383 19.895m.544-47.827c-20.971 0-37.971 12.557-37.971 28.04 0 15.484 17 28.04 37.971 28.04 20.969 0 37.971-12.556 37.971-28.04s-17.002-28.04-37.971-28.04M423.486 276.606c-7.391 0-13.38-9.053-13.38-20.225 0-11.167 5.99-20.222 13.38-20.222s13.379 9.055 13.379 20.222c.001 11.172-5.988 20.225-13.379 20.225m.546-48.606c-20.975 0-37.97 12.761-37.97 28.497s16.994 28.495 37.97 28.495C445 284.992 462 272.233 462 256.497S445 228 424.032 228" />
+    </Svg>
+  );
+};
+
+VolvoLogoHorizontalDark.displayName = 'VolvoLogoHorizontalDark';
+
+export default VolvoLogoHorizontalDark;

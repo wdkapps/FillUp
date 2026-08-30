@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "jsx": "react",
+    "lib": ["ESNext", "DOM"],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "noImplicitAny": false
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "__tests__", "**/*.test.ts"]
+}

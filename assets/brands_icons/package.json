@@ -1,0 +1,51 @@
+{
+  "name": "@cardog-icons",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monorepo for Cardog Icons - car brand icons and logos",
+  "workspaces": [
+    "core",
+    "react",
+    "react-native"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "clean": "turbo run clean",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "build:core": "turbo run build --filter=@cardog-icons/core",
+    "build:react": "turbo run build --filter=@cardog-icons/react",
+    "build:native": "turbo run build --filter=@cardog-icons/react-native",
+    "generate:react": "turbo run generate --filter=@cardog-icons/react",
+    "generate:native": "turbo run generate --filter=@cardog-icons/react-native",
+    "generate": "npm run generate:react && npm run generate:native",
+    "optimize": "turbo run optimize --filter=@cardog-icons/core",
+    "build:all": "npm run optimize && npm run build:core && npm run generate && npm run build:react && npm run build:native",
+    "web": "cd web && npm run dev",
+    "publish:core": "cd core && npm publish --access public",
+    "publish:react": "cd react && npm publish --access public",
+    "publish:native": "cd react-native && npm publish --access public",
+    "publish:all": "npm run publish:core && npm run publish:react && npm run publish:native"
+  },
+  "keywords": [
+    "icons",
+    "svg",
+    "car",
+    "brand",
+    "logos",
+    "automotive"
+  ],
+  "author": "Cardog",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^9.0.11",
+    "prettier": "^3.2.5",
+    "turbo": "^1.11.3"
+  }
+}

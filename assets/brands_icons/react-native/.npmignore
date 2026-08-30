@@ -1,0 +1,22 @@
+# Source files
+scripts/
+tsconfig.json
+*.log
+
+# Don't ignore src directory as it's needed for react-native
+
+# Development files
+.turbo/
+coverage/
+node_modules/
+tests/
+*.test.ts
+*.test.tsx
+*.spec.ts
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo 

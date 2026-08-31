@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.github.wdkapps.fillup"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

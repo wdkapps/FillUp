@@ -36,53 +36,61 @@ class SettingsController extends GetxController {
     requireCost.value = prefs.getBool(AppConstants.keyRequireCost) ?? true;
     displayCost.value = prefs.getBool(AppConstants.keyDisplayCost) ?? true;
     displayNotes.value = prefs.getBool(AppConstants.keyDisplayNotes) ?? true;
+    update();
   }
 
-  Future<void> setUnit(Units unit) async {
-    _unit.value = unit;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(AppConstants.keyUnit, unit.value);
-  }
+   Future<void> setUnit(Units unit) async {
+     _unit.value = unit;
+     final prefs = await SharedPreferences.getInstance();
+     await prefs.setInt(AppConstants.keyUnit, unit.value);
+     update();
+   }
 
-  Future<void> setCurrency(String currency) async {
-    _currency.value = currency;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(AppConstants.keyCurrency, currency);
-  }
+   Future<void> setCurrency(String currency) async {
+     _currency.value = currency;
+     final prefs = await SharedPreferences.getInstance();
+     await prefs.setString(AppConstants.keyCurrency, currency);
+     update();
+   }
 
-  Future<void> setLanguage(String language) async {
-    _language.value = language;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(AppConstants.keyLanguage, language);
-    
-    final locale = _getLocaleFromString(language);
-    Get.updateLocale(locale);
-  }
+   Future<void> setLanguage(String language) async {
+     _language.value = language;
+     final prefs = await SharedPreferences.getInstance();
+     await prefs.setString(AppConstants.keyLanguage, language);
+     
+     final locale = _getLocaleFromString(language);
+     Get.updateLocale(locale);
+     update();
+   }
 
-  Future<void> setThemeMode(ThemeMode mode) async {
-    _themeMode.value = mode;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(AppConstants.keyTheme, mode.index);
-    Get.changeThemeMode(mode);
-  }
+    Future<void> setThemeMode(ThemeMode mode) async {
+      _themeMode.value = mode;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(AppConstants.keyTheme, mode.index);
+      Get.changeThemeMode(mode);
+      update();
+    }
 
-  Future<void> setRequireCost(bool value) async {
-    requireCost.value = value;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(AppConstants.keyRequireCost, value);
-  }
+   Future<void> setRequireCost(bool value) async {
+     requireCost.value = value;
+     final prefs = await SharedPreferences.getInstance();
+     await prefs.setBool(AppConstants.keyRequireCost, value);
+     update();
+   }
 
-  Future<void> setDisplayCost(bool value) async {
-    displayCost.value = value;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(AppConstants.keyDisplayCost, value);
-  }
+   Future<void> setDisplayCost(bool value) async {
+     displayCost.value = value;
+     final prefs = await SharedPreferences.getInstance();
+     await prefs.setBool(AppConstants.keyDisplayCost, value);
+     update();
+   }
 
-  Future<void> setDisplayNotes(bool value) async {
-    displayNotes.value = value;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(AppConstants.keyDisplayNotes, value);
-  }
+   Future<void> setDisplayNotes(bool value) async {
+     displayNotes.value = value;
+     final prefs = await SharedPreferences.getInstance();
+     await prefs.setBool(AppConstants.keyDisplayNotes, value);
+     update();
+   }
 
   Locale _getLocaleFromString(String langCode) {
     switch (langCode) {

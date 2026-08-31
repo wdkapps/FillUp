@@ -11,9 +11,9 @@ import 'controllers/gas_record_controller.dart';
 class AppBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(SettingsController());
     Get.put(VehicleController());
     Get.put(GasRecordController());
+    Get.put(SettingsController());
   }
 }
 
@@ -24,29 +24,31 @@ class FillUpApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'FillUp',
-      debugShowCheckedModeBanner: false,
+    return GetBuilder<SettingsController>(
+      builder: (controller) => GetMaterialApp(
+        title: 'FillUp',
+        debugShowCheckedModeBanner: false,
 
-      initialBinding: AppBinding(),
+        initialBinding: AppBinding(),
 
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-        Locale('tr'),
-      ],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ar'),
+          Locale('tr'),
+        ],
 
-      theme: _buildLightTheme(),
-      darkTheme: _buildDarkTheme(),
-      themeMode: ThemeMode.system,
+        theme: _buildLightTheme(),
+        darkTheme: _buildDarkTheme(),
+        themeMode: controller.themeMode, // Use the saved theme mode
 
-      home: const StartupScreen(),
+        home: const StartupScreen(),
+      ),
     );
   }
 

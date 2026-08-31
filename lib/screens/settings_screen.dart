@@ -23,197 +23,214 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)?.settings ?? 'Settings'),
       ),
-      body: Obx(() => ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          // Units section
-          _buildSectionTitle(context, AppLocalizations.of(context)?.units ?? 'Units'),
-          RadioGroup<Units>(
-            groupValue: controller.unit,
-            onChanged: (value) {
-              if (value != null) controller.setUnit(value);
-            },
-            child: Card(
+      body: Obx(
+        () => ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            // Units section
+            _buildSectionTitle(
+              context,
+              AppLocalizations.of(context)?.units ?? 'Units',
+            ),
+            RadioGroup<Units>(
+              groupValue: controller.unit,
+              onChanged: (value) {
+                if (value != null) controller.setUnit(value);
+              },
+              child: Card(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: const Text(
+                        'US',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: const Text('Miles, Gallons'),
+                    ),
+                    const RadioListTile<Units>(
+                      title: Text('MPG (miles per gallon)'),
+                      value: Units.mpg,
+                    ),
+                    const Divider(height: 1),
+                    ListTile(
+                      title: const Text(
+                        'Metric',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: const Text('Kilometers, Liters'),
+                    ),
+                    const RadioListTile<Units>(
+                      title: Text('KM/L (kilometers per liter)'),
+                      value: Units.kml,
+                    ),
+                    const RadioListTile<Units>(
+                      title: Text('L/100KM (liters per 100 km)'),
+                      value: Units.l100km,
+                    ),
+                    const Divider(height: 1),
+                    ListTile(
+                      title: const Text(
+                        'UK',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: const Text('Miles, Imperial Gallons'),
+                    ),
+                    const RadioListTile<Units>(
+                      title: Text('UK MPG (miles per imperial gallon)'),
+                      value: Units.ukmpg,
+                    ),
+                    const RadioListTile<Units>(
+                      title: Text('KPG (kilometers per gallon)'),
+                      value: Units.kpg,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Language section
+            _buildSectionTitle(
+              context,
+              AppLocalizations.of(context)?.language ?? 'Language',
+            ),
+            SegmentedButton<String>(
+              segments: const [
+                ButtonSegment(value: 'en', label: Text('English')),
+                ButtonSegment(value: 'ar', label: Text('العربية')),
+                ButtonSegment(value: 'tr', label: Text('Türkçe')),
+              ],
+              selected: {controller.language},
+              onSelectionChanged: (Set<String> selected) {
+                if (selected.isNotEmpty) {
+                  controller.setLanguage(selected.first);
+                }
+              },
+            ),
+            const SizedBox(height: 24),
+
+            // Theme section
+            _buildSectionTitle(
+              context,
+              AppLocalizations.of(context)?.theme ?? 'Theme',
+            ),
+            SegmentedButton<ThemeMode>(
+              segments: const [
+                ButtonSegment(value: ThemeMode.light, label: Text('Light')),
+                ButtonSegment(value: ThemeMode.dark, label: Text('Dark')),
+                ButtonSegment(value: ThemeMode.system, label: Text('System')),
+              ],
+              selected: {controller.themeMode},
+              onSelectionChanged: (Set<ThemeMode> selected) {
+                if (selected.isNotEmpty) {
+                  controller.setThemeMode(selected.first);
+                }
+              },
+            ),
+            const SizedBox(height: 24),
+
+            // Currency section
+            _buildSectionTitle(context, 'Currency'),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.attach_money),
+                title: const Text('Currency'),
+                subtitle: Text(controller.currency),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showCurrencyDialog(context, controller),
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Display options
+            _buildSectionTitle(context, 'Display'),
+            SwitchListTile(
+              title: const Text('Require Cost'),
+              subtitle: const Text('When entering fuel purchase'),
+              value: controller.requireCost.value,
+              onChanged: (value) => controller.setRequireCost(value),
+            ),
+            SwitchListTile(
+              title: const Text('Display Cost in Log'),
+              value: controller.displayCost.value,
+              onChanged: (value) => controller.setDisplayCost(value),
+            ),
+            SwitchListTile(
+              title: const Text('Display Notes in Log'),
+              value: controller.displayNotes.value,
+              onChanged: (value) => controller.setDisplayNotes(value),
+            ),
+            const SizedBox(height: 24),
+
+            // Database section
+            _buildSectionTitle(context, 'Database'),
+            Card(
               child: Column(
                 children: [
                   ListTile(
-                    title: const Text('US', style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: const Text('Miles, Gallons'),
-                  ),
-                  const RadioListTile<Units>(
-                    title: Text('MPG (miles per gallon)'),
-                    value: Units.mpg,
-                  ),
-                  const Divider(height: 1),
-                  ListTile(
-                    title: const Text('Metric', style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: const Text('Kilometers, Liters'),
-                  ),
-                  const RadioListTile<Units>(
-                    title: Text('KM/L (kilometers per liter)'),
-                    value: Units.kml,
-                  ),
-                  const RadioListTile<Units>(
-                    title: Text('L/100KM (liters per 100 km)'),
-                    value: Units.l100km,
+                    leading: const Icon(Icons.backup),
+                    title: const Text('Backup Database'),
+                    subtitle: const Text('Backup entire database to file'),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => _backupDatabase(context),
                   ),
                   const Divider(height: 1),
                   ListTile(
-                    title: const Text('UK', style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: const Text('Miles, Imperial Gallons'),
-                  ),
-                  const RadioListTile<Units>(
-                    title: Text('UK MPG (miles per imperial gallon)'),
-                    value: Units.ukmpg,
-                  ),
-                  const RadioListTile<Units>(
-                    title: Text('KPG (kilometers per gallon)'),
-                    value: Units.kpg,
+                    leading: const Icon(Icons.restore),
+                    title: const Text('Restore Database'),
+                    subtitle: const Text('Restore database from backup file'),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => _restoreDatabase(context),
                   ),
                 ],
               ),
             ),
-          ),
-          const SizedBox(height: 24),
+            const SizedBox(height: 24),
 
-          // Language section
-          _buildSectionTitle(context, AppLocalizations.of(context)?.language ?? 'Language'),
-          SegmentedButton<String>(
-            segments: const [
-              ButtonSegment(value: 'en', label: Text('English')),
-              ButtonSegment(value: 'ar', label: Text('العربية')),
-              ButtonSegment(value: 'tr', label: Text('Türkçe')),
-            ],
-            selected: {controller.language},
-            onSelectionChanged: (Set<String> selected) {
-              if (selected.isNotEmpty) {
-                controller.setLanguage(selected.first);
-              }
-            },
-          ),
-          const SizedBox(height: 24),
-
-          // Theme section
-          _buildSectionTitle(context, AppLocalizations.of(context)?.theme ?? 'Theme'),
-          SegmentedButton<ThemeMode>(
-            segments: const [
-              ButtonSegment(value: ThemeMode.light, label: Text('Light')),
-              ButtonSegment(value: ThemeMode.dark, label: Text('Dark')),
-              ButtonSegment(value: ThemeMode.system, label: Text('System')),
-            ],
-            selected: {controller.themeMode},
-            onSelectionChanged: (Set<ThemeMode> selected) {
-              if (selected.isNotEmpty) {
-                controller.setThemeMode(selected.first);
-              }
-            },
-          ),
-          const SizedBox(height: 24),
-
-          // Currency section
-          _buildSectionTitle(context, 'Currency'),
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.attach_money),
-              title: const Text('Currency'),
-              subtitle: Text(controller.currency),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => _showCurrencyDialog(context, controller),
+            // Help section
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.help_outline),
+                title: Text(AppLocalizations.of(context)?.help ?? 'Help'),
+                subtitle: const Text('Display application help information'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showHelpDialog(context),
+              ),
             ),
-          ),
-          const SizedBox(height: 24),
+            const SizedBox(height: 8),
 
-          // Display options
-          _buildSectionTitle(context, 'Display'),
-          SwitchListTile(
-            title: const Text('Require Cost'),
-            subtitle: const Text('When entering fuel purchase'),
-            value: controller.requireCost.value,
-            onChanged: (value) => controller.setRequireCost(value),
-          ),
-          SwitchListTile(
-            title: const Text('Display Cost in Log'),
-            value: controller.displayCost.value,
-            onChanged: (value) => controller.setDisplayCost(value),
-          ),
-          SwitchListTile(
-            title: const Text('Display Notes in Log'),
-            value: controller.displayNotes.value,
-            onChanged: (value) => controller.setDisplayNotes(value),
-          ),
-          const SizedBox(height: 24),
-
-          // Database section
-          _buildSectionTitle(context, 'Database'),
-          Card(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.backup),
-                  title: const Text('Backup Database'),
-                  subtitle: const Text('Backup entire database to file'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => _backupDatabase(context),
-                ),
-                const Divider(height: 1),
-                ListTile(
-                  leading: const Icon(Icons.restore),
-                  title: const Text('Restore Database'),
-                  subtitle: const Text('Restore database from backup file'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => _restoreDatabase(context),
-                ),
-              ],
+            // About section
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.info_outline),
+                title: Text(AppLocalizations.of(context)?.about ?? 'About'),
+                subtitle: const Text('Display application version information'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showAboutScreen(context),
+              ),
             ),
-          ),
-          const SizedBox(height: 24),
+            const SizedBox(height: 8),
 
-          // Help section
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.help_outline),
-              title: Text(AppLocalizations.of(context)?.help ?? 'Help'),
-              subtitle: const Text('Display application help information'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => _showHelpDialog(context),
+            // License section
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.description_outlined),
+                title: const Text('License'),
+                subtitle: const Text('Display the software license'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showLicenseScreen(context),
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-
-          // About section
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.info_outline),
-              title: Text(AppLocalizations.of(context)?.about ?? 'About'),
-              subtitle: const Text('Display application version information'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => _showAboutScreen(context),
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // License section
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.description_outlined),
-              title: const Text('License'),
-              subtitle: const Text('Display the software license'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => _showLicenseScreen(context),
-            ),
-          ),
-        ],
-      )),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildSectionTitle(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.titleMedium,
-      ),
+      child: Text(title, style: Theme.of(context).textTheme.titleMedium),
     );
   }
 
@@ -234,19 +251,23 @@ class SettingsScreen extends StatelessWidget {
               SizedBox(height: 16),
               _HelpSection(
                 title: 'Why isn\'t FillUp calculating my mileage?',
-                content: 'You need to fill your tank once to establish a starting point, and then continue recording all of your fuel purchases. Each time you fill your tank after the starting point, FillUp will calculate your mileage by determining the distance driven and fuel used since the previous full tank.\n\nTIP: In the Add Fuel screen, put a check mark in the "Tank Full" box to indicate when the tank has been filled, otherwise FillUp will never calculate mileage.',
+                content:
+                    'You need to fill your tank once to establish a starting point, and then continue recording all of your fuel purchases. Each time you fill your tank after the starting point, FillUp will calculate your mileage by determining the distance driven and fuel used since the previous full tank.\n\nTIP: In the Add Fuel screen, put a check mark in the "Tank Full" box to indicate when the tank has been filled, otherwise FillUp will never calculate mileage.',
               ),
               _HelpSection(
                 title: 'Why does FillUp only estimate my mileage?',
-                content: 'A full tank is needed to accurately calculate how much fuel was used since the previous full tank. When you get fuel and the tank is not full, FillUp cannot calculate mileage exactly. Instead it will allow you to estimate mileage.',
+                content:
+                    'A full tank is needed to accurately calculate how much fuel was used since the previous full tank. When you get fuel and the tank is not full, FillUp cannot calculate mileage exactly. Instead it will allow you to estimate mileage.',
               ),
               _HelpSection(
                 title: 'What if I forget to record a fuel purchase?',
-                content: 'The next time you fill your tank, the mileage calculation will be wrong (too high). You can hide this value by selecting it in the Log and clicking "Hide Calculation".',
+                content:
+                    'The next time you fill your tank, the mileage calculation will be wrong (too high). You can hide this value by selecting it in the Log and clicking "Hide Calculation".',
               ),
               _HelpSection(
                 title: 'How do I backup/restore my data?',
-                content: 'FillUp Log data is stored in a database on your device. Use Export to save Log data to a CSV file, and Import to restore it.',
+                content:
+                    'FillUp Log data is stored in a database on your device. Use Export to save Log data to a CSV file, and Import to restore it.',
               ),
             ],
           ),
@@ -287,7 +308,10 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       Text(
                         'FillUp',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text('Gas Mileage Log'),
                     ],
@@ -298,7 +322,10 @@ class SettingsScreen extends StatelessWidget {
               _AboutRow(title: 'Package Name', value: packageInfo.packageName),
               _AboutRow(title: 'Package Version', value: packageInfo.version),
               _AboutRow(title: 'Build Date', value: _formatBuildDate()),
-              _AboutRow(title: 'Database Version', value: '${AppConstants.dbVersion}'),
+              _AboutRow(
+                title: 'Database Version',
+                value: '${AppConstants.dbVersion}',
+              ),
             ],
           ),
         ),
@@ -323,7 +350,7 @@ class SettingsScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Copyright © 2013,2014 William D. Kraemer',
+                'Copyright © 2013,2014 William D. Kraemer - Rewritten by Muhammad Bashir Al-Noimi',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 16),
@@ -375,7 +402,8 @@ class SettingsScreen extends StatelessWidget {
       final dbPath = db.path;
 
       final directory = await getApplicationDocumentsDirectory();
-      final backupPath = '${directory.path}/fillup_backup_${DateTime.now().millisecondsSinceEpoch}.db';
+      final backupPath =
+          '${directory.path}/fillup_backup_${DateTime.now().millisecondsSinceEpoch}.db';
 
       final dbFile = File(dbPath);
 
@@ -392,10 +420,7 @@ class SettingsScreen extends StatelessWidget {
       }
 
       await SharePlus.instance.share(
-        ShareParams(
-          files: [XFile(backupPath)],
-          text: 'FillUp Database Backup',
-        ),
+        ShareParams(files: [XFile(backupPath)], text: 'FillUp Database Backup'),
       );
 
       if (context.mounted) {
@@ -442,9 +467,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               FilledButton(
                 onPressed: () => Navigator.pop(context, true),
-                style: FilledButton.styleFrom(
-                  backgroundColor: Colors.red,
-                ),
+                style: FilledButton.styleFrom(backgroundColor: Colors.red),
                 child: const Text('Restore'),
               ),
             ],
@@ -474,7 +497,9 @@ class SettingsScreen extends StatelessWidget {
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Database restored successfully. Please restart the app.'),
+                content: Text(
+                  'Database restored successfully. Please restart the app.',
+                ),
                 backgroundColor: Colors.green,
               ),
             );
@@ -493,7 +518,10 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
-  void _showCurrencyDialog(BuildContext context, SettingsController controller) {
+  void _showCurrencyDialog(
+    BuildContext context,
+    SettingsController controller,
+  ) {
     final currencies = CurrencyManager.instance.getAvailableCurrencies();
     final searchController = TextEditingController();
     var filtered = List.of(currencies);
@@ -519,10 +547,18 @@ class SettingsScreen extends StatelessWidget {
                   onChanged: (value) {
                     setState(() {
                       filtered = currencies
-                          .where((c) =>
-                              c.code.toLowerCase().contains(value.toLowerCase()) ||
-                              c.name.toLowerCase().contains(value.toLowerCase()) ||
-                              c.localName.toLowerCase().contains(value.toLowerCase()))
+                          .where(
+                            (c) =>
+                                c.code.toLowerCase().contains(
+                                  value.toLowerCase(),
+                                ) ||
+                                c.name.toLowerCase().contains(
+                                  value.toLowerCase(),
+                                ) ||
+                                c.localName.toLowerCase().contains(
+                                  value.toLowerCase(),
+                                ),
+                          )
                           .toList();
                     });
                   },

@@ -1,4 +1,5 @@
 import '../models/units.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class MileageCalculator {
   static const double imperialGallonsPerLiter = 0.219969;
@@ -37,25 +38,6 @@ class MileageCalculator {
     }
   }
 
-  static String getUnitLabel(Units unit) {
-    switch (unit) {
-      case Units.mpg:
-        return 'Miles per gallon';
-      case Units.kml:
-        return 'Kilometers per liter';
-      case Units.l100km:
-        return 'Liters per 100 kilometers';
-      case Units.ukmpg:
-        return 'UK miles per gallon';
-      case Units.kpg:
-        return 'Kilometers per gallon';
-    }
-  }
-
-  static String formatMileage(double mileage, Units unit) {
-    return '${mileage.toStringAsFixed(2)} ${getMileageLabel(unit)}';
-  }
-
   static String getMileageLabel(Units unit) {
     switch (unit) {
       case Units.mpg:
@@ -69,5 +51,24 @@ class MileageCalculator {
       case Units.kpg:
         return 'KPG';
     }
+  }
+
+  static String getUnitLabel(Units unit, AppLocalizations l10n) {
+    switch (unit) {
+      case Units.mpg:
+        return l10n.mpgLabel;
+      case Units.kml:
+        return l10n.kmlLabel;
+      case Units.l100km:
+        return l10n.l100kmLabel;
+      case Units.ukmpg:
+        return l10n.ukmpgLabel;
+      case Units.kpg:
+        return l10n.kpgLabel;
+    }
+  }
+
+  static String formatMileage(double mileage, Units unit, AppLocalizations l10n) {
+    return '${mileage.toStringAsFixed(2)} ${getMileageLabel(unit)}';
   }
 }

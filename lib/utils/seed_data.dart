@@ -9,7 +9,9 @@ class SeedData {
     final vehicles = await db.readAllVehicles();
 
     for (final v in vehicles) {
-      final records = await db.readAllRecords(v.id!);
+      final vid = v.id;
+      if (vid == null) continue;
+      final records = await db.readAllRecords(vid);
       if (records.isNotEmpty) return;
     }
 
@@ -26,10 +28,14 @@ class SeedData {
     if (vehicles.isEmpty) return;
 
     for (final v in vehicles) {
-      await db.deleteAllRecords(v.id!);
+      final vid = v.id;
+      if (vid == null) continue;
+      await db.deleteAllRecords(vid);
     }
     for (final v in vehicles) {
-      await db.deleteVehicle(v.id!);
+      final vid = v.id;
+      if (vid == null) continue;
+      await db.deleteVehicle(vid);
     }
   }
 
@@ -62,9 +68,11 @@ class SeedData {
     final random = Random(42);
 
     for (final vehicle in allVehicles) {
+      final vid = vehicle.id;
+      if (vid == null) continue;
       if (vehicle.name == 'Tesla Model 3') continue;
 
-      final existingRecords = await db.readAllRecords(vehicle.id!);
+      final existingRecords = await db.readAllRecords(vid);
       if (existingRecords.isNotEmpty) continue;
 
       final recordCount = 15 + random.nextInt(11);
@@ -85,7 +93,7 @@ class SeedData {
         final date = DateTime.now().subtract(Duration(days: daysAgo));
 
         final record = GasRecord(
-          vehicleId: vehicle.id!,
+          vehicleId: vid,
           date: date,
           odometer: odometer,
           gallons: double.parse(gallons.toStringAsFixed(3)),
@@ -111,7 +119,9 @@ class SeedData {
     final vehicles = await db.readAllVehicles();
     int total = 0;
     for (final v in vehicles) {
-      final records = await db.readAllRecords(v.id!);
+      final vid = v.id;
+      if (vid == null) continue;
+      final records = await db.readAllRecords(vid);
       total += records.length;
     }
     return total;

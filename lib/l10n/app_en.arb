@@ -239,5 +239,481 @@
   "version": "Version",
   "@version": {
     "description": "App version"
+  },
+  "importExport": "Import/Export",
+  "@importExport": {
+    "description": "Import/Export screen title"
+  },
+  "pleaseEnterName": "Please enter a name",
+  "@pleaseEnterName": {
+    "description": "Validator: vehicle name empty"
+  },
+  "pleaseEnterTankSize": "Please enter tank size",
+  "@pleaseEnterTankSize": {
+    "description": "Validator: tank size empty"
+  },
+  "pleaseEnterOdometer": "Please enter odometer",
+  "@pleaseEnterOdometer": {
+    "description": "Validator: odometer empty"
+  },
+  "pleaseEnterCost": "Please enter cost",
+  "@pleaseEnterCost": {
+    "description": "Validator: cost empty"
+  },
+  "pleaseEnterFuel": "Please enter {unitLabel}",
+  "@pleaseEnterFuel": {
+    "description": "Validator: fuel amount empty",
+    "placeholders": {
+      "unitLabel": { "type": "String" }
+    }
+  },
+  "fullTankSubtitle": "Was the tank filled completely?",
+  "@fullTankSubtitle": {
+    "description": "Full tank switch subtitle"
+  },
+  "confirmDeleteRecord": "Are you sure you want to delete this record?",
+  "@confirmDeleteRecord": {
+    "description": "Delete record confirmation"
+  },
+  "confirmDeleteVehicle": "Are you sure you want to delete {name}?",
+  "@confirmDeleteVehicle": {
+    "description": "Delete vehicle confirmation",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "exportSubtitle": "Export fuel records to CSV file",
+  "@exportSubtitle": {
+    "description": "Export list tile subtitle"
+  },
+  "importSubtitle": "Import fuel records from CSV file",
+  "@importSubtitle": {
+    "description": "Import list tile subtitle"
+  },
+  "shareTitle": "Share",
+  "@shareTitle": {
+    "description": "Share list tile title"
+  },
+  "shareSubtitle": "Share CSV file",
+  "@shareSubtitle": {
+    "description": "Share list tile subtitle"
+  },
+  "exportSuccess": "Export successful",
+  "@exportSuccess": {
+    "description": "Export success snackbar"
+  },
+  "exportFailed": "Export failed",
+  "@exportFailed": {
+    "description": "Export failure snackbar"
+  },
+  "noValidRecords": "No valid records found",
+  "@noValidRecords": {
+    "description": "Import with zero valid rows"
+  },
+  "importedRecords": "Imported {count} records",
+  "@importedRecords": {
+    "description": "Import success snackbar",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "shareRecords": "Fuel records for {name}",
+  "@shareRecords": {
+    "description": "Share sheet text",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "currency": "Currency",
+  "@currency": {
+    "description": "Currency section / list tile"
+  },
+  "display": "Display",
+  "@display": {
+    "description": "Display options section"
+  },
+  "requireCost": "Require Cost",
+  "@requireCost": {
+    "description": "Require cost switch"
+  },
+  "requireCostSubtitle": "When entering fuel purchase",
+  "@requireCostSubtitle": {
+    "description": "Require cost switch subtitle"
+  },
+  "displayCost": "Display Cost in Log",
+  "@displayCost": {
+    "description": "Display cost switch"
+  },
+  "displayNotes": "Display Notes in Log",
+  "@displayNotes": {
+    "description": "Display notes switch"
+  },
+  "database": "Database",
+  "@database": {
+    "description": "Database section"
+  },
+  "backupDatabase": "Backup Database",
+  "@backupDatabase": {
+    "description": "Backup database list tile"
+  },
+  "backupDatabaseSubtitle": "Backup entire database to file",
+  "@backupDatabaseSubtitle": {
+    "description": "Backup database subtitle"
+  },
+  "restoreDatabase": "Restore Database",
+  "@restoreDatabase": {
+    "description": "Restore database list tile"
+  },
+  "restoreDatabaseSubtitle": "Restore database from backup file",
+  "@restoreDatabaseSubtitle": {
+    "description": "Restore database subtitle"
+  },
+  "helpSubtitle": "Display application help information",
+  "@helpSubtitle": {
+    "description": "Help list tile subtitle"
+  },
+  "aboutSubtitle": "Display application version information",
+  "@aboutSubtitle": {
+    "description": "About list tile subtitle"
+  },
+  "license": "License",
+  "@license": {
+    "description": "License list tile"
+  },
+  "licenseSubtitle": "Display the software license",
+  "@licenseSubtitle": {
+    "description": "License list tile subtitle"
+  },
+  "close": "Close",
+  "@close": {
+    "description": "Dialog close button"
+  },
+  "summary": "Summary",
+  "@summary": {
+    "description": "Statistics summary card header"
+  },
+  "recordsLabel": "Records",
+  "@recordsLabel": {
+    "description": "Statistics records row label"
+  },
+  "avg": "Avg",
+  "@avg": {
+    "description": "Statistics avg row label"
+  },
+  "min": "Min",
+  "@min": {
+    "description": "Statistics min row label"
+  },
+  "max": "Max",
+  "@max": {
+    "description": "Statistics max row label"
+  },
+  "total": "Total",
+  "@total": {
+    "description": "Statistics total row label"
+  },
+  "avgMonth": "Avg/month",
+  "@avgMonth": {
+    "description": "Statistics per-month average"
+  },
+  "perDistance": "Per {unit}",
+  "@perDistance": {
+    "description": "Cost per distance unit",
+    "placeholders": {
+      "unit": { "type": "String" }
+    }
+  },
+  "avgPerVolume": "Avg/{unit}",
+  "@avgPerVolume": {
+    "description": "Average price per liquid unit",
+    "placeholders": {
+      "unit": { "type": "String" }
+    }
+  },
+  "distanceSection": "Distance",
+  "@distanceSection": {
+    "description": "Statistics distance section"
+  },
+  "fuelSection": "Fuel",
+  "@fuelSection": {
+    "description": "Statistics fuel section"
+  },
+  "costSection": "Cost",
+  "@costSection": {
+    "description": "Statistics cost section"
+  },
+  "priceSection": "Price",
+  "@priceSection": {
+    "description": "Statistics price section"
+  },
+  "monthlyBreakdown": "Monthly Breakdown",
+  "@monthlyBreakdown": {
+    "description": "Statistics monthly section title"
+  },
+  "shareReport": "Share Report",
+  "@shareReport": {
+    "description": "Statistics share tooltip"
+  },
+  "shareReportError": "Failed to share report: {error}",
+  "@shareReportError": {
+    "description": "Share report error snackbar",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "usSection": "US",
+  "@usSection": {
+    "description": "Units section: US"
+  },
+  "usSubtitle": "Miles, Gallons",
+  "@usSubtitle": {
+    "description": "US section subtitle"
+  },
+  "metricSection": "Metric",
+  "@metricSection": {
+    "description": "Units section: Metric"
+  },
+  "metricSubtitle": "Kilometers, Liters",
+  "@metricSubtitle": {
+    "description": "Metric section subtitle"
+  },
+  "ukSection": "UK",
+  "@ukSection": {
+    "description": "Units section: UK"
+  },
+  "ukSubtitle": "Miles, Imperial Gallons",
+  "@ukSubtitle": {
+    "description": "UK section subtitle"
+  },
+  "mpgLabel": "MPG (miles per gallon)",
+  "@mpgLabel": {
+    "description": "MPG unit option"
+  },
+  "kmlLabel": "KM/L (kilometers per liter)",
+  "@kmlLabel": {
+    "description": "KM/L unit option"
+  },
+  "l100kmLabel": "L/100KM (liters per 100 km)",
+  "@l100kmLabel": {
+    "description": "L/100KM unit option"
+  },
+  "ukmpgLabel": "UK MPG (miles per imperial gallon)",
+  "@ukmpgLabel": {
+    "description": "UK MPG unit option"
+  },
+  "kpgLabel": "KPG (kilometers per gallon)",
+  "@kpgLabel": {
+    "description": "KPG unit option"
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Edit menu item"
+  },
+  "recordsLabelShort": "{count} records | {odometer} {unitDistance} | {mileage}",
+  "@recordsLabelShort": {
+    "description": "Vehicle list subtitle with stats",
+    "placeholders": {
+      "count": { "type": "int" },
+      "odometer": { "type": "String" },
+      "unitDistance": { "type": "String" },
+      "mileage": { "type": "String" }
+    }
+  },
+  "tankSizeOnly": "{tankSize} {unit}",
+  "@tankSizeOnly": {
+    "description": "Vehicle list subtitle for empty vehicle",
+    "placeholders": {
+      "tankSize": { "type": "String" },
+      "unit": { "type": "String" }
+    }
+  },
+  "recordsSubtitle": "{odometer} {unitDistance} | {fuel} {unitVolume}",
+  "@recordsSubtitle": {
+    "description": "Monthly card subtitle",
+    "placeholders": {
+      "odometer": { "type": "String" },
+      "unitDistance": { "type": "String" },
+      "fuel": { "type": "String" },
+      "unitVolume": { "type": "String" }
+    }
+  },
+  "appVersion": "App Version",
+  "@appVersion": {
+    "description": "About row: app version"
+  },
+  "buildDate": "Build Date",
+  "@buildDate": {
+    "description": "About row: build date"
+  },
+  "databaseVersion": "Database Version",
+  "@databaseVersion": {
+    "description": "About row: db version"
+  },
+  "gasMileageLog": "Gas Mileage Log",
+  "@gasMileageLog": {
+    "description": "About subtitle"
+  },
+  "selectCurrency": "Select Currency",
+  "@selectCurrency": {
+    "description": "Currency dialog title"
+  },
+  "searchCurrenciesHint": "Search currencies...",
+  "@searchCurrenciesHint": {
+    "description": "Currency search hint"
+  },
+  "backupSuccess": "Database backup created successfully",
+  "@backupSuccess": {
+    "description": "Backup success snackbar"
+  },
+  "backupFailed": "Backup failed: {error}",
+  "@backupFailed": {
+    "description": "Backup failure snackbar",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "restoreSuccess": "Database restored successfully. Please restart the app.",
+  "@restoreSuccess": {
+    "description": "Restore success snackbar"
+  },
+  "restoreFailed": "Restore failed: {error}",
+  "@restoreFailed": {
+    "description": "Restore failure snackbar",
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "restoreConfirm": "This will replace your current database with the backup. This action cannot be undone. Continue?",
+  "@restoreConfirm": {
+    "description": "Restore confirmation dialog content"
+  },
+  "faqs": "Frequently Asked Questions (FAQ)",
+  "@faqs": {
+    "description": "Help dialog FAQ header"
+  },
+  "helpQ1": "Why isn't FillUp calculating my mileage?",
+  "@helpQ1": {
+    "description": "FAQ question 1"
+  },
+  "helpA1": "You need to fill your tank once to establish a starting point, and then continue recording all of your fuel purchases. Each time you fill your tank after the starting point, FillUp will calculate your mileage by determining the distance driven and fuel used since the previous full tank.\n\nTIP: In the Add Fuel screen, put a check mark in the \"Tank Full\" box to indicate when the tank has been filled, otherwise FillUp will never calculate mileage.",
+  "@helpA1": {
+    "description": "FAQ answer 1"
+  },
+  "helpQ2": "Why does FillUp only estimate my mileage?",
+  "@helpQ2": {
+    "description": "FAQ question 2"
+  },
+  "helpA2": "A full tank is needed to accurately calculate how much fuel was used since the previous full tank. When you get fuel and the tank is not full, FillUp cannot calculate mileage exactly. Instead it will allow you to estimate mileage.",
+  "@helpA2": {
+    "description": "FAQ answer 2"
+  },
+  "helpQ3": "What if I forget to record a fuel purchase?",
+  "@helpQ3": {
+    "description": "FAQ question 3"
+  },
+  "helpA3": "The next time you fill your tank, the mileage calculation will be wrong (too high). You can hide this value by selecting it in the Log and clicking \"Hide Calculation\".",
+  "@helpA3": {
+    "description": "FAQ answer 3"
+  },
+  "helpQ4": "How do I backup/restore my data?",
+  "@helpQ4": {
+    "description": "FAQ question 4"
+  },
+  "helpA4": "FillUp Log data is stored in a database on your device. Use Export to save Log data to a CSV file, and Import to restore it.",
+  "@helpA4": {
+    "description": "FAQ answer 4"
+  },
+  "licenseText": "Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this software except in compliance with the License. You may obtain a copy of the License at:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\n\nUse of this software constitutes acceptance of this license.",
+  "@licenseText": {
+    "description": "Apache 2.0 license text"
+  },
+  "copyright": "Copyright © 2013,2014 William D. Kraemer - Rewritten by Muhammad Bashir Al-Noimi on 2026-08-31",
+  "@copyright": {
+    "description": "Copyright line"
+  },
+  "shareStatistics": "Statistics for {name}",
+  "@shareStatistics": {
+    "description": "Share sheet text for statistics report",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "recordsSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}",
+  "@recordsSummary": {
+    "description": "Monthly card subtitle: distance | fuel",
+    "placeholders": {
+      "odometer": { "type": "String" },
+      "unitDistance": { "type": "String" },
+      "fuel": { "type": "String" },
+      "unitVolume": { "type": "String" }
+    }
+  },
+  "allData": "All data",
+  "@allData": {
+    "description": "Statistics summary header"
+  },
+  "dateRange": "Date Range",
+  "@dateRange": {
+    "description": "Statistics summary date range label"
+  },
+  "months": "months",
+  "@months": {
+    "description": "Plural month count"
+  },
+  "fuelEconomy": "Fuel Economy ({metric})",
+  "@fuelEconomy": {
+    "description": "Fuel economy label with metric",
+    "placeholders": {
+      "metric": { "type": "String" }
+    }
+  },
+  "distanceDriven": "Distance Driven",
+  "@distanceDriven": {
+    "description": "Distance driven label"
+  },
+  "fuelPurchased": "Fuel Purchased",
+  "@fuelPurchased": {
+    "description": "Fuel purchased label"
+  },
+  "fuelCost": "Fuel Cost",
+  "@fuelCost": {
+    "description": "Fuel cost label"
+  },
+  "fuelPrice": "Fuel Price (avg)",
+  "@fuelPrice": {
+    "description": "Fuel price label"
+  },
+  "perMonth": "per month",
+  "@perMonth": {
+    "description": "Per month suffix"
+  },
+  "per": "per {unit}",
+  "@per": {
+    "description": "Per unit suffix",
+    "placeholders": {
+      "unit": { "type": "String" }
+    }
+  },
+  "fuelAmount": "Fuel Amount",
+  "@fuelAmount": {
+    "description": "Gallons field label (unit-aware via liquidVolumeLabel)"
+  },
+  "recordSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}{mileagePart}",
+  "@recordSummary": {
+    "description": "Record list subtitle: odometer | fuel | mileage",
+    "placeholders": {
+      "odometer": { "type": "String" },
+      "unitDistance": { "type": "String" },
+      "fuel": { "type": "String" },
+      "unitVolume": { "type": "String" },
+      "mileagePart": { "type": "String" }
+    }
+  },
+  "mileageUnitLabel": "Mileage ({unit})",
+  "@mileageUnitLabel": {
+    "description": "Mileage unit label with short unit code",
+    "placeholders": {
+      "unit": { "type": "String" }
+    }
   }
 }

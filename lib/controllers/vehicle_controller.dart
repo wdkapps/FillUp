@@ -102,9 +102,11 @@ class VehicleController extends GetxController {
       final stats = <int, Map<String, dynamic>>{};
       final settingsController = Get.find<SettingsController>();
       for (final vehicle in _vehicles) {
-        final records = await db.readAllRecords(vehicle.id!);
+        final vid = vehicle.id;
+        if (vid == null) continue;
+        final records = await db.readAllRecords(vid);
         if (records.isEmpty) {
-          stats[vehicle.id!] = {'odometer': null, 'avgMileage': null, 'recordCount': 0};
+          stats[vid] = {'odometer': null, 'avgMileage': null, 'recordCount': 0};
           continue;
         }
         
@@ -120,7 +122,9 @@ class VehicleController extends GetxController {
         int mileageCount = 0;
         for (final r in sortedRecords) {
           if (r.hasCalculation && !r.hidden) {
-            final m = r.calculation!.getMileage();
+            final calc = r.calculation;
+            if (calc == null) continue;
+            final m = calc.getMileage();
             if (m > 0) {
               mileageSum += m;
               mileageCount++;
@@ -129,7 +133,7 @@ class VehicleController extends GetxController {
         }
         final avgMileage = mileageCount > 0 ? mileageSum / mileageCount : null;
         
-        stats[vehicle.id!] = {
+        stats[vid] = {
           'odometer': sortedRecords.last.odometer,
           'avgMileage': avgMileage,
           'recordCount': records.length,

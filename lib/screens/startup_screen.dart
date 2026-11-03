@@ -28,6 +28,7 @@ class _StartupScreenState extends State<StartupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
         child: Column(
@@ -36,7 +37,7 @@ class _StartupScreenState extends State<StartupScreen> {
             AppIcons.getFuelGaugeIcon(size: 100),
             const SizedBox(height: 24),
             Text(
-              AppLocalizations.of(context)?.appTitle ?? 'FillUp',
+              l10n.appTitle,
               style: Theme.of(context).textTheme.headlineLarge,
             ),
             const SizedBox(height: 16),

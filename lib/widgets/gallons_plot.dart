@@ -13,9 +13,10 @@ class GallonsPlotWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     if (records.isEmpty) {
       return Center(
-        child: Text(AppLocalizations.of(context)?.noRecords ?? 'No data available'),
+        child: Text(l10n.noRecords),
       );
     }
 
@@ -44,7 +45,7 @@ class GallonsPlotWidget extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            '$unitLabel ${AppLocalizations.of(context)?.gallonsPlot ?? 'Plot'}',
+            '$unitLabel ${l10n.gallonsPlot}',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 16),

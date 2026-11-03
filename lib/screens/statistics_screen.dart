@@ -30,42 +30,49 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   void initState() {
     super.initState();
     _controller = Get.put(GasRecordController());
-    _controller.loadRecords(widget.vehicle.id!);
+    final id = widget.vehicle.id;
+    if (id != null) _controller.loadRecords(id);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _controller.loadRecords(widget.vehicle.id!);
+    final id = widget.vehicle.id;
+    if (id != null) _controller.loadRecords(id);
   }
 
   Future<void> _shareReport() async {
+    final l10n = AppLocalizations.of(context);
     try {
-      final html = StatsExporter.generateHtml(widget.vehicle, _controller.records);
+      final html = StatsExporter.generateHtml(
+          widget.vehicle, _controller.records, l10n);
       if (html.isEmpty) return;
       final dir = await getTemporaryDirectory();
-      final file = File('${dir.path}/${widget.vehicle.name}_statistics.html');
+      final file =
+          File('${dir.path}/${widget.vehicle.name}_statistics.html');
       await file.writeAsString(html);
       await SharePlus.instance.share(
         ShareParams(
           files: [XFile(file.path)],
-          text: '${widget.vehicle.name} Statistics',
+          text: l10n.shareStatistics(widget.vehicle.name),
         ),
       );
     } catch (e) {
-      Get.snackbar('Error', 'Failed to share report: $e');
+      Get.snackbar(l10n.error, l10n.shareReportError(e.toString()));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)?.statistics ?? 'Statistics'),
+        title: Text(l10n.statistics),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
-            tooltip: 'Share Report',
+            tooltip: l10n.shareReport,
             onPressed: _shareReport,
           ),
         ],
@@ -78,18 +85,18 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         if (_controller.records.isEmpty) {
           return Center(
             child: Text(
-              AppLocalizations.of(context)?.noRecords ?? 'No data available',
+              l10n.noRecords,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           );
         }
 
-        return _buildStatistics();
+        return _buildStatistics(l10n);
       }),
     );
   }
 
-  Widget _buildStatistics() {
+  Widget _buildStatistics(AppLocalizations l10n) {
     final records = _controller.records;
     final settingsController = Get.find<SettingsController>();
     final unit = settingsController.unit;
@@ -149,28 +156,33 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       totalCost += trip.cost;
     }
 
-    // Mileage stats
+    // Mileage stats — matches Java StatisticsMonthTable: includes zero-mileage
+    // values in min/sum (no m > 0 guard).
     double mileageSum = 0;
-    double mileageMin = double.infinity;
+    double mileageMin = 0;
     double mileageMax = 0;
     int mileageCount = 0;
     for (final r in sorted) {
       if (r.hasCalculation && !r.hidden) {
-        final m = r.calculation!.getMileage();
-        if (m > 0) {
-          mileageSum += m;
-          mileageMin = m < mileageMin ? m : mileageMin;
-          mileageMax = m > mileageMax ? m : mileageMax;
-          mileageCount++;
-        }
+        final calc = r.calculation;
+        if (calc == null) continue;
+        final m = calc.getMileage();
+        mileageSum += m;
+        if (mileageCount == 0 || m < mileageMin) mileageMin = m;
+        if (m > mileageMax) mileageMax = m;
+        mileageCount++;
       }
     }
 
     final numMonths = allMonths.length;
-    final avgDistPerMonth = numMonths > 0 ? totalTripDistance / numMonths : 0.0;
-    final avgFuelPerMonth = numMonths > 0 ? totalFuel / numMonths : 0.0;
-    final avgCostPerMonth = numMonths > 0 ? totalCost / numMonths : 0.0;
-    final costPerDist = totalTripDistance > 0 ? totalCost / totalTripDistance : 0.0;
+    final avgDistPerMonth =
+        numMonths > 0 ? totalTripDistance / numMonths : 0.0;
+    final avgFuelPerMonth =
+        numMonths > 0 ? totalFuel / numMonths : 0.0;
+    final avgCostPerMonth =
+        numMonths > 0 ? totalCost / numMonths : 0.0;
+    final costPerDist =
+        totalTripDistance > 0 ? totalCost / totalTripDistance : 0.0;
     final avgPricePerUnit = totalFuel > 0 ? totalCost / totalFuel : 0.0;
 
     return ListView(
@@ -183,31 +195,71 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Summary', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  l10n.summary,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 const SizedBox(height: 12),
-                _buildStatRow('Records', '${sorted.length}'),
+                _buildStatRow(l10n.recordsLabel, '${sorted.length}'),
                 const Divider(),
-                _buildSectionHeader('Mileage'),
-                _buildStatRow('  Avg', mileageCount > 0 ? MileageCalculator.formatMileage(mileageSum / mileageCount, unit) : '-'),
-                _buildStatRow('  Min', mileageCount > 0 ? MileageCalculator.formatMileage(mileageMin, unit) : '-'),
-                _buildStatRow('  Max', mileageCount > 0 ? MileageCalculator.formatMileage(mileageMax, unit) : '-'),
+                _buildSectionHeader(l10n.mileage),
+                _buildStatRow(
+                  '  ${l10n.avg}',
+                  mileageCount > 0
+                      ? MileageCalculator.formatMileage(
+                          mileageSum / mileageCount, unit, l10n)
+                      : '-',
+                ),
+                _buildStatRow(
+                  '  ${l10n.min}',
+                  mileageCount > 0
+                      ? MileageCalculator.formatMileage(mileageMin, unit, l10n)
+                      : '-',
+                ),
+                _buildStatRow(
+                  '  ${l10n.max}',
+                  mileageCount > 0
+                      ? MileageCalculator.formatMileage(mileageMax, unit, l10n)
+                      : '-',
+                ),
                 const Divider(),
-                _buildSectionHeader('Distance'),
-                _buildStatRow('  Total', '$totalTripDistance ${unit.distanceLabel}'),
-                _buildStatRow('  Avg/month', '${avgDistPerMonth.toStringAsFixed(0)} ${unit.distanceLabel}'),
+                _buildSectionHeader(l10n.distanceSection),
+                _buildStatRow(
+                  '  ${l10n.total}',
+                  '$totalTripDistance ${unit.distanceLabel}',
+                ),
+                _buildStatRow(
+                  '  ${l10n.avgMonth}',
+                  '${avgDistPerMonth.toStringAsFixed(0)} ${unit.distanceLabel}',
+                ),
                 const Divider(),
-                _buildSectionHeader('Fuel'),
-                _buildStatRow('  Total', '${totalFuel.toStringAsFixed(3)} ${unit.liquidVolumeLabel}'),
-                _buildStatRow('  Avg/month', '${avgFuelPerMonth.toStringAsFixed(3)} ${unit.liquidVolumeLabel}'),
+                _buildSectionHeader(l10n.fuelSection),
+                _buildStatRow(
+                  '  ${l10n.total}',
+                  '${totalFuel.toStringAsFixed(3)} ${unit.liquidVolumeLabel}',
+                ),
+                _buildStatRow(
+                  '  ${l10n.avgMonth}',
+                  '${avgFuelPerMonth.toStringAsFixed(3)} ${unit.liquidVolumeLabel}',
+                ),
                 const Divider(),
-                _buildSectionHeader('Cost'),
-                _buildStatRow('  Total', cm.formatCurrency(totalCost, currencyCode)),
-                _buildStatRow('  Avg/month', cm.formatCurrency(avgCostPerMonth, currencyCode)),
+                _buildSectionHeader(l10n.costSection),
+                _buildStatRow(
+                    '  ${l10n.total}', cm.formatCurrency(totalCost, currencyCode)),
+                _buildStatRow(
+                    '  ${l10n.avgMonth}',
+                    cm.formatCurrency(avgCostPerMonth, currencyCode)),
                 if (totalTripDistance > 0)
-                  _buildStatRow('  Per ${unit.distanceLabel}', '${cm.formatCurrency(costPerDist, currencyCode)}/${unit.distanceLabel}'),
+                  _buildStatRow(
+                    '  ${l10n.perDistance(unit.distanceLabel)}',
+                    '${cm.formatCurrency(costPerDist, currencyCode)}/${unit.distanceLabel}',
+                  ),
                 const Divider(),
-                _buildSectionHeader('Price'),
-                _buildStatRow('  Avg/${unit.liquidVolumeLabel}', cm.formatCurrency(avgPricePerUnit, currencyCode)),
+                _buildSectionHeader(l10n.priceSection),
+                _buildStatRow(
+                  '  ${l10n.avgPerVolume(unit.liquidVolumeLabel)}',
+                  cm.formatCurrency(avgPricePerUnit, currencyCode),
+                ),
               ],
             ),
           ),
@@ -215,12 +267,17 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         const SizedBox(height: 16),
 
         // Monthly Breakdown (newest first)
-        Text('Monthly Breakdown', style: Theme.of(context).textTheme.titleMedium),
+        Text(
+          l10n.monthlyBreakdown,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         const SizedBox(height: 8),
         ...allMonths.reversed.map((month) {
-          final trip = tripsByMonth[month] ?? _TripData(distance: 0, fuel: 0, cost: 0);
+          final trip = tripsByMonth[month] ??
+              _TripData(distance: 0, fuel: 0, cost: 0);
           final monthRecs = recordsByMonth[month] ?? [];
-          return _buildMonthlyCard(month, trip, monthRecs, unit, currencyCode);
+          return _buildMonthlyCard(
+              context, month, trip, monthRecs, unit, currencyCode, l10n);
         }),
       ],
     );
@@ -240,7 +297,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   Widget _buildSectionHeader(String label) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
-      child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+      child: Text(
+          label, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
     );
   }
 
@@ -251,18 +309,21 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: const TextStyle(fontSize: 13)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          Text(value,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
         ],
       ),
     );
   }
 
   Widget _buildMonthlyCard(
+    BuildContext context,
     String month,
     _TripData trip,
     List<GasRecord> monthRecords,
     Units unit,
     String currencyCode,
+    AppLocalizations l10n,
   ) {
     final cm = CurrencyManager.instance;
     final mDistance = trip.distance;
@@ -272,53 +333,78 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     final mAvgPrice = mFuel > 0 ? mCost / mFuel : 0.0;
 
     double mileageSum = 0;
-    double mileageMin = double.infinity;
+    double mileageMin = 0;
     double mileageMax = 0;
     int mileageCount = 0;
     for (final r in monthRecords) {
       if (r.hasCalculation && !r.hidden) {
-        final m = r.calculation!.getMileage();
-        if (m > 0) {
-          mileageSum += m;
-          mileageMin = m < mileageMin ? m : mileageMin;
-          mileageMax = m > mileageMax ? m : mileageMax;
-          mileageCount++;
-        }
+        final calc = r.calculation;
+        if (calc == null) continue;
+        final m = calc.getMileage();
+        mileageSum += m;
+        if (mileageCount == 0 || m < mileageMin) mileageMin = m;
+        if (m > mileageMax) mileageMax = m;
+        mileageCount++;
       }
     }
 
-    final label = DateFormat('MMM yyyy').format(DateFormat('yyyy-MM').parse(month)).toUpperCase();
+    final label = DateFormat('MMM yyyy')
+        .format(DateFormat('yyyy-MM').parse(month))
+        .toUpperCase();
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: ExpansionTile(
-        title: Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('$mDistance ${unit.distanceLabel} | ${mFuel.toStringAsFixed(3)} ${unit.liquidVolumeLabel}'),
+        title: Text(label,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(
+          l10n.recordsSummary(
+              mDistance.toString(),
+              unit.distanceLabel,
+              mFuel.toStringAsFixed(3),
+              unit.liquidVolumeLabel)),
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
             child: Column(
               children: [
                 if (mileageCount > 0) ...[
-                  _buildMonthlySubHeader('Mileage'),
-                  _buildStatRow('  Avg', MileageCalculator.formatMileage(mileageSum / mileageCount, unit)),
-                  _buildStatRow('  Min', MileageCalculator.formatMileage(mileageMin, unit)),
-                  _buildStatRow('  Max', MileageCalculator.formatMileage(mileageMax, unit)),
+                  _buildMonthlySubHeader(l10n.mileage),
+                  _buildStatRow(
+                      '  ${l10n.avg}',
+                      MileageCalculator.formatMileage(
+                          mileageSum / mileageCount, unit, l10n)),
+                  _buildStatRow('  ${l10n.min}',
+                      MileageCalculator.formatMileage(mileageMin, unit, l10n)),
+                  _buildStatRow('  ${l10n.max}',
+                      MileageCalculator.formatMileage(mileageMax, unit, l10n)),
                   const Divider(height: 16),
                 ],
-                _buildMonthlySubHeader('Distance'),
-                _buildStatRow('  Total', '$mDistance ${unit.distanceLabel}'),
+                _buildMonthlySubHeader(l10n.distanceSection),
+                _buildStatRow('  ${l10n.total}',
+                    '$mDistance ${unit.distanceLabel}'),
                 const Divider(height: 16),
-                _buildMonthlySubHeader('Fuel'),
-                _buildStatRow('  Total', '${mFuel.toStringAsFixed(3)} ${unit.liquidVolumeLabel}'),
+                _buildMonthlySubHeader(l10n.fuelSection),
+                _buildStatRow(
+                    '  ${l10n.total}',
+                    '${mFuel.toStringAsFixed(3)} ${unit.liquidVolumeLabel}'),
                 const Divider(height: 16),
-                _buildMonthlySubHeader('Cost'),
-                _buildStatRow('  Total', cm.formatCurrency(mCost, currencyCode)),
+                _buildMonthlySubHeader(l10n.costSection),
+                _buildStatRow(
+                    '  ${l10n.total}', cm.formatCurrency(mCost, currencyCode)),
                 if (mDistance > 0)
-                  _buildStatRow('  Per ${unit.distanceLabel}', '${cm.formatCurrency(mCostPerDist, currencyCode)}/${unit.distanceLabel}'),
+                  _buildStatRow(
+                    '  ${l10n.perDistance(unit.distanceLabel)}',
+                    '${cm.formatCurrency(mCostPerDist, currencyCode)}/${unit.distanceLabel}',
+                  ),
                 const Divider(height: 16),
-                _buildMonthlySubHeader('Price'),
-                _buildStatRow('  Avg/${unit.liquidVolumeLabel}', mFuel > 0 ? cm.formatCurrency(mAvgPrice, currencyCode) : '-'),
+                _buildMonthlySubHeader(l10n.priceSection),
+                _buildStatRow(
+                  '  ${l10n.avgPerVolume(unit.liquidVolumeLabel)}',
+                  mFuel > 0
+                      ? cm.formatCurrency(mAvgPrice, currencyCode)
+                      : '-',
+                ),
               ],
             ),
           ),
@@ -330,7 +416,10 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   Widget _buildMonthlySubHeader(String label) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
+      child: Text(
+          label,
+          style:
+              const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
     );
   }
 }

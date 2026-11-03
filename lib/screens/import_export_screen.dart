@@ -14,11 +14,12 @@ class ImportExportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final controller = Get.put(GasRecordController());
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Import/Export'),
+        title: Text(l10n.importExport),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -27,11 +28,13 @@ class ImportExportScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: const Icon(Icons.upload_file),
-              title: Text(AppLocalizations.of(context)?.export ?? 'Export'),
-              subtitle: const Text('Export fuel records to CSV file'),
+              title: Text(l10n.export),
+              subtitle: Text(l10n.exportSubtitle),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
-                await controller.loadRecords(vehicle.id!);
+                final id = vehicle.id;
+                if (id == null) return;
+                await controller.loadRecords(id);
                 final success = await CsvHandler.exportToCsv(
                   controller.records,
                   vehicle.name,
@@ -39,7 +42,9 @@ class ImportExportScreen extends StatelessWidget {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(success ? 'Export successful' : 'Export failed'),
+                      content: Text(
+                        success ? l10n.exportSuccess : l10n.exportFailed,
+                      ),
                       backgroundColor: success ? Colors.green : Colors.red,
                     ),
                   );
@@ -53,8 +58,8 @@ class ImportExportScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: const Icon(Icons.download),
-              title: Text(AppLocalizations.of(context)?.import ?? 'Import'),
-              subtitle: const Text('Import fuel records from CSV file'),
+              title: Text(l10n.import),
+              subtitle: Text(l10n.importSubtitle),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
                 final files = await FilePicker.pickFiles(
@@ -62,17 +67,20 @@ class ImportExportScreen extends StatelessWidget {
                   allowedExtensions: ['csv'],
                 );
                 if (files.isNotEmpty) {
-                  final records = await CsvHandler.importFromCsv(
-                    files.first.path!,
-                  );
+                  final filePath = files.first.path;
+                  if (filePath == null) return;
+                  final records = await CsvHandler.importFromCsv(filePath);
                   if (records.isNotEmpty) {
                     for (final record in records) {
-                      await controller.addRecord(record.copyWith(vehicleId: vehicle.id));
+                      await controller
+                          .addRecord(record.copyWith(vehicleId: vehicle.id));
                     }
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Imported ${records.length} records'),
+                          content: Text(
+                            l10n.importedRecords(records.length),
+                          ),
                           backgroundColor: Colors.green,
                         ),
                       );
@@ -81,8 +89,8 @@ class ImportExportScreen extends StatelessWidget {
                   } else {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('No valid records found'),
+                        SnackBar(
+                          content: Text(l10n.noValidRecords),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -98,11 +106,13 @@ class ImportExportScreen extends StatelessWidget {
           Card(
             child: ListTile(
               leading: const Icon(Icons.share),
-              title: const Text('Share'),
-              subtitle: const Text('Share CSV file'),
+              title: Text(l10n.shareTitle),
+              subtitle: Text(l10n.shareSubtitle),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
-                await controller.loadRecords(vehicle.id!);
+                final id = vehicle.id;
+                if (id == null) return;
+                await controller.loadRecords(id);
                 final success = await CsvHandler.exportToCsv(
                   controller.records,
                   vehicle.name,
@@ -112,7 +122,7 @@ class ImportExportScreen extends StatelessWidget {
                   await SharePlus.instance.share(
                     ShareParams(
                       files: [XFile(path)],
-                      text: 'Fuel records for ${vehicle.name}',
+                      text: l10n.shareRecords(vehicle.name),
                     ),
                   );
                 }

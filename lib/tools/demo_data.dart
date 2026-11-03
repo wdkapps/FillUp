@@ -15,6 +15,7 @@ Future<void> main(List<String> args) async {
   }
 
   sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
 
   final dbPath = p.join(await getDatabasesPath(), 'gaslog.db');
   print('Database: $dbPath');

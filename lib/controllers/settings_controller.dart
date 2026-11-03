@@ -29,13 +29,16 @@ class SettingsController extends GetxController {
     _unit.value = Units.fromValue(prefs.getInt(AppConstants.keyUnit) ?? AppConstants.defaultUnit);
     _currency.value = prefs.getString(AppConstants.keyCurrency) ?? AppConstants.defaultCurrency;
     _language.value = prefs.getString(AppConstants.keyLanguage) ?? AppConstants.defaultLanguage;
-    
+
     final themeIndex = prefs.getInt(AppConstants.keyTheme) ?? 0;
     _themeMode.value = ThemeMode.values[themeIndex];
-    
+
     requireCost.value = prefs.getBool(AppConstants.keyRequireCost) ?? true;
     displayCost.value = prefs.getBool(AppConstants.keyDisplayCost) ?? true;
     displayNotes.value = prefs.getBool(AppConstants.keyDisplayNotes) ?? true;
+
+    // Apply persisted language on startup so restarts keep the chosen locale.
+    Get.updateLocale(_getLocaleFromString(_language.value));
     update();
   }
 
@@ -96,6 +99,18 @@ class SettingsController extends GetxController {
     switch (langCode) {
       case 'ar':
         return const Locale('ar');
+      case 'de':
+        return const Locale('de');
+      case 'es':
+        return const Locale('es');
+      case 'fr':
+        return const Locale('fr');
+      case 'pt-BR':
+        return const Locale('pt', 'BR');
+      case 'pt':
+        return const Locale('pt');
+      case 'ru':
+        return const Locale('ru');
       case 'tr':
         return const Locale('tr');
       default:

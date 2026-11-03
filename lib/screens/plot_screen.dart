@@ -27,7 +27,8 @@ class _PlotScreenState extends State<PlotScreen> with SingleTickerProviderStateM
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
     _controller = Get.put(GasRecordController());
-    _controller.loadRecords(widget.vehicle.id!);
+    final id = widget.vehicle.id;
+    if (id != null) _controller.loadRecords(id);
   }
 
   @override
@@ -38,18 +39,19 @@ class _PlotScreenState extends State<PlotScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)?.plot ?? 'Plot'),
+        title: Text(l10n.plot),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
           tabs: [
-            Tab(text: AppLocalizations.of(context)?.mileagePlot ?? 'Mileage'),
-            Tab(text: AppLocalizations.of(context)?.odometerPlot ?? 'Odometer'),
-            Tab(text: AppLocalizations.of(context)?.gallonsPlot ?? 'Gallons'),
-            Tab(text: AppLocalizations.of(context)?.costPlot ?? 'Cost'),
-            Tab(text: AppLocalizations.of(context)?.pricePlot ?? 'Price'),
+            Tab(text: l10n.mileagePlot),
+            Tab(text: l10n.odometerPlot),
+            Tab(text: l10n.gallonsPlot),
+            Tab(text: l10n.costPlot),
+            Tab(text: l10n.pricePlot),
           ],
         ),
       ),
@@ -61,7 +63,7 @@ class _PlotScreenState extends State<PlotScreen> with SingleTickerProviderStateM
         if (_controller.records.isEmpty) {
           return Center(
             child: Text(
-              AppLocalizations.of(context)?.noRecords ?? 'No data available',
+              l10n.noRecords,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           );

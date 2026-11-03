@@ -5,8 +5,6 @@ import '../l10n/generated/app_localizations.dart';
 import '../controllers/vehicle_controller.dart';
 import '../controllers/settings_controller.dart';
 import '../models/vehicle.dart';
-import '../models/units.dart';
-import '../models/mileage_calculation.dart';
 import '../constants/app_icons.dart';
 import '../widgets/vehicle_brand_widget.dart';
 import 'gas_record_screen.dart';
@@ -41,13 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final vehicleController = Get.put(VehicleController());
+    final l10n = AppLocalizations.of(context);
 
     return Obx(() {
       final hasVehicles = vehicleController.vehicles.isNotEmpty;
 
       return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)?.appTitle ?? 'FillUp'),
+          title: Text(l10n.appTitle),
           actions: [
             PopupMenuButton<String>(
               onSelected: (value) {
@@ -64,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       const Icon(Icons.settings),
                       const SizedBox(width: 8),
-                      Text(AppLocalizations.of(context)?.settings ?? 'Settings'),
+                      Text(l10n.settings),
                     ],
                   ),
                 ),
@@ -75,10 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
         body: vehicleController.isLoading
             ? const Center(child: CircularProgressIndicator())
             : hasVehicles
-                ? _buildVehicleList(context, vehicleController)
-                : _buildEmptyState(context),
+                ? _buildVehicleList(context, vehicleController, l10n)
+                : _buildEmptyState(context, l10n),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _showAddVehicleDialog(context),
+          onPressed: () => _showAddVehicleDialog(context, l10n),
           child: const Icon(Icons.add),
         ),
       );
@@ -91,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadStats();
   }
 
-  Widget _buildEmptyState(BuildContext context) {
+  Widget _buildEmptyState(BuildContext context, AppLocalizations l10n) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -99,21 +98,24 @@ class _HomeScreenState extends State<HomeScreen> {
           const Icon(Icons.directions_car, size: 80),
           const SizedBox(height: 24),
           Text(
-            AppLocalizations.of(context)?.noVehicles ?? 'No vehicles added yet',
+            l10n.noVehicles,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
           FilledButton.icon(
-            onPressed: () => _showAddVehicleDialog(context),
+            onPressed: () => _showAddVehicleDialog(context, l10n),
             icon: const Icon(Icons.add),
-            label: Text(AppLocalizations.of(context)?.addVehicle ?? 'Add Vehicle'),
+            label: Text(l10n.addVehicle),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildVehicleList(BuildContext context, VehicleController controller) {
+  Widget _buildVehicleList(
+      BuildContext context,
+      VehicleController controller,
+      AppLocalizations l10n) {
     final settingsController = Get.find<SettingsController>();
     final unit = settingsController.unit;
     return ListView.builder(
@@ -129,13 +131,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
         String subtitle;
         if (recordCount == 0) {
-          subtitle = '${vehicle.tankSize} ${unit.liquidVolumeLabel}';
+          subtitle = l10n.tankSizeOnly(
+              vehicle.tankSize.toString(),
+              unit.liquidVolumeLabel);
         } else {
           final odoStr = odo != null ? NumberFormat('#,###').format(odo) : '-';
           final avgStr = avgMileage != null
               ? '${avgMileage.toStringAsFixed(2)} ${unit.mileageLabel}'
               : '-';
-          subtitle = '$recordCount records | $odoStr ${unit.distanceLabel} | $avgStr';
+          subtitle = l10n.recordsLabelShort(
+            recordCount,
+            odoStr,
+            unit.distanceLabel,
+            avgStr,
+          );
         }
 
         return Card(
@@ -154,17 +163,17 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.edit),
-                  onPressed: () => _showEditVehicleDialog(context, vehicle),
+                  onPressed: () => _showEditVehicleDialog(context, vehicle, l10n),
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete),
-                  onPressed: () => _showDeleteVehicleDialog(context, vehicle),
+                  onPressed: () => _showDeleteVehicleDialog(context, vehicle, l10n),
                 ),
               ],
             ),
             onTap: () {
               controller.selectVehicle(vehicle);
-              _showVehicleMenu(context, vehicle);
+              _showVehicleMenu(context, vehicle, l10n);
             },
           ),
         );
@@ -172,7 +181,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showVehicleMenu(BuildContext context, Vehicle vehicle) {
+  void _showVehicleMenu(
+      BuildContext context,
+      Vehicle vehicle,
+      AppLocalizations l10n) {
     final settingsController = Get.find<SettingsController>();
     final unitLabel = settingsController.unit.liquidVolumeLabel;
     showModalBottomSheet(
@@ -192,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const Divider(),
             ListTile(
               leading: const Icon(AppIcons.add),
-              title: Text(AppLocalizations.of(context)?.addRecord ?? 'Add Record'),
+              title: Text(l10n.addRecord),
               onTap: () async {
                 Navigator.pop(context);
                 final result = await Get.to(() => GasRecordScreen(vehicle: vehicle));
@@ -203,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               leading: const Icon(AppIcons.notepad),
-              title: Text(AppLocalizations.of(context)?.fuelRecords ?? 'Fuel Records'),
+              title: Text(l10n.fuelRecords),
               onTap: () {
                 Navigator.pop(context);
                 Get.to(() => GasLogListScreen(vehicle: vehicle));
@@ -211,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               leading: AppIcons.getPlotIcon(size: 24),
-              title: Text(AppLocalizations.of(context)?.plot ?? 'Plot'),
+              title: Text(l10n.plot),
               onTap: () {
                 Navigator.pop(context);
                 Get.to(() => PlotScreen(vehicle: vehicle));
@@ -219,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               leading: AppIcons.getStatsIcon(size: 24),
-              title: Text(AppLocalizations.of(context)?.statistics ?? 'Statistics'),
+              title: Text(l10n.statistics),
               onTap: () {
                 Navigator.pop(context);
                 Get.to(() => StatisticsScreen(vehicle: vehicle));
@@ -227,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ListTile(
               leading: const Icon(AppIcons.importFile),
-              title: const Text('Import/Export'),
+              title: Text(l10n.importExport),
               onTap: () async {
                 Navigator.pop(context);
                 final result = await Get.to(() => ImportExportScreen(vehicle: vehicle));
@@ -242,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showAddVehicleDialog(BuildContext context) {
+  void _showAddVehicleDialog(BuildContext context, AppLocalizations l10n) {
     final nameController = TextEditingController();
     final tankSizeController = TextEditingController();
     final formKey = GlobalKey<FormState>();
@@ -252,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)?.addVehicle ?? 'Add Vehicle'),
+        title: Text(l10n.addVehicle),
         content: Form(
           key: formKey,
           child: Column(
@@ -261,12 +273,12 @@ class _HomeScreenState extends State<HomeScreen> {
               TextFormField(
                 controller: nameController,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)?.vehicleName ?? 'Vehicle Name',
+                  labelText: l10n.vehicleName,
                   border: const OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
+                    return l10n.pleaseEnterName;
                   }
                   try {
                     Vehicle.validateName(value);
@@ -281,12 +293,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: tankSizeController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: '${AppLocalizations.of(context)?.tankSize ?? 'Tank Size'} ($unitLabel)',
+                  labelText: '${l10n.tankSize} ($unitLabel)',
                   border: const OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter tank size';
+                    return l10n.pleaseEnterTankSize;
                   }
                   try {
                     Vehicle.validateTankSize(double.parse(value));
@@ -302,7 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)?.cancel ?? 'Cancel'),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () async {
@@ -315,22 +327,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (context.mounted) Navigator.pop(context);
               }
             },
-            child: Text(AppLocalizations.of(context)?.save ?? 'Save'),
+            child: Text(l10n.save),
           ),
         ],
       ),
     );
   }
 
-  void _showEditVehicleDialog(BuildContext context, Vehicle vehicle) {
+  void _showEditVehicleDialog(
+      BuildContext context,
+      Vehicle vehicle,
+      AppLocalizations l10n) {
     final nameController = TextEditingController(text: vehicle.name);
-    final tankSizeController = TextEditingController(text: vehicle.tankSize.toString());
+    final tankSizeController =
+        TextEditingController(text: vehicle.tankSize.toString());
     final formKey = GlobalKey<FormState>();
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)?.editVehicle ?? 'Edit Vehicle'),
+        title: Text(l10n.editVehicle),
         content: Form(
           key: formKey,
           child: Column(
@@ -339,12 +355,12 @@ class _HomeScreenState extends State<HomeScreen> {
               TextFormField(
                 controller: nameController,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)?.vehicleName ?? 'Vehicle Name',
+                  labelText: l10n.vehicleName,
                   border: const OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
+                    return l10n.pleaseEnterName;
                   }
                   try {
                     Vehicle.validateName(value);
@@ -359,12 +375,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: tankSizeController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)?.tankSize ?? 'Tank Size',
+                  labelText: l10n.tankSize,
                   border: const OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter tank size';
+                    return l10n.pleaseEnterTankSize;
                   }
                   try {
                     Vehicle.validateTankSize(double.parse(value));
@@ -380,7 +396,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)?.cancel ?? 'Cancel'),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () async {
@@ -393,30 +409,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (context.mounted) Navigator.pop(context);
               }
             },
-            child: Text(AppLocalizations.of(context)?.save ?? 'Save'),
+            child: Text(l10n.save),
           ),
         ],
       ),
     );
   }
 
-  void _showDeleteVehicleDialog(BuildContext context, Vehicle vehicle) {
+  void _showDeleteVehicleDialog(
+      BuildContext context,
+      Vehicle vehicle,
+      AppLocalizations l10n) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)?.deleteVehicle ?? 'Delete Vehicle'),
-        content: Text('Are you sure you want to delete ${vehicle.name}?'),
+        title: Text(l10n.deleteVehicle),
+        content: Text(l10n.confirmDeleteVehicle(vehicle.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)?.cancel ?? 'Cancel'),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () async {
-              await Get.find<VehicleController>().deleteVehicle(vehicle.id!);
+              final id = vehicle.id;
+              if (id == null) return;
+              await Get.find<VehicleController>().deleteVehicle(id);
               if (context.mounted) Navigator.pop(context);
             },
-            child: Text(AppLocalizations.of(context)?.delete ?? 'Delete'),
+            child: Text(l10n.delete),
           ),
         ],
       ),

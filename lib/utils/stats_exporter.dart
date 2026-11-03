@@ -6,17 +6,22 @@ import '../controllers/settings_controller.dart';
 import '../utils/mileage_calculator.dart';
 import '../utils/currency_manager.dart';
 import 'package:get/get.dart';
+import '../l10n/generated/app_localizations.dart';
 
 class _TripRecord {
   int distance;
   double gallons;
   double cost;
 
-  _TripRecord({required this.distance, required this.gallons, required this.cost});
+  _TripRecord(
+      {required this.distance, required this.gallons, required this.cost});
 }
 
 class StatsExporter {
-  static String generateHtml(Vehicle vehicle, List<GasRecord> records) {
+  static String generateHtml(
+      Vehicle vehicle,
+      List<GasRecord> records,
+      AppLocalizations l10n) {
     final sc = Get.find<SettingsController>();
     final unit = sc.unit;
     final currencyCode = sc.currency;
@@ -33,7 +38,10 @@ class StatsExporter {
     // First record: self-trip (distance=0)
     final firstKey = DateFormat('yyyy-MM').format(sorted.first.date);
     tripsByMonth.putIfAbsent(firstKey, () => []).add(
-      _TripRecord(distance: 0, gallons: sorted.first.gallons, cost: sorted.first.cost),
+      _TripRecord(
+          distance: 0,
+          gallons: sorted.first.gallons,
+          cost: sorted.first.cost),
     );
 
     // Subsequent records: trip from previous record
@@ -75,13 +83,17 @@ class StatsExporter {
     }
 
     final sb = StringBuffer();
-    sb.writeln('<?xml version="1.0" encoding="utf-8"?>');
-    sb.writeln('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">');
+    sb.writeln(
+        '<?xml version="1.0" encoding="utf-8"?>');
+    sb.writeln(
+        '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">');
     sb.writeln('<html>');
     sb.writeln('<head>');
-    sb.writeln('<title>Statistics</title>');
-    sb.writeln('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />');
-    sb.writeln('<meta name="generator" content="FillUp/Flutter" />');
+    sb.writeln('<title>${l10n.statistics}</title>');
+    sb.writeln(
+        '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />');
+    sb.writeln(
+        '<meta name="generator" content="FillUp/Flutter" />');
     sb.writeln(_css());
     sb.writeln('</head>');
     sb.writeln('<body>');
@@ -89,7 +101,8 @@ class StatsExporter {
     // Summary table
     if (allMonths.length > 1) {
       sb.writeln('<div>');
-      sb.writeln(_summaryTable(sorted, allMonths.length, totalTripDistance, totalFuel, totalCost, unit, currencyCode, cm));
+      sb.writeln(_summaryTable(sorted, allMonths.length, totalTripDistance,
+          totalFuel, totalCost, unit, currencyCode, cm, l10n));
       sb.writeln('</div>');
       sb.writeln('<p/>');
     }
@@ -101,7 +114,8 @@ class StatsExporter {
       final monthRecords = recordsByMonth[monthKey] ?? [];
       final label = _monthLabel(monthKey);
       sb.writeln('<div>');
-      sb.writeln(_monthTable(label, trips, monthRecords, unit, currencyCode, cm));
+      sb.writeln(
+          _monthTable(label, trips, monthRecords, unit, currencyCode, cm, l10n));
       sb.writeln('</div>');
       sb.writeln('<p/>');
     }
@@ -136,33 +150,38 @@ class StatsExporter {
     Units unit,
     String currencyCode,
     CurrencyManager cm,
+    AppLocalizations l10n,
   ) {
     final firstDate = sorted.first.date;
     final lastDate = sorted.last.date;
-    final firstMonth = DateFormat('MMM yyyy').format(firstDate).toUpperCase();
+    final firstMonth =
+        DateFormat('MMM yyyy').format(firstDate).toUpperCase();
     final lastMonth = DateFormat('MMM yyyy').format(lastDate).toUpperCase();
 
-    // Mileage stats from full-tank-to-full-tank calculations only
+    // Mileage stats — matches Java StatisticsMonthTable: includes zero-mileage
+    // values in min/sum (no m > 0 guard).
     double mileageSum = 0;
-    double mileageMin = double.infinity;
+    double mileageMin = 0;
     double mileageMax = 0;
     int mileageCount = 0;
     for (final r in sorted) {
       if (r.hasCalculation && !r.hidden) {
-        final m = r.calculation!.getMileage();
-        if (m > 0) {
-          mileageSum += m;
-          mileageMin = m < mileageMin ? m : mileageMin;
-          mileageMax = m > mileageMax ? m : mileageMax;
-          mileageCount++;
-        }
+        final calc = r.calculation;
+        if (calc == null) continue;
+        final m = calc.getMileage();
+        mileageSum += m;
+        if (mileageCount == 0 || m < mileageMin) mileageMin = m;
+        if (m > mileageMax) mileageMax = m;
+        mileageCount++;
       }
     }
 
-    final avgDistPerMonth = numMonths > 0 ? totalDistance / numMonths : 0.0;
+    final avgDistPerMonth =
+        numMonths > 0 ? totalDistance / numMonths : 0.0;
     final avgFuelPerMonth = numMonths > 0 ? totalFuel / numMonths : 0.0;
     final avgCostPerMonth = numMonths > 0 ? totalCost / numMonths : 0.0;
-    final costPerDist = totalDistance > 0 ? totalCost / totalDistance : 0.0;
+    final costPerDist =
+        totalDistance > 0 ? totalCost / totalDistance : 0.0;
     final avgPrice = totalFuel > 0 ? totalCost / totalFuel : 0.0;
 
     final distLabel = unit.distanceLabel.toLowerCase();
@@ -171,11 +190,14 @@ class StatsExporter {
     final sb = StringBuffer();
     sb.writeln('<table class="summary">');
     sb.writeln('<tr class="summary">');
-    sb.writeln('  <th class="summary" colspan="2">SUMMARY:All data</th>');
+    sb.writeln(
+        '  <th class="summary" colspan="2">${l10n.summary}: ${l10n.allData}</th>');
     sb.writeln('</tr>');
     sb.writeln('<tr class="summary">');
-    sb.writeln('  <td class="summary">Date Range</td>');
-    sb.writeln('  <td class="summary"><span style="white-space: nowrap">$firstMonth</span> &mdash; <span style="white-space: nowrap">$lastMonth</span> <br/>($numMonths months)</td>');
+    sb.writeln(
+        '  <td class="summary">${l10n.dateRange}</td>');
+    sb.writeln(
+        '  <td class="summary"><span style="white-space: nowrap">$firstMonth</span> &mdash; <span style="white-space: nowrap">$lastMonth</span> <br/>($numMonths ${l10n.months})</td>');
     sb.writeln('</tr>');
 
     int row = 0;
@@ -185,45 +207,61 @@ class StatsExporter {
         ('Fuel Economy (min)', _fmtMileage(mileageMin, unit)),
         ('Fuel Economy (max)', _fmtMileage(mileageMax, unit)),
       ]) {
-        sb.writeln('<tr class="summary${row.isOdd ? ' odd' : ''}">');
-        sb.writeln('  <td class="summary">${entry.$1}</td>');
+        sb.writeln(
+            '<tr class="summary${row.isOdd ? ' odd' : ''}">');
+        sb.writeln(
+            '  <td class="summary">${l10n.fuelEconomy(entry.$1)}</td>');
         sb.writeln('  <td class="summary">${entry.$2}</td>');
         sb.writeln('</tr>');
         row++;
       }
     } else {
-      for (final label in ['Fuel Economy (avg)', 'Fuel Economy (min)', 'Fuel Economy (max)']) {
-        sb.writeln('<tr class="summary${row.isOdd ? ' odd' : ''}">');
-        sb.writeln('  <td class="summary">$label</td>');
+      for (final lbl in [l10n.fuelEconomy('avg'),
+          l10n.fuelEconomy('min'),
+          l10n.fuelEconomy('max')]) {
+        sb.writeln(
+            '<tr class="summary${row.isOdd ? ' odd' : ''}">');
+        sb.writeln('  <td class="summary">$lbl</td>');
         sb.writeln('  <td class="summary">-</td>');
         sb.writeln('</tr>');
         row++;
       }
     }
 
-    sb.writeln('<tr class="summary${row.isOdd ? ' odd' : ''}">');
-    sb.writeln('  <td class="summary">Distance Driven</td>');
-    sb.writeln('  <td class="summary">$totalDistance $distLabel <br/>(${avgDistPerMonth.toStringAsFixed(0)} per month)</td>');
+    sb.writeln(
+        '<tr class="summary${row.isOdd ? ' odd' : ''}">');
+    sb.writeln(
+        '  <td class="summary">${l10n.distanceDriven}</td>');
+    sb.writeln(
+        '  <td class="summary">$totalDistance $distLabel <br/>(${avgDistPerMonth.toStringAsFixed(0)} ${l10n.perMonth})</td>');
     sb.writeln('</tr>');
     row++;
 
-    sb.writeln('<tr class="summary${row.isOdd ? ' odd' : ''}">');
-    sb.writeln('  <td class="summary">Fuel Purchased</td>');
-    sb.writeln('  <td class="summary">${totalFuel.toStringAsFixed(3)} $fuelLabel <br/>(${avgFuelPerMonth.toStringAsFixed(3)} per month)</td>');
+    sb.writeln(
+        '<tr class="summary${row.isOdd ? ' odd' : ''}">');
+    sb.writeln('  <td class="summary">${l10n.fuelPurchased}</td>');
+    sb.writeln(
+        '  <td class="summary">${totalFuel.toStringAsFixed(3)} $fuelLabel <br/>(${avgFuelPerMonth.toStringAsFixed(3)} ${l10n.perMonth})</td>');
     sb.writeln('</tr>');
     row++;
 
-    sb.writeln('<tr class="summary${row.isOdd ? ' odd' : ''}">');
-    sb.writeln('  <td class="summary">Fuel Cost</td>');
-    final costPerDistStr = totalDistance > 0 ? ' <br/>(${cm.formatCurrency(costPerDist, currencyCode)} per $distLabel)' : '';
-    sb.writeln('  <td class="summary">${cm.formatCurrency(totalCost, currencyCode)} <br/>(${cm.formatCurrency(avgCostPerMonth, currencyCode)} per month)$costPerDistStr</td>');
+    sb.writeln(
+        '<tr class="summary${row.isOdd ? ' odd' : ''}">');
+    sb.writeln('  <td class="summary">${l10n.fuelCost}</td>');
+    final costPerDistStr = totalDistance > 0
+        ? ' <br/>(${cm.formatCurrency(costPerDist, currencyCode)} ${l10n.per(distLabel)})'
+        : '';
+    sb.writeln(
+        '  <td class="summary">${cm.formatCurrency(totalCost, currencyCode)} <br/>(${cm.formatCurrency(avgCostPerMonth, currencyCode)} ${l10n.perMonth})$costPerDistStr</td>');
     sb.writeln('</tr>');
     row++;
 
-    sb.writeln('<tr class="summary${row.isOdd ? ' odd' : ''}">');
-    sb.writeln('  <td class="summary">Fuel Price (avg)</td>');
+    sb.writeln(
+        '<tr class="summary${row.isOdd ? ' odd' : ''}">');
+    sb.writeln('  <td class="summary">${l10n.fuelPrice}</td>');
     if (totalFuel > 0) {
-      sb.writeln('  <td class="summary">${cm.formatCurrency(avgPrice, currencyCode)} per $fuelLabel</td>');
+      sb.writeln(
+          '  <td class="summary">${cm.formatCurrency(avgPrice, currencyCode)} ${l10n.per(fuelLabel)}</td>');
     } else {
       sb.writeln('  <td class="summary">-</td>');
     }
@@ -240,6 +278,7 @@ class StatsExporter {
     Units unit,
     String currencyCode,
     CurrencyManager cm,
+    AppLocalizations l10n,
   ) {
     int mDistance = 0;
     double mFuel = 0;
@@ -250,20 +289,21 @@ class StatsExporter {
       mCost += t.cost;
     }
 
-    // Mileage from records with calculations (like Java StatisticsMonthTable)
+    // Mileage from records with calculations (matches Java StatisticsMonthTable:
+    // includes zero-mileage values in min/sum — no m > 0 guard).
     double mileageSum = 0;
-    double mileageMin = double.infinity;
+    double mileageMin = 0;
     double mileageMax = 0;
     int mileageCount = 0;
     for (final r in monthRecords) {
       if (r.hasCalculation && !r.hidden) {
-        final m = r.calculation!.getMileage();
-        if (m > 0) {
-          mileageSum += m;
-          mileageMin = m < mileageMin ? m : mileageMin;
-          mileageMax = m > mileageMax ? m : mileageMax;
-          mileageCount++;
-        }
+        final calc = r.calculation;
+        if (calc == null) continue;
+        final m = calc.getMileage();
+        mileageSum += m;
+        if (mileageCount == 0 || m < mileageMin) mileageMin = m;
+        if (m > mileageMax) mileageMax = m;
+        mileageCount++;
       }
     }
 
@@ -287,13 +327,18 @@ class StatsExporter {
         ('Fuel Economy (max)', _fmtMileage(mileageMax, unit)),
       ]) {
         sb.writeln('<tr class="month${row.isOdd ? ' odd' : ''}">');
-        sb.writeln('  <td class="month">${entry.$1}</td>');
+        sb.writeln(
+            '  <td class="month">${l10n.fuelEconomy(entry.$1)}</td>');
         sb.writeln('  <td class="month">${entry.$2}</td>');
         sb.writeln('</tr>');
         row++;
       }
     } else {
-      for (final lbl in ['Fuel Economy (avg)', 'Fuel Economy (min)', 'Fuel Economy (max)']) {
+      for (final lbl in [
+        l10n.fuelEconomy('avg'),
+        l10n.fuelEconomy('min'),
+        l10n.fuelEconomy('max')
+      ]) {
         sb.writeln('<tr class="month${row.isOdd ? ' odd' : ''}">');
         sb.writeln('  <td class="month">$lbl</td>');
         sb.writeln('  <td class="month">-</td>');
@@ -303,28 +348,33 @@ class StatsExporter {
     }
 
     sb.writeln('<tr class="month${row.isOdd ? ' odd' : ''}">');
-    sb.writeln('  <td class="month">Distance Driven</td>');
+    sb.writeln('  <td class="month">${l10n.distanceDriven}</td>');
     sb.writeln('  <td class="month">$mDistance $distLabel</td>');
     sb.writeln('</tr>');
     row++;
 
     sb.writeln('<tr class="month${row.isOdd ? ' odd' : ''}">');
-    sb.writeln('  <td class="month">Fuel Purchased</td>');
-    sb.writeln('  <td class="month">${mFuel.toStringAsFixed(3)} $fuelLabel</td>');
+    sb.writeln('  <td class="month">${l10n.fuelPurchased}</td>');
+    sb.writeln(
+        '  <td class="month">${mFuel.toStringAsFixed(3)} $fuelLabel</td>');
     sb.writeln('</tr>');
     row++;
 
     sb.writeln('<tr class="month${row.isOdd ? ' odd' : ''}">');
-    sb.writeln('  <td class="month">Fuel Cost</td>');
-    final costPerDistStr = mDistance > 0 ? ' <br/>(${cm.formatCurrency(mCostPerDist, currencyCode)} per $distLabel)' : ' <br/>(- per $distLabel)';
-    sb.writeln('  <td class="month">${cm.formatCurrency(mCost, currencyCode)}$costPerDistStr</td>');
+    sb.writeln('  <td class="month">${l10n.fuelCost}</td>');
+    final costPerDistStr = mDistance > 0
+        ? ' <br/>(${cm.formatCurrency(mCostPerDist, currencyCode)} ${l10n.per(distLabel)})'
+        : ' <br/>(- ${l10n.per(distLabel)})';
+    sb.writeln(
+        '  <td class="month">${cm.formatCurrency(mCost, currencyCode)}$costPerDistStr</td>');
     sb.writeln('</tr>');
     row++;
 
     sb.writeln('<tr class="month${row.isOdd ? ' odd' : ''}">');
-    sb.writeln('  <td class="month">Fuel Price (avg)</td>');
+    sb.writeln('  <td class="month">${l10n.fuelPrice}</td>');
     if (mFuel > 0) {
-      sb.writeln('  <td class="month">${cm.formatCurrency(mAvgPrice, currencyCode)} per $fuelLabel</td>');
+      sb.writeln(
+          '  <td class="month">${cm.formatCurrency(mAvgPrice, currencyCode)} ${l10n.per(fuelLabel)}</td>');
     } else {
       sb.writeln('  <td class="month">-</td>');
     }
@@ -340,63 +390,63 @@ class StatsExporter {
 
   static String _css() {
     return '''<style type="text/css">
-body {
-    background-color: #000000;
-}
+ body {
+     background-color: #000000;
+ }
 
-table {
-    border-collapse:collapse; 
-    margin-left:10px; 
-    margin-right:10px;
-    font-size:14px;    
-}
+ table {
+     border-collapse:collapse; 
+     margin-left:10px; 
+     margin-right:10px;
+     font-size:14px;    
+ }
 
-tr.odd {
-    background-color:#f6f4f0;
-}
+ tr.odd {
+     background-color:#f6f4f0;
+ }
 
-tr {
-    background-color:#ffffff;
-}
+ tr {
+     background-color:#ffffff;
+ }
 
-th {
-    color:#ffffff;
-    background-color:#555555;
-    border:1px solid #555555;
-    padding:5px;
-    vertical-align:top;
-    text-align:left;
-}
+ th {
+     color:#ffffff;
+     background-color:#555555;
+     border:1px solid #555555;
+     padding:5px;
+     vertical-align:top;
+     text-align:left;
+ }
 
-td {
-    border:1px solid #d4d4d4;
-    padding:5px;
-    padding-top:7px;
-    padding-bottom:7px;
-    vertical-align:top;
-    text-align:left;
-}
+ td {
+     border:1px solid #d4d4d4;
+     padding:5px;
+     padding-top:7px;
+     padding-bottom:7px;
+     vertical-align:top;
+     text-align:left;
+ }
 
-table.month {
-    width:95%;
-}
+ table.month {
+     width:95%;
+ }
 
-td.month {
-    width:50%;
-}
+ td.month {
+     width:50%;
+ }
 
-table.summary {
-    width:95%;
-}
+ table.summary {
+     width:95%;
+ }
 
-td.summary {
-    width:50%;
-}
+ td.summary {
+     width:50%;
+ }
 
-th.summary {
-    color:#7bd610;
-}
+ th.summary {
+     color:#7bd610;
+ }
 
-</style>''';
+ </style>''';
   }
 }

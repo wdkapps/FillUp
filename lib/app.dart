@@ -37,11 +37,7 @@ class FillUpApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('ar'),
-          Locale('tr'),
-        ],
+        supportedLocales: AppLocalizations.supportedLocales,
 
         theme: _buildLightTheme(),
         darkTheme: _buildDarkTheme(),

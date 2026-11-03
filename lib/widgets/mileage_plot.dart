@@ -18,21 +18,28 @@ class MileagePlotWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final recordsWithMileage = records
-        .where((r) => r.hasCalculation && r.calculation!.getMileage() > 0)
+        .where((r) {
+          final calc = r.hasCalculation ? r.calculation : null;
+          return calc != null && calc.getMileage() > 0;
+        })
         .toList();
 
     if (recordsWithMileage.isEmpty) {
       return Center(
         child: Text(
-          AppLocalizations.of(context)?.noRecords ?? 'No data available',
+          l10n.noRecords,
         ),
       );
     }
 
     final spots = <FlSpot>[];
     for (int i = 0; i < recordsWithMileage.length; i++) {
-      spots.add(FlSpot(i.toDouble(), recordsWithMileage[i].calculation!.getMileage()));
+      final calc = recordsWithMileage[i].calculation;
+      if (calc != null) {
+        spots.add(FlSpot(i.toDouble(), calc.getMileage()));
+      }
     }
 
     return Padding(
@@ -40,12 +47,12 @@ class MileagePlotWidget extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            AppLocalizations.of(context)?.mileagePlot ?? 'Mileage Plot',
+            l10n.mileagePlot,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),
           Text(
-            MileageCalculator.getUnitLabel(unit),
+            MileageCalculator.getUnitLabel(unit, l10n),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 16),
@@ -72,11 +79,13 @@ class MileagePlotWidget extends StatelessWidget {
                       reservedSize: 30,
                       getTitlesWidget: (value, meta) {
                         final index = value.toInt();
-                        if (index >= 0 && index < recordsWithMileage.length) {
+                        if (index >= 0 &&
+                            index < recordsWithMileage.length) {
                           return Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: Text(
-                              DateFormat.Md().format(recordsWithMileage[index].date),
+                              DateFormat.Md()
+                                  .format(recordsWithMileage[index].date),
                               style: const TextStyle(fontSize: 9),
                             ),
                           );
@@ -85,8 +94,10 @@ class MileagePlotWidget extends StatelessWidget {
                       },
                     ),
                   ),
-                  topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  topTitles:
+                      const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  rightTitles:
+                      const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 ),
                 borderData: FlBorderData(show: true),
                 lineBarsData: [
@@ -98,7 +109,10 @@ class MileagePlotWidget extends StatelessWidget {
                     dotData: const FlDotData(show: true),
                     belowBarData: BarAreaData(
                       show: true,
-                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.1),
                     ),
                   ),
                 ],

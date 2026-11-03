@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:fillup/database/database_helper.dart';
-import 'package:fillup/models/vehicle.dart';
-import 'package:fillup/models/gas_record.dart';
+import 'package:FillUp/database/database_helper.dart';
+import 'package:FillUp/models/vehicle.dart';
+import 'package:FillUp/models/gas_record.dart';
 
 void main() {
   setUpAll(() {

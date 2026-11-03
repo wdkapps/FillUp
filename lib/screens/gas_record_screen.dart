@@ -56,12 +56,13 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final settings = Get.find<SettingsController>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.record != null
-              ? (AppLocalizations.of(context)?.editRecord ?? 'Edit Record')
-              : (AppLocalizations.of(context)?.addRecord ?? 'Add Record'),
+          widget.record != null ? l10n.editRecord : l10n.addRecord,
         ),
       ),
       body: Form(
@@ -72,7 +73,7 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
             // Date picker
             ListTile(
               leading: const Icon(Icons.calendar_today),
-              title: Text(AppLocalizations.of(context)?.date ?? 'Date'),
+              title: Text(l10n.date),
               subtitle: Text(DateFormat.yMMMd().format(_date)),
               onTap: _selectDate,
             ),
@@ -83,13 +84,13 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
               controller: _odometerController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)?.odometer ?? 'Odometer',
+                labelText: l10n.odometer,
                 border: const OutlineInputBorder(),
                 prefixIcon: const Icon(Icons.speed),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter odometer';
+                  return l10n.pleaseEnterOdometer;
                 }
                 try {
                   GasRecord.validateOdometer(int.parse(value));
@@ -106,14 +107,13 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
               controller: _gallonsController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: '${AppLocalizations.of(context)?.gallons ?? 'Fuel Amount'} (${Get.find<SettingsController>().unit.liquidVolumeLabel})',
+                labelText: '${l10n.fuelAmount} (${settings.unit.liquidVolumeLabel})',
                 border: const OutlineInputBorder(),
                 prefixIcon: const Icon(Icons.local_gas_station),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  final unitLabel = Get.find<SettingsController>().unit.liquidVolumeLabel;
-                  return 'Please enter $unitLabel';
+                  return l10n.pleaseEnterFuel(settings.unit.liquidVolumeLabel);
                 }
                 try {
                   GasRecord.validateGallons(double.parse(value));
@@ -130,13 +130,13 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
               controller: _costController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)?.cost ?? 'Cost',
+                labelText: l10n.cost,
                 border: const OutlineInputBorder(),
                 prefixIcon: const Icon(Icons.attach_money),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter cost';
+                  return l10n.pleaseEnterCost;
                 }
                 try {
                   GasRecord.validateCost(double.parse(value));
@@ -150,8 +150,8 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
 
             // Full tank checkbox
             SwitchListTile(
-              title: Text(AppLocalizations.of(context)?.fullTank ?? 'Full Tank'),
-              subtitle: const Text('Was the tank filled completely?'),
+              title: Text(l10n.fullTank),
+              subtitle: Text(l10n.fullTankSubtitle),
               value: _fullTank,
               onChanged: (value) {
                 setState(() {
@@ -166,7 +166,7 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
               controller: _notesController,
               maxLines: 3,
               decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)?.notes ?? 'Notes',
+                labelText: l10n.notes,
                 border: const OutlineInputBorder(),
                 prefixIcon: const Icon(Icons.notes),
               ),
@@ -177,7 +177,7 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
             FilledButton.icon(
               onPressed: _saveRecord,
               icon: const Icon(Icons.save),
-              label: Text(AppLocalizations.of(context)?.save ?? 'Save'),
+              label: Text(l10n.save),
             ),
           ],
         ),

@@ -18,20 +18,18 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SettingsController());
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)?.settings ?? 'Settings'),
+        title: Text(l10n.settings),
       ),
       body: Obx(
         () => ListView(
           padding: const EdgeInsets.all(16),
           children: [
             // Units section
-            _buildSectionTitle(
-              context,
-              AppLocalizations.of(context)?.units ?? 'Units',
-            ),
+            _buildSectionTitle(context, l10n.units),
             RadioGroup<Units>(
               groupValue: controller.unit,
               onChanged: (value) {
@@ -41,46 +39,46 @@ class SettingsScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
-                      title: const Text(
-                        'US',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      title: Text(
+                        l10n.usSection,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: const Text('Miles, Gallons'),
+                      subtitle: Text(l10n.usSubtitle),
                     ),
-                    const RadioListTile<Units>(
-                      title: Text('MPG (miles per gallon)'),
+                    RadioListTile<Units>(
+                      title: Text(l10n.mpgLabel),
                       value: Units.mpg,
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text(
-                        'Metric',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      title: Text(
+                        l10n.metricSection,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: const Text('Kilometers, Liters'),
+                      subtitle: Text(l10n.metricSubtitle),
                     ),
-                    const RadioListTile<Units>(
-                      title: Text('KM/L (kilometers per liter)'),
+                    RadioListTile<Units>(
+                      title: Text(l10n.kmlLabel),
                       value: Units.kml,
                     ),
-                    const RadioListTile<Units>(
-                      title: Text('L/100KM (liters per 100 km)'),
+                    RadioListTile<Units>(
+                      title: Text(l10n.l100kmLabel),
                       value: Units.l100km,
                     ),
                     const Divider(height: 1),
                     ListTile(
-                      title: const Text(
-                        'UK',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      title: Text(
+                        l10n.ukSection,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: const Text('Miles, Imperial Gallons'),
+                      subtitle: Text(l10n.ukSubtitle),
                     ),
-                    const RadioListTile<Units>(
-                      title: Text('UK MPG (miles per imperial gallon)'),
+                    RadioListTile<Units>(
+                      title: Text(l10n.ukmpgLabel),
                       value: Units.ukmpg,
                     ),
-                    const RadioListTile<Units>(
-                      title: Text('KPG (kilometers per gallon)'),
+                    RadioListTile<Units>(
+                      title: Text(l10n.kpgLabel),
                       value: Units.kpg,
                     ),
                   ],
@@ -90,13 +88,15 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Language section
-            _buildSectionTitle(
-              context,
-              AppLocalizations.of(context)?.language ?? 'Language',
-            ),
+            _buildSectionTitle(context, l10n.language),
             SegmentedButton<String>(
-              segments: const [
+              segments: [
                 ButtonSegment(value: 'en', label: Text('English')),
+                ButtonSegment(value: 'de', label: Text('Deutsch')),
+                ButtonSegment(value: 'es', label: Text('Español')),
+                ButtonSegment(value: 'fr', label: Text('Français')),
+                ButtonSegment(value: 'pt-BR', label: Text('Português (BR)')),
+                ButtonSegment(value: 'ru', label: Text('Русский')),
                 ButtonSegment(value: 'ar', label: Text('العربية')),
                 ButtonSegment(value: 'tr', label: Text('Türkçe')),
               ],
@@ -110,15 +110,12 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Theme section
-            _buildSectionTitle(
-              context,
-              AppLocalizations.of(context)?.theme ?? 'Theme',
-            ),
+            _buildSectionTitle(context, l10n.theme),
             SegmentedButton<ThemeMode>(
-              segments: const [
-                ButtonSegment(value: ThemeMode.light, label: Text('Light')),
-                ButtonSegment(value: ThemeMode.dark, label: Text('Dark')),
-                ButtonSegment(value: ThemeMode.system, label: Text('System')),
+              segments: [
+                ButtonSegment(value: ThemeMode.light, label: Text(l10n.light)),
+                ButtonSegment(value: ThemeMode.dark, label: Text(l10n.dark)),
+                ButtonSegment(value: ThemeMode.system, label: Text(l10n.system)),
               ],
               selected: {controller.themeMode},
               onSelectionChanged: (Set<ThemeMode> selected) {
@@ -130,57 +127,57 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Currency section
-            _buildSectionTitle(context, 'Currency'),
+            _buildSectionTitle(context, l10n.currency),
             Card(
               child: ListTile(
                 leading: const Icon(Icons.attach_money),
-                title: const Text('Currency'),
+                title: Text(l10n.currency),
                 subtitle: Text(controller.currency),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => _showCurrencyDialog(context, controller),
+                onTap: () => _showCurrencyDialog(context, controller, l10n),
               ),
             ),
             const SizedBox(height: 24),
 
             // Display options
-            _buildSectionTitle(context, 'Display'),
+            _buildSectionTitle(context, l10n.display),
             SwitchListTile(
-              title: const Text('Require Cost'),
-              subtitle: const Text('When entering fuel purchase'),
+              title: Text(l10n.requireCost),
+              subtitle: Text(l10n.requireCostSubtitle),
               value: controller.requireCost.value,
               onChanged: (value) => controller.setRequireCost(value),
             ),
             SwitchListTile(
-              title: const Text('Display Cost in Log'),
+              title: Text(l10n.displayCost),
               value: controller.displayCost.value,
               onChanged: (value) => controller.setDisplayCost(value),
             ),
             SwitchListTile(
-              title: const Text('Display Notes in Log'),
+              title: Text(l10n.displayNotes),
               value: controller.displayNotes.value,
               onChanged: (value) => controller.setDisplayNotes(value),
             ),
             const SizedBox(height: 24),
 
             // Database section
-            _buildSectionTitle(context, 'Database'),
+            _buildSectionTitle(context, l10n.database),
             Card(
               child: Column(
                 children: [
                   ListTile(
                     leading: const Icon(Icons.backup),
-                    title: const Text('Backup Database'),
-                    subtitle: const Text('Backup entire database to file'),
+                    title: Text(l10n.backupDatabase),
+                    subtitle: Text(l10n.backupDatabaseSubtitle),
                     trailing: const Icon(Icons.chevron_right),
-                    onTap: () => _backupDatabase(context),
+                    onTap: () => _backupDatabase(context, l10n),
                   ),
                   const Divider(height: 1),
                   ListTile(
                     leading: const Icon(Icons.restore),
-                    title: const Text('Restore Database'),
-                    subtitle: const Text('Restore database from backup file'),
+                    title: Text(l10n.restoreDatabase),
+                    subtitle: Text(l10n.restoreDatabaseSubtitle),
                     trailing: const Icon(Icons.chevron_right),
-                    onTap: () => _restoreDatabase(context),
+                    onTap: () => _restoreDatabase(context, l10n),
                   ),
                 ],
               ),
@@ -191,10 +188,10 @@ class SettingsScreen extends StatelessWidget {
             Card(
               child: ListTile(
                 leading: const Icon(Icons.help_outline),
-                title: Text(AppLocalizations.of(context)?.help ?? 'Help'),
-                subtitle: const Text('Display application help information'),
+                title: Text(l10n.help),
+                subtitle: Text(l10n.helpSubtitle),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => _showHelpDialog(context),
+                onTap: () => _showHelpDialog(context, l10n),
               ),
             ),
             const SizedBox(height: 8),
@@ -203,10 +200,10 @@ class SettingsScreen extends StatelessWidget {
             Card(
               child: ListTile(
                 leading: const Icon(Icons.info_outline),
-                title: Text(AppLocalizations.of(context)?.about ?? 'About'),
-                subtitle: const Text('Display application version information'),
+                title: Text(l10n.about),
+                subtitle: Text(l10n.aboutSubtitle),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => _showAboutScreen(context),
+                onTap: () => _showAboutScreen(context, l10n),
               ),
             ),
             const SizedBox(height: 8),
@@ -215,10 +212,10 @@ class SettingsScreen extends StatelessWidget {
             Card(
               child: ListTile(
                 leading: const Icon(Icons.description_outlined),
-                title: const Text('License'),
-                subtitle: const Text('Display the software license'),
+                title: Text(l10n.license),
+                subtitle: Text(l10n.licenseSubtitle),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => _showLicenseScreen(context),
+                onTap: () => _showLicenseScreen(context, l10n),
               ),
             ),
           ],
@@ -234,62 +231,46 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  void _showHelpDialog(BuildContext context) {
+  void _showHelpDialog(BuildContext context, AppLocalizations l10n) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Help'),
-        content: const SingleChildScrollView(
+        title: Text(l10n.help),
+        content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Frequently Asked Questions (FAQ)',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                l10n.faqs,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              SizedBox(height: 16),
-              _HelpSection(
-                title: 'Why isn\'t FillUp calculating my mileage?',
-                content:
-                    'You need to fill your tank once to establish a starting point, and then continue recording all of your fuel purchases. Each time you fill your tank after the starting point, FillUp will calculate your mileage by determining the distance driven and fuel used since the previous full tank.\n\nTIP: In the Add Fuel screen, put a check mark in the "Tank Full" box to indicate when the tank has been filled, otherwise FillUp will never calculate mileage.',
-              ),
-              _HelpSection(
-                title: 'Why does FillUp only estimate my mileage?',
-                content:
-                    'A full tank is needed to accurately calculate how much fuel was used since the previous full tank. When you get fuel and the tank is not full, FillUp cannot calculate mileage exactly. Instead it will allow you to estimate mileage.',
-              ),
-              _HelpSection(
-                title: 'What if I forget to record a fuel purchase?',
-                content:
-                    'The next time you fill your tank, the mileage calculation will be wrong (too high). You can hide this value by selecting it in the Log and clicking "Hide Calculation".',
-              ),
-              _HelpSection(
-                title: 'How do I backup/restore my data?',
-                content:
-                    'FillUp Log data is stored in a database on your device. Use Export to save Log data to a CSV file, and Import to restore it.',
-              ),
+              const SizedBox(height: 16),
+              _HelpSection(title: l10n.helpQ1, content: l10n.helpA1),
+              _HelpSection(title: l10n.helpQ2, content: l10n.helpA2),
+              _HelpSection(title: l10n.helpQ3, content: l10n.helpA3),
+              _HelpSection(title: l10n.helpQ4, content: l10n.helpA4),
             ],
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: Text(l10n.close),
           ),
         ],
       ),
     );
   }
 
-  void _showAboutScreen(BuildContext context) async {
+  void _showAboutScreen(BuildContext context, AppLocalizations l10n) async {
     final packageInfo = await PackageInfo.fromPlatform();
     if (!context.mounted) return;
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('About'),
+        title: Text(l10n.about),
         content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,27 +284,23 @@ class SettingsScreen extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   const SizedBox(width: 16),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'FillUp',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        l10n.appTitle,
+                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       ),
-                      Text('Gas Mileage Log'),
+                      Text(l10n.gasMileageLog),
                     ],
                   ),
                 ],
               ),
               const Divider(height: 32),
-              _AboutRow(title: 'Package Name', value: packageInfo.packageName),
-              _AboutRow(title: 'Package Version', value: packageInfo.version),
-              _AboutRow(title: 'Build Date', value: _formatBuildDate()),
+              _AboutRow(title: l10n.appVersion, value: packageInfo.version),
+              _AboutRow(title: l10n.buildDate, value: _formatBuildDate()),
               _AboutRow(
-                title: 'Database Version',
+                title: l10n.databaseVersion,
                 value: '${AppConstants.dbVersion}',
               ),
             ],
@@ -332,58 +309,36 @@ class SettingsScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: Text(l10n.close),
           ),
         ],
       ),
     );
   }
 
-  void _showLicenseScreen(BuildContext context) {
+  void _showLicenseScreen(BuildContext context, AppLocalizations l10n) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('License'),
-        content: const SingleChildScrollView(
+        title: Text(l10n.license),
+        content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Copyright © 2013,2014 William D. Kraemer - Rewritten by Muhammad Bashir Al-Noimi',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                l10n.copyright,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 16),
-              Text(
-                'Licensed under the Apache License, Version 2.0 (the "License"); '
-                'you may not use this software except in compliance with the License. '
-                'You may obtain a copy of the License at:',
-              ),
-              SizedBox(height: 8),
-              Text(
-                'http://www.apache.org/licenses/LICENSE-2.0',
-                style: TextStyle(color: Colors.blue),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Unless required by applicable law or agreed to in writing, software '
-                'distributed under the License is distributed on an "AS IS" BASIS, '
-                'WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. '
-                'See the License for the specific language governing permissions and '
-                'limitations under the License.',
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Use of this software constitutes acceptance of this license.',
-                style: TextStyle(fontStyle: FontStyle.italic),
-              ),
+              const SizedBox(height: 16),
+              Text(l10n.licenseText),
             ],
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: Text(l10n.close),
           ),
         ],
       ),
@@ -395,7 +350,7 @@ class SettingsScreen extends StatelessWidget {
     return '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
   }
 
-  Future<void> _backupDatabase(BuildContext context) async {
+  Future<void> _backupDatabase(BuildContext context, AppLocalizations l10n) async {
     try {
       final dbHelper = DatabaseHelper.instance;
       final db = await dbHelper.database;
@@ -406,7 +361,6 @@ class SettingsScreen extends StatelessWidget {
           '${directory.path}/fillup_backup_${DateTime.now().millisecondsSinceEpoch}.db';
 
       final dbFile = File(dbPath);
-
       await dbFile.copy(backupPath);
 
       final walFile = File('$dbPath-wal');
@@ -420,13 +374,13 @@ class SettingsScreen extends StatelessWidget {
       }
 
       await SharePlus.instance.share(
-        ShareParams(files: [XFile(backupPath)], text: 'FillUp Database Backup'),
+        ShareParams(files: [XFile(backupPath)], text: l10n.backupDatabase),
       );
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Database backup created successfully'),
+          SnackBar(
+            content: Text(l10n.backupSuccess),
             backgroundColor: Colors.green,
           ),
         );
@@ -435,7 +389,7 @@ class SettingsScreen extends StatelessWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Backup failed: $e'),
+            content: Text(l10n.backupFailed('$e')),
             backgroundColor: Colors.red,
           ),
         );
@@ -443,7 +397,7 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _restoreDatabase(BuildContext context) async {
+  Future<void> _restoreDatabase(BuildContext context, AppLocalizations l10n) async {
     try {
       final files = await FilePicker.pickFiles(
         type: FileType.custom,
@@ -455,37 +409,43 @@ class SettingsScreen extends StatelessWidget {
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Restore Database'),
-            content: const Text(
-              'This will replace your current database with the backup. '
-              'This action cannot be undone. Continue?',
-            ),
+            title: Text(l10n.restoreDatabase),
+            content: Text(l10n.restoreConfirm),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
-                child: const Text('Cancel'),
+                child: Text(l10n.cancel),
               ),
               FilledButton(
                 onPressed: () => Navigator.pop(context, true),
                 style: FilledButton.styleFrom(backgroundColor: Colors.red),
-                child: const Text('Restore'),
+                child: Text(l10n.restoreDatabase),
               ),
             ],
           ),
         );
 
         if (confirmed == true) {
+          final filePath = files.first.path;
+          if (filePath == null) {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(l10n.restoreFailed('No file selected')), backgroundColor: Colors.red),
+              );
+            }
+            return;
+          }
           final dbHelper = DatabaseHelper.instance;
           final db = await dbHelper.database;
           final dbPath = db.path;
 
           await dbHelper.close();
 
-          final backupFile = File(files.first.path!);
+          final backupFile = File(filePath);
           await backupFile.copy(dbPath);
 
-          final backupWal = File('${files.first.path!}-wal');
-          final backupShm = File('${files.first.path!}-shm');
+          final backupWal = File('$filePath-wal');
+          final backupShm = File('$filePath-shm');
 
           if (await backupWal.exists()) {
             await backupWal.copy('$dbPath-wal');
@@ -496,10 +456,8 @@ class SettingsScreen extends StatelessWidget {
 
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                  'Database restored successfully. Please restart the app.',
-                ),
+              SnackBar(
+                content: Text(l10n.restoreSuccess),
                 backgroundColor: Colors.green,
               ),
             );
@@ -510,7 +468,7 @@ class SettingsScreen extends StatelessWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Restore failed: $e'),
+            content: Text(l10n.restoreFailed('$e')),
             backgroundColor: Colors.red,
           ),
         );
@@ -521,6 +479,7 @@ class SettingsScreen extends StatelessWidget {
   void _showCurrencyDialog(
     BuildContext context,
     SettingsController controller,
+    AppLocalizations l10n,
   ) {
     final currencies = CurrencyManager.instance.getAvailableCurrencies();
     final searchController = TextEditingController();
@@ -530,7 +489,7 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('Select Currency'),
+          title: Text(l10n.selectCurrency),
           content: SizedBox(
             width: double.maxFinite,
             height: 400,
@@ -539,10 +498,10 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 TextField(
                   controller: searchController,
-                  decoration: const InputDecoration(
-                    hintText: 'Search currencies...',
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    hintText: l10n.searchCurrenciesHint,
+                    prefixIcon: const Icon(Icons.search),
+                    border: const OutlineInputBorder(),
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -593,7 +552,7 @@ class SettingsScreen extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
           ],
         ),

@@ -14,9 +14,10 @@ class CostPlotWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     if (records.isEmpty) {
       return Center(
-        child: Text(AppLocalizations.of(context)?.noRecords ?? 'No data available'),
+        child: Text(l10n.noRecords),
       );
     }
 
@@ -45,7 +46,7 @@ class CostPlotWidget extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            AppLocalizations.of(context)?.costPlot ?? 'Cost Plot',
+            l10n.costPlot,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 16),

@@ -390,6 +390,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get kpgLabel => 'KPG (Kilometer pro Gallone)';
 
   @override
+  String get gallonsUnit => 'Gallonen';
+
+  @override
+  String get litersUnit => 'Liter';
+
+  @override
+  String get milesUnit => 'Meilen';
+
+  @override
+  String get kilometersUnit => 'Kilometer';
+
+  @override
   String get edit => 'Bearbeiten';
 
   @override
@@ -498,7 +510,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String shareStatistics(String name) {
-    return 'Statistics for $name';
+    return 'Statistiken für $name';
   }
 
   @override
@@ -512,37 +524,37 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get allData => 'All data';
+  String get allData => 'Alle Daten';
 
   @override
-  String get dateRange => 'Date Range';
+  String get dateRange => 'Zeitraum';
 
   @override
-  String get months => 'months';
+  String get months => 'Monate';
 
   @override
   String fuelEconomy(String metric) {
-    return 'Fuel Economy ($metric)';
+    return 'Verbrauch ($metric)';
   }
 
   @override
-  String get distanceDriven => 'Distance Driven';
+  String get distanceDriven => 'Gefahrene Strecke';
 
   @override
-  String get fuelPurchased => 'Fuel Purchased';
+  String get fuelPurchased => 'Getankt';
 
   @override
-  String get fuelCost => 'Fuel Cost';
+  String get fuelCost => 'Kraftstoffkosten';
 
   @override
-  String get fuelPrice => 'Fuel Price (avg)';
+  String get fuelPrice => 'Kraftstoffpreis (Ø)';
 
   @override
-  String get perMonth => 'per month';
+  String get perMonth => 'pro Monat';
 
   @override
   String per(String unit) {
-    return 'per $unit';
+    return 'pro $unit';
   }
 
   @override
@@ -561,6 +573,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String mileageUnitLabel(String unit) {
-    return 'Mileage ($unit)';
+    return 'Verbrauch ($unit)';
   }
+
+  @override
+  String get noFileSelected => 'Keine Datei ausgewählt';
+
+  @override
+  String get searchLanguagesHint => 'Sprachen durchsuchen...';
 }

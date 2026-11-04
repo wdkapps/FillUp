@@ -60,7 +60,7 @@
   "about": "À propos",
   "help": "Aide",
   "version": "Version",
-  "importExport": "Import/Export",
+  "importExport": "Import/Exporter",
   "pleaseEnterName": "Veuillez saisir un nom",
   "pleaseEnterTankSize": "Veuillez saisir la capacité du réservoir",
   "pleaseEnterOdometer": "Veuillez saisir le compteur",
@@ -147,5 +147,43 @@
   "helpA4": "Les données FillUp sont stockées dans une base de données sur votre appareil. Utilisez Exporter pour sauvegarder les données dans un fichier CSV et Importer pour les restaurer.",
   "licenseText": "Sous licence Apache License, Version 2.0 (la « Licence ») ; vous ne pouvez pas utiliser ce logiciel sauf en conformité avec la Licence. Vous pouvez obtenir une copie de la Licence à l'adresse :\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nSauf exigence de la loi applicable ou accord écrit, le logiciel est distribué sous la Licence sur une base « EN L'ÉTAT », SANS GARANTIE OU CONDITION D'AUCUNE SORTE, expresse ou implicite. Consultez la Licence pour les conditions régissant les autorisations et limitations.",
   "copyright": "Copyright © 2013,2014 William D. Kraemer - Réécrit par Muhammad Bashir Al-Noimi le 2026-08-31",
-  "fuelAmount": "Quantité de carburant"
+  "fuelAmount": "Quantité de carburant",
+  "gallonsUnit": "gallons",
+  "litersUnit": "litres",
+  "milesUnit": "miles",
+  "kilometersUnit": "kilomètres",
+  "allData": "Toutes les données",
+  "dateRange": "Période",
+  "distanceDriven": "Distance parcourue",
+  "fuelCost": "Coût du carburant",
+  "fuelEconomy": "Consommation ({metric})",
+  "@fuelEconomy": {
+    "description": "Fuel economy label with metric"
+  },
+  "fuelPrice": "Prix du carburant (moy.)",
+  "fuelPurchased": "Carburant acheté",
+  "months": "mois",
+  "per": "par {unit}",
+  "@per": {
+    "description": "Per unit suffix"
+  },
+  "perMonth": "par mois",
+  "recordSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}{mileagePart}",
+  "@recordSummary": {
+    "description": "Record list subtitle: odometer | fuel | mileage"
+  },
+  "recordsSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}",
+  "@recordsSummary": {
+    "description": "Monthly card subtitle: distance | fuel"
+  },
+  "shareStatistics": "Statistiques de {name}",
+  "@shareStatistics": {
+    "description": "Share sheet text for statistics report"
+  },
+  "mileageUnitLabel": "Consommation ({unit})",
+  "@mileageUnitLabel": {
+    "description": "Mileage unit label with short unit code"
+  },
+  "noFileSelected": "Aucun fichier sélectionné",
+  "searchLanguagesHint": "Rechercher les langues..."
 }

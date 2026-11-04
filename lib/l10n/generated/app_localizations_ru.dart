@@ -374,7 +374,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get ukSubtitle => 'Мили, Имперские галлоны';
 
   @override
-  String get mpgLabel => 'Миля/галлон (miles per gallon)';
+  String get mpgLabel => 'Миля/галлон (миля на галлон)';
 
   @override
   String get kmlLabel => 'КМ/Л (километров на литр)';
@@ -383,10 +383,22 @@ class AppLocalizationsRu extends AppLocalizations {
   String get l100kmLabel => 'Л/100КМ (литров на 100 км)';
 
   @override
-  String get ukmpgLabel => 'UK Миля/галлон (miles per imperial gallon)';
+  String get ukmpgLabel => 'UK Миля/галлон (миля на имперский галлон)';
 
   @override
   String get kpgLabel => 'КМ/галлон (километров на галлон)';
+
+  @override
+  String get gallonsUnit => 'галлоны';
+
+  @override
+  String get litersUnit => 'литры';
+
+  @override
+  String get milesUnit => 'мили';
+
+  @override
+  String get kilometersUnit => 'километры';
 
   @override
   String get edit => 'Изменить';
@@ -496,7 +508,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String shareStatistics(String name) {
-    return 'Statistics for $name';
+    return 'Статистика для $name';
   }
 
   @override
@@ -510,37 +522,37 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get allData => 'All data';
+  String get allData => 'Все данные';
 
   @override
-  String get dateRange => 'Date Range';
+  String get dateRange => 'Период';
 
   @override
-  String get months => 'months';
+  String get months => 'месяцев';
 
   @override
   String fuelEconomy(String metric) {
-    return 'Fuel Economy ($metric)';
+    return 'Расход ($metric)';
   }
 
   @override
-  String get distanceDriven => 'Distance Driven';
+  String get distanceDriven => 'Пройдено';
 
   @override
-  String get fuelPurchased => 'Fuel Purchased';
+  String get fuelPurchased => 'Куплено топлива';
 
   @override
-  String get fuelCost => 'Fuel Cost';
+  String get fuelCost => 'Стоимость топлива';
 
   @override
-  String get fuelPrice => 'Fuel Price (avg)';
+  String get fuelPrice => 'Цена топлива (ср.)';
 
   @override
-  String get perMonth => 'per month';
+  String get perMonth => 'в месяц';
 
   @override
   String per(String unit) {
-    return 'per $unit';
+    return 'на $unit';
   }
 
   @override
@@ -559,6 +571,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String mileageUnitLabel(String unit) {
-    return 'Mileage ($unit)';
+    return 'Расход ($unit)';
   }
+
+  @override
+  String get noFileSelected => 'Файл не выбран';
+
+  @override
+  String get searchLanguagesHint => 'Поиск языков...';
 }

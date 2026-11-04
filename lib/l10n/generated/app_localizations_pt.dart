@@ -388,6 +388,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get kpgLabel => 'KPG (kilometers per gallon)';
 
   @override
+  String get gallonsUnit => 'gallons';
+
+  @override
+  String get litersUnit => 'liters';
+
+  @override
+  String get milesUnit => 'miles';
+
+  @override
+  String get kilometersUnit => 'kilometers';
+
+  @override
   String get edit => 'Edit';
 
   @override
@@ -560,6 +572,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String mileageUnitLabel(String unit) {
     return 'Mileage ($unit)';
   }
+
+  @override
+  String get noFileSelected => 'No file selected';
+
+  @override
+  String get searchLanguagesHint => 'Search languages...';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -947,6 +965,18 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get kpgLabel => 'KPG (quilômetros por galão)';
 
   @override
+  String get gallonsUnit => 'galões';
+
+  @override
+  String get litersUnit => 'litros';
+
+  @override
+  String get milesUnit => 'milhas';
+
+  @override
+  String get kilometersUnit => 'quilômetros';
+
+  @override
   String get edit => 'Editar';
 
   @override
@@ -1054,5 +1084,76 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
       'Copyright © 2013,2014 William D. Kraemer - Reescrito por Muhammad Bashir Al-Noimi em 2026-08-31';
 
   @override
+  String shareStatistics(String name) {
+    return 'Estatísticas de $name';
+  }
+
+  @override
+  String recordsSummary(
+    String odometer,
+    String unitDistance,
+    String fuel,
+    String unitVolume,
+  ) {
+    return '$odometer $unitDistance | $fuel $unitVolume';
+  }
+
+  @override
+  String get allData => 'Todos os dados';
+
+  @override
+  String get dateRange => 'Período';
+
+  @override
+  String get months => 'meses';
+
+  @override
+  String fuelEconomy(String metric) {
+    return 'Consumo ($metric)';
+  }
+
+  @override
+  String get distanceDriven => 'Distância percorrida';
+
+  @override
+  String get fuelPurchased => 'Combustível adquirido';
+
+  @override
+  String get fuelCost => 'Custo de combustível';
+
+  @override
+  String get fuelPrice => 'Preço do combustível (média)';
+
+  @override
+  String get perMonth => 'por mês';
+
+  @override
+  String per(String unit) {
+    return 'por $unit';
+  }
+
+  @override
   String get fuelAmount => 'Quantidade de combustível';
+
+  @override
+  String recordSummary(
+    String odometer,
+    String unitDistance,
+    String fuel,
+    String unitVolume,
+    String mileagePart,
+  ) {
+    return '$odometer $unitDistance | $fuel $unitVolume$mileagePart';
+  }
+
+  @override
+  String mileageUnitLabel(String unit) {
+    return 'Rendimento ($unit)';
+  }
+
+  @override
+  String get noFileSelected => 'Nenhum arquivo selecionado';
+
+  @override
+  String get searchLanguagesHint => 'Buscar idiomas...';
 }

@@ -116,10 +116,10 @@
   "metricSubtitle": "Километры, Литры",
   "ukSection": "Великобритания",
   "ukSubtitle": "Мили, Имперские галлоны",
-  "mpgLabel": "Миля/галлон (miles per gallon)",
+  "mpgLabel": "Миля/галлон (миля на галлон)",
   "kmlLabel": "КМ/Л (километров на литр)",
   "l100kmLabel": "Л/100КМ (литров на 100 км)",
-  "ukmpgLabel": "UK Миля/галлон (miles per imperial gallon)",
+  "ukmpgLabel": "UK Миля/галлон (миля на имперский галлон)",
   "kpgLabel": "КМ/галлон (километров на галлон)",
   "edit": "Изменить",
   "recordsLabelShort": "{count} записей | {odometer} {unitDistance} | {mileage}",
@@ -147,5 +147,43 @@
   "helpA4": "Данные FillUp хранятся в базе данных на вашем устройстве. Используйте Экспорт для сохранения в CSV и Импорт для восстановления.",
   "licenseText": "Лицензия Apache License, Version 2.0 (\"Лицензия\"); вы не можете использовать это программное обеспечение, кроме как в соответствии с Лицензией. Скопированное можно получить по адресу:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nЕсли не требуется применимым законом или письменным соглашением, ПО распространяется по Лицензии на условиях \"КАК ЕСТЬ\", БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ ИЛИ УСЛОВИЙ, явных или подразумеваемых. Смотрите Лицензию для прав и ограничений.",
   "copyright": "Copyright © 2013,2014 William D. Kraemer - Переписано Muhammad Bashir Al-Noimi 2026-08-31",
-  "fuelAmount": "Объём топлива"
+  "fuelAmount": "Объём топлива",
+  "gallonsUnit": "галлоны",
+  "litersUnit": "литры",
+  "milesUnit": "мили",
+  "kilometersUnit": "километры",
+  "allData": "Все данные",
+  "dateRange": "Период",
+  "distanceDriven": "Пройдено",
+  "fuelCost": "Стоимость топлива",
+  "fuelEconomy": "Расход ({metric})",
+  "@fuelEconomy": {
+    "description": "Fuel economy label with metric"
+  },
+  "fuelPrice": "Цена топлива (ср.)",
+  "fuelPurchased": "Куплено топлива",
+  "months": "месяцев",
+  "per": "на {unit}",
+  "@per": {
+    "description": "Per unit suffix"
+  },
+  "perMonth": "в месяц",
+  "recordSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}{mileagePart}",
+  "@recordSummary": {
+    "description": "Record list subtitle: odometer | fuel | mileage"
+  },
+  "recordsSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}",
+  "@recordsSummary": {
+    "description": "Monthly card subtitle: distance | fuel"
+  },
+  "shareStatistics": "Статистика для {name}",
+  "@shareStatistics": {
+    "description": "Share sheet text for statistics report"
+  },
+  "mileageUnitLabel": "Расход ({unit})",
+  "@mileageUnitLabel": {
+    "description": "Mileage unit label with short unit code"
+  },
+  "noFileSelected": "Файл не выбран",
+  "searchLanguagesHint": "Поиск языков..."
 }

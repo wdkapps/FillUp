@@ -1,7 +1,7 @@
 name: FillUp
 description: "FillUp - Gas Mileage Log"
 publish_to: 'none'
-version: 2.1.8+219
+version: 2.1.8+220
 
 environment:
   sdk: ^3.13.7

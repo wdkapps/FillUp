@@ -388,6 +388,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kpgLabel => 'KPG (kilometers per gallon)';
 
   @override
+  String get gallonsUnit => 'gallons';
+
+  @override
+  String get litersUnit => 'liters';
+
+  @override
+  String get milesUnit => 'miles';
+
+  @override
+  String get kilometersUnit => 'kilometers';
+
+  @override
   String get edit => 'Edit';
 
   @override
@@ -560,4 +572,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String mileageUnitLabel(String unit) {
     return 'Mileage ($unit)';
   }
+
+  @override
+  String get noFileSelected => 'No file selected';
+
+  @override
+  String get searchLanguagesHint => 'Search languages...';
 }

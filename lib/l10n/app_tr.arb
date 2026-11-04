@@ -147,5 +147,43 @@
   "helpA4": "FillUp verileri cihazınızdaki bir veritabanında saklanır. Verileri CSV dosyasına kaydetmek için Dışa Aktar'ı, geri yüklemek için İçe Aktar'ı kullanın.",
   "licenseText": "Apache Lisansı, Versiyon 2.0 (\"Lisans\") kapsamında lisanslanmıştır; yazılımı Lisansa uygun olmayan şekilde kullanamazsınız. Lisansın bir kopyasını buradan edinebilirsiniz:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUygulanabilir yasa gerektirmedikçe veya yazılı anlaşma olmadıkça, yazılım Lisans kapsamında \"OLDUĞU GİBİ\" temelde, herhangi bir türde garanti veya koşul verilmeden dağıtılır. İzins ve kısıtlamalar hakkında Lisansa bakın.",
   "copyright": "Telif Hakkı © 2013,2014 William D. Kraemer - Muhammad Bashir Al-Noimi tarafından 2026-08-31'de yeniden yazıldı",
-  "fuelAmount": "Yakıt Miktarı"
+  "fuelAmount": "Yakıt Miktarı",
+  "gallonsUnit": "galon",
+  "litersUnit": "litre",
+  "milesUnit": "mil",
+  "kilometersUnit": "kilometre",
+  "allData": "Tüm veriler",
+  "dateRange": "Tarih Aralığı",
+  "distanceDriven": "Kat Edilen Mesafe",
+  "fuelCost": "Yakıt Maliyeti",
+  "fuelEconomy": "Yakıt Ekonomisi ({metric})",
+  "@fuelEconomy": {
+    "description": "Fuel economy label with metric"
+  },
+  "fuelPrice": "Yakıt Fiyatı (ort.)",
+  "fuelPurchased": "Alınan Yakıt",
+  "months": "ay",
+  "per": "birim başına {unit}",
+  "@per": {
+    "description": "Per unit suffix"
+  },
+  "perMonth": "ayda",
+  "recordSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}{mileagePart}",
+  "@recordSummary": {
+    "description": "Record list subtitle: odometer | fuel | mileage"
+  },
+  "recordsSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}",
+  "@recordsSummary": {
+    "description": "Monthly card subtitle: distance | fuel"
+  },
+  "shareStatistics": "{name} için istatistikler",
+  "@shareStatistics": {
+    "description": "Share sheet text for statistics report"
+  },
+  "mileageUnitLabel": "Tasarruf ({unit})",
+  "@mileageUnitLabel": {
+    "description": "Mileage unit label with short unit code"
+  },
+  "noFileSelected": "Dosya seçilmedi",
+  "searchLanguagesHint": "Dilleri ara..."
 }

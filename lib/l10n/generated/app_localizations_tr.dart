@@ -389,6 +389,18 @@ class AppLocalizationsTr extends AppLocalizations {
   String get kpgLabel => 'KPG (KM/Galon)';
 
   @override
+  String get gallonsUnit => 'galon';
+
+  @override
+  String get litersUnit => 'litre';
+
+  @override
+  String get milesUnit => 'mil';
+
+  @override
+  String get kilometersUnit => 'kilometre';
+
+  @override
   String get edit => 'Düzenle';
 
   @override
@@ -496,7 +508,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String shareStatistics(String name) {
-    return 'Statistics for $name';
+    return '$name için istatistikler';
   }
 
   @override
@@ -510,37 +522,37 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get allData => 'All data';
+  String get allData => 'Tüm veriler';
 
   @override
-  String get dateRange => 'Date Range';
+  String get dateRange => 'Tarih Aralığı';
 
   @override
-  String get months => 'months';
+  String get months => 'ay';
 
   @override
   String fuelEconomy(String metric) {
-    return 'Fuel Economy ($metric)';
+    return 'Yakıt Ekonomisi ($metric)';
   }
 
   @override
-  String get distanceDriven => 'Distance Driven';
+  String get distanceDriven => 'Kat Edilen Mesafe';
 
   @override
-  String get fuelPurchased => 'Fuel Purchased';
+  String get fuelPurchased => 'Alınan Yakıt';
 
   @override
-  String get fuelCost => 'Fuel Cost';
+  String get fuelCost => 'Yakıt Maliyeti';
 
   @override
-  String get fuelPrice => 'Fuel Price (avg)';
+  String get fuelPrice => 'Yakıt Fiyatı (ort.)';
 
   @override
-  String get perMonth => 'per month';
+  String get perMonth => 'ayda';
 
   @override
   String per(String unit) {
-    return 'per $unit';
+    return 'birim başına $unit';
   }
 
   @override
@@ -559,6 +571,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String mileageUnitLabel(String unit) {
-    return 'Mileage ($unit)';
+    return 'Tasarruf ($unit)';
   }
+
+  @override
+  String get noFileSelected => 'Dosya seçilmedi';
+
+  @override
+  String get searchLanguagesHint => 'Dilleri ara...';
 }

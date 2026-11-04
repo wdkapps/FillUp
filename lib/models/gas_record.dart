@@ -86,10 +86,10 @@ class GasRecord {
       hidden: (map['hidden'] as int) == 1,
       cost: (map['cost'] as num).toDouble(),
       notes: map['notes'] as String? ?? '',
-      price: _calculatePrice(
-        (map['cost'] as num).toDouble(),
-        (map['gallons'] as num).toDouble(),
-      ),
+      price: GasRecord.calculatePrice(
+          (map['cost'] as num).toDouble(),
+          (map['gallons'] as num).toDouble(),
+        ),
     );
   }
 
@@ -107,7 +107,7 @@ class GasRecord {
     };
   }
 
-  static double _calculatePrice(double cost, double gallons) {
+  static double calculatePrice(double cost, double gallons) {
     if (gallons != 0) {
       return cost / gallons;
     }

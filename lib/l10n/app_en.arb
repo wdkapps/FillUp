@@ -264,7 +264,9 @@
   "@pleaseEnterFuel": {
     "description": "Validator: fuel amount empty",
     "placeholders": {
-      "unitLabel": { "type": "String" }
+      "unitLabel": {
+        "type": "String"
+      }
     }
   },
   "fullTankSubtitle": "Was the tank filled completely?",
@@ -279,7 +281,9 @@
   "@confirmDeleteVehicle": {
     "description": "Delete vehicle confirmation",
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "exportSubtitle": "Export fuel records to CSV file",
@@ -314,14 +318,18 @@
   "@importedRecords": {
     "description": "Import success snackbar",
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "shareRecords": "Fuel records for {name}",
   "@shareRecords": {
     "description": "Share sheet text",
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "currency": "Currency",
@@ -420,14 +428,18 @@
   "@perDistance": {
     "description": "Cost per distance unit",
     "placeholders": {
-      "unit": { "type": "String" }
+      "unit": {
+        "type": "String"
+      }
     }
   },
   "avgPerVolume": "Avg/{unit}",
   "@avgPerVolume": {
     "description": "Average price per liquid unit",
     "placeholders": {
-      "unit": { "type": "String" }
+      "unit": {
+        "type": "String"
+      }
     }
   },
   "distanceSection": "Distance",
@@ -458,7 +470,9 @@
   "@shareReportError": {
     "description": "Share report error snackbar",
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "usSection": "US",
@@ -505,6 +519,22 @@
   "@kpgLabel": {
     "description": "KPG unit option"
   },
+  "gallonsUnit": "gallons",
+  "@gallonsUnit": {
+    "description": "Fuel volume unit label (imperial)"
+  },
+  "litersUnit": "liters",
+  "@litersUnit": {
+    "description": "Fuel volume unit label (metric)"
+  },
+  "milesUnit": "miles",
+  "@milesUnit": {
+    "description": "Distance unit label (imperial)"
+  },
+  "kilometersUnit": "kilometers",
+  "@kilometersUnit": {
+    "description": "Distance unit label (metric)"
+  },
   "edit": "Edit",
   "@edit": {
     "description": "Edit menu item"
@@ -513,28 +543,48 @@
   "@recordsLabelShort": {
     "description": "Vehicle list subtitle with stats",
     "placeholders": {
-      "count": { "type": "int" },
-      "odometer": { "type": "String" },
-      "unitDistance": { "type": "String" },
-      "mileage": { "type": "String" }
+      "count": {
+        "type": "int"
+      },
+      "odometer": {
+        "type": "String"
+      },
+      "unitDistance": {
+        "type": "String"
+      },
+      "mileage": {
+        "type": "String"
+      }
     }
   },
   "tankSizeOnly": "{tankSize} {unit}",
   "@tankSizeOnly": {
     "description": "Vehicle list subtitle for empty vehicle",
     "placeholders": {
-      "tankSize": { "type": "String" },
-      "unit": { "type": "String" }
+      "tankSize": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
     }
   },
   "recordsSubtitle": "{odometer} {unitDistance} | {fuel} {unitVolume}",
   "@recordsSubtitle": {
     "description": "Monthly card subtitle",
     "placeholders": {
-      "odometer": { "type": "String" },
-      "unitDistance": { "type": "String" },
-      "fuel": { "type": "String" },
-      "unitVolume": { "type": "String" }
+      "odometer": {
+        "type": "String"
+      },
+      "unitDistance": {
+        "type": "String"
+      },
+      "fuel": {
+        "type": "String"
+      },
+      "unitVolume": {
+        "type": "String"
+      }
     }
   },
   "appVersion": "App Version",
@@ -569,7 +619,9 @@
   "@backupFailed": {
     "description": "Backup failure snackbar",
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "restoreSuccess": "Database restored successfully. Please restart the app.",
@@ -580,7 +632,9 @@
   "@restoreFailed": {
     "description": "Restore failure snackbar",
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "restoreConfirm": "This will replace your current database with the backup. This action cannot be undone. Continue?",
@@ -635,17 +689,27 @@
   "@shareStatistics": {
     "description": "Share sheet text for statistics report",
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "recordsSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}",
   "@recordsSummary": {
     "description": "Monthly card subtitle: distance | fuel",
     "placeholders": {
-      "odometer": { "type": "String" },
-      "unitDistance": { "type": "String" },
-      "fuel": { "type": "String" },
-      "unitVolume": { "type": "String" }
+      "odometer": {
+        "type": "String"
+      },
+      "unitDistance": {
+        "type": "String"
+      },
+      "fuel": {
+        "type": "String"
+      },
+      "unitVolume": {
+        "type": "String"
+      }
     }
   },
   "allData": "All data",
@@ -664,7 +728,9 @@
   "@fuelEconomy": {
     "description": "Fuel economy label with metric",
     "placeholders": {
-      "metric": { "type": "String" }
+      "metric": {
+        "type": "String"
+      }
     }
   },
   "distanceDriven": "Distance Driven",
@@ -691,7 +757,9 @@
   "@per": {
     "description": "Per unit suffix",
     "placeholders": {
-      "unit": { "type": "String" }
+      "unit": {
+        "type": "String"
+      }
     }
   },
   "fuelAmount": "Fuel Amount",
@@ -702,18 +770,35 @@
   "@recordSummary": {
     "description": "Record list subtitle: odometer | fuel | mileage",
     "placeholders": {
-      "odometer": { "type": "String" },
-      "unitDistance": { "type": "String" },
-      "fuel": { "type": "String" },
-      "unitVolume": { "type": "String" },
-      "mileagePart": { "type": "String" }
+      "odometer": {
+        "type": "String"
+      },
+      "unitDistance": {
+        "type": "String"
+      },
+      "fuel": {
+        "type": "String"
+      },
+      "unitVolume": {
+        "type": "String"
+      },
+      "mileagePart": {
+        "type": "String"
+      }
     }
   },
   "mileageUnitLabel": "Mileage ({unit})",
   "@mileageUnitLabel": {
     "description": "Mileage unit label with short unit code",
     "placeholders": {
-      "unit": { "type": "String" }
+      "unit": {
+        "type": "String"
+      }
     }
-  }
+  },
+  "noFileSelected": "No file selected",
+  "@noFileSelected": {
+    "description": "File picker returned no file"
+  },
+  "searchLanguagesHint": "Search languages..."
 }

@@ -837,6 +837,30 @@ abstract class AppLocalizations {
   /// **'KPG (kilometers per gallon)'**
   String get kpgLabel;
 
+  /// Fuel volume unit label (imperial)
+  ///
+  /// In en, this message translates to:
+  /// **'gallons'**
+  String get gallonsUnit;
+
+  /// Fuel volume unit label (metric)
+  ///
+  /// In en, this message translates to:
+  /// **'liters'**
+  String get litersUnit;
+
+  /// Distance unit label (imperial)
+  ///
+  /// In en, this message translates to:
+  /// **'miles'**
+  String get milesUnit;
+
+  /// Distance unit label (metric)
+  ///
+  /// In en, this message translates to:
+  /// **'kilometers'**
+  String get kilometersUnit;
+
   /// Edit menu item
   ///
   /// In en, this message translates to:
@@ -1103,6 +1127,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mileage ({unit})'**
   String mileageUnitLabel(String unit);
+
+  /// File picker returned no file
+  ///
+  /// In en, this message translates to:
+  /// **'No file selected'**
+  String get noFileSelected;
+
+  /// No description provided for @searchLanguagesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search languages...'**
+  String get searchLanguagesHint;
 }
 
 class _AppLocalizationsDelegate

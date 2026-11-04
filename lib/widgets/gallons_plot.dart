@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../models/gas_record.dart';
 import '../controllers/settings_controller.dart';
+import '../utils/mileage_calculator.dart';
 
 class GallonsPlotWidget extends StatelessWidget {
   final List<GasRecord> records;
@@ -38,7 +39,7 @@ class GallonsPlotWidget extends StatelessWidget {
     }
 
     final settingsController = Get.find<SettingsController>();
-    final unitLabel = settingsController.unit.liquidVolumeLabel;
+    final unitLabel = MileageCalculator.fuelVolumeLabel(settingsController.unit, l10n);
 
     return Padding(
       padding: const EdgeInsets.all(16),

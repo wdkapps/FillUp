@@ -190,7 +190,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get version => 'Version';
 
   @override
-  String get importExport => 'Import/Export';
+  String get importExport => 'Import/Exporter';
 
   @override
   String get pleaseEnterName => 'Veuillez saisir un nom';
@@ -391,6 +391,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get kpgLabel => 'KPG (kilomètres par gallon)';
 
   @override
+  String get gallonsUnit => 'gallons';
+
+  @override
+  String get litersUnit => 'litres';
+
+  @override
+  String get milesUnit => 'miles';
+
+  @override
+  String get kilometersUnit => 'kilomètres';
+
+  @override
   String get edit => 'Modifier';
 
   @override
@@ -500,7 +512,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String shareStatistics(String name) {
-    return 'Statistics for $name';
+    return 'Statistiques de $name';
   }
 
   @override
@@ -514,37 +526,37 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get allData => 'All data';
+  String get allData => 'Toutes les données';
 
   @override
-  String get dateRange => 'Date Range';
+  String get dateRange => 'Période';
 
   @override
-  String get months => 'months';
+  String get months => 'mois';
 
   @override
   String fuelEconomy(String metric) {
-    return 'Fuel Economy ($metric)';
+    return 'Consommation ($metric)';
   }
 
   @override
-  String get distanceDriven => 'Distance Driven';
+  String get distanceDriven => 'Distance parcourue';
 
   @override
-  String get fuelPurchased => 'Fuel Purchased';
+  String get fuelPurchased => 'Carburant acheté';
 
   @override
-  String get fuelCost => 'Fuel Cost';
+  String get fuelCost => 'Coût du carburant';
 
   @override
-  String get fuelPrice => 'Fuel Price (avg)';
+  String get fuelPrice => 'Prix du carburant (moy.)';
 
   @override
-  String get perMonth => 'per month';
+  String get perMonth => 'par mois';
 
   @override
   String per(String unit) {
-    return 'per $unit';
+    return 'par $unit';
   }
 
   @override
@@ -563,6 +575,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String mileageUnitLabel(String unit) {
-    return 'Mileage ($unit)';
+    return 'Consommation ($unit)';
   }
+
+  @override
+  String get noFileSelected => 'Aucun fichier sélectionné';
+
+  @override
+  String get searchLanguagesHint => 'Rechercher les langues...';
 }

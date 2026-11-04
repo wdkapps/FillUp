@@ -34,7 +34,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get odometer => 'عداد المسافة';
 
   @override
-  String get gallons => 'جلاون';
+  String get gallons => 'جالون';
 
   @override
   String get cost => 'التكلفة';
@@ -157,7 +157,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get odometerPlot => 'رسم بياني لعداد المسافة';
 
   @override
-  String get gallonsPlot => 'رسم بياني للجلاون';
+  String get gallonsPlot => 'رسم بياني للجالون';
 
   @override
   String get costPlot => 'رسم بياني للتكلفة';
@@ -358,7 +358,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get usSection => 'أمريكي';
 
   @override
-  String get usSubtitle => 'أميال، جلاون';
+  String get usSubtitle => 'أميال، جالون';
 
   @override
   String get metricSection => 'متري';
@@ -370,10 +370,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ukSection => 'بريطاني';
 
   @override
-  String get ukSubtitle => 'أميال، جلاون إمبراطوري';
+  String get ukSubtitle => 'أميال، جالون إمبراطوري';
 
   @override
-  String get mpgLabel => 'ميل/جلاون (ميل لكل جالون)';
+  String get mpgLabel => 'ميل/جالون (ميل لكل جالون)';
 
   @override
   String get kmlLabel => 'كم/ل (كيلومتر لكل لتر)';
@@ -382,10 +382,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get l100kmLabel => 'ل/100كم (لتر لكل 100 كم)';
 
   @override
-  String get ukmpgLabel => 'ميل بريطاني/جلاون (ميل إمبراطوري لكل جالون)';
+  String get ukmpgLabel => 'ميل بريطاني/جالون (ميل إمبراطوري لكل جالون)';
 
   @override
-  String get kpgLabel => 'كم/جلاون (كيلومتر لكل جالون)';
+  String get kpgLabel => 'كم/جالون (كيلومتر لكل جالون)';
+
+  @override
+  String get gallonsUnit => 'جالون';
+
+  @override
+  String get litersUnit => 'لتر';
+
+  @override
+  String get milesUnit => 'ميل';
+
+  @override
+  String get kilometersUnit => 'كيلومتر';
 
   @override
   String get edit => 'تعديل';
@@ -495,7 +507,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String shareStatistics(String name) {
-    return 'Statistics for $name';
+    return 'إحصائيات $name';
   }
 
   @override
@@ -509,37 +521,37 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get allData => 'All data';
+  String get allData => 'جميع البيانات';
 
   @override
-  String get dateRange => 'Date Range';
+  String get dateRange => 'النطاق الزمني';
 
   @override
-  String get months => 'months';
+  String get months => 'أشهر';
 
   @override
   String fuelEconomy(String metric) {
-    return 'Fuel Economy ($metric)';
+    return 'الاستهلاك ($metric)';
   }
 
   @override
-  String get distanceDriven => 'Distance Driven';
+  String get distanceDriven => 'المسافة المقطوعة';
 
   @override
-  String get fuelPurchased => 'Fuel Purchased';
+  String get fuelPurchased => 'الوقود المشتراه';
 
   @override
-  String get fuelCost => 'Fuel Cost';
+  String get fuelCost => 'تكلفة الوقود';
 
   @override
-  String get fuelPrice => 'Fuel Price (avg)';
+  String get fuelPrice => 'سعر الوقود (متوسط)';
 
   @override
-  String get perMonth => 'per month';
+  String get perMonth => 'لكل شهر';
 
   @override
   String per(String unit) {
-    return 'per $unit';
+    return 'لكل $unit';
   }
 
   @override
@@ -558,6 +570,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String mileageUnitLabel(String unit) {
-    return 'Mileage ($unit)';
+    return 'الاقتصاد ($unit)';
   }
+
+  @override
+  String get noFileSelected => 'لم يتم اختيار أي ملف';
+
+  @override
+  String get searchLanguagesHint => 'ابحث عن لغة...';
 }

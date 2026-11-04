@@ -184,8 +184,8 @@ class StatsExporter {
         totalDistance > 0 ? totalCost / totalDistance : 0.0;
     final avgPrice = totalFuel > 0 ? totalCost / totalFuel : 0.0;
 
-    final distLabel = unit.distanceLabel.toLowerCase();
-    final fuelLabel = unit.liquidVolumeLabel.toLowerCase();
+    final distLabel = MileageCalculator.distanceLabel(unit, l10n).toLowerCase();
+    final fuelLabel = MileageCalculator.fuelVolumeLabel(unit, l10n).toLowerCase();
 
     final sb = StringBuffer();
     sb.writeln('<table class="summary">');
@@ -202,23 +202,30 @@ class StatsExporter {
 
     int row = 0;
     if (mileageCount > 0) {
-      for (final entry in [
-        ('Fuel Economy (avg)', _fmtMileage(mileageSum / mileageCount, unit)),
-        ('Fuel Economy (min)', _fmtMileage(mileageMin, unit)),
-        ('Fuel Economy (max)', _fmtMileage(mileageMax, unit)),
-      ]) {
+      final fuelEconomyLabels = [
+        l10n.fuelEconomy(l10n.avg),
+        l10n.fuelEconomy(l10n.min),
+        l10n.fuelEconomy(l10n.max),
+      ];
+      final fuelEconomyValues = [
+        _fmtMileage(mileageSum / mileageCount, unit, l10n),
+        _fmtMileage(mileageMin, unit, l10n),
+        _fmtMileage(mileageMax, unit, l10n),
+      ];
+      for (int i = 0; i < fuelEconomyLabels.length; i++) {
         sb.writeln(
             '<tr class="summary${row.isOdd ? ' odd' : ''}">');
         sb.writeln(
-            '  <td class="summary">${l10n.fuelEconomy(entry.$1)}</td>');
-        sb.writeln('  <td class="summary">${entry.$2}</td>');
+            '  <td class="summary">${fuelEconomyLabels[i]}</td>');
+        sb.writeln('  <td class="summary">${fuelEconomyValues[i]}</td>');
         sb.writeln('</tr>');
         row++;
       }
     } else {
-      for (final lbl in [l10n.fuelEconomy('avg'),
-          l10n.fuelEconomy('min'),
-          l10n.fuelEconomy('max')]) {
+      for (final lbl in [
+          l10n.fuelEconomy(l10n.avg),
+          l10n.fuelEconomy(l10n.min),
+          l10n.fuelEconomy(l10n.max)]) {
         sb.writeln(
             '<tr class="summary${row.isOdd ? ' odd' : ''}">');
         sb.writeln('  <td class="summary">$lbl</td>');
@@ -310,8 +317,8 @@ class StatsExporter {
     final mCostPerDist = mDistance > 0 ? mCost / mDistance : 0.0;
     final mAvgPrice = mFuel > 0 ? mCost / mFuel : 0.0;
 
-    final distLabel = unit.distanceLabel.toLowerCase();
-    final fuelLabel = unit.liquidVolumeLabel.toLowerCase();
+    final distLabel = MileageCalculator.distanceLabel(unit, l10n).toLowerCase();
+    final fuelLabel = MileageCalculator.fuelVolumeLabel(unit, l10n).toLowerCase();
 
     final sb = StringBuffer();
     sb.writeln('<table class="month">');
@@ -321,23 +328,29 @@ class StatsExporter {
 
     int row = 0;
     if (mileageCount > 0) {
-      for (final entry in [
-        ('Fuel Economy (avg)', _fmtMileage(mileageSum / mileageCount, unit)),
-        ('Fuel Economy (min)', _fmtMileage(mileageMin, unit)),
-        ('Fuel Economy (max)', _fmtMileage(mileageMax, unit)),
-      ]) {
+      final fuelEconomyLabels = [
+        l10n.fuelEconomy(l10n.avg),
+        l10n.fuelEconomy(l10n.min),
+        l10n.fuelEconomy(l10n.max),
+      ];
+      final fuelEconomyValues = [
+        _fmtMileage(mileageSum / mileageCount, unit, l10n),
+        _fmtMileage(mileageMin, unit, l10n),
+        _fmtMileage(mileageMax, unit, l10n),
+      ];
+      for (int i = 0; i < fuelEconomyLabels.length; i++) {
         sb.writeln('<tr class="month${row.isOdd ? ' odd' : ''}">');
         sb.writeln(
-            '  <td class="month">${l10n.fuelEconomy(entry.$1)}</td>');
-        sb.writeln('  <td class="month">${entry.$2}</td>');
+            '  <td class="month">${fuelEconomyLabels[i]}</td>');
+        sb.writeln('  <td class="month">${fuelEconomyValues[i]}</td>');
         sb.writeln('</tr>');
         row++;
       }
     } else {
       for (final lbl in [
-        l10n.fuelEconomy('avg'),
-        l10n.fuelEconomy('min'),
-        l10n.fuelEconomy('max')
+        l10n.fuelEconomy(l10n.avg),
+        l10n.fuelEconomy(l10n.min),
+        l10n.fuelEconomy(l10n.max)
       ]) {
         sb.writeln('<tr class="month${row.isOdd ? ' odd' : ''}">');
         sb.writeln('  <td class="month">$lbl</td>');
@@ -384,8 +397,8 @@ class StatsExporter {
     return sb.toString();
   }
 
-  static String _fmtMileage(double value, Units unit) {
-    return '${value.toStringAsFixed(2)} ${MileageCalculator.getMileageLabel(unit)}';
+  static String _fmtMileage(double value, Units unit, AppLocalizations l10n) {
+    return '${value.toStringAsFixed(2)} ${MileageCalculator.getUnitLabel(unit, l10n)}';
   }
 
   static String _css() {

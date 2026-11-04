@@ -390,6 +390,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get kpgLabel => 'KPG (kilómetros por galón)';
 
   @override
+  String get gallonsUnit => 'galones';
+
+  @override
+  String get litersUnit => 'litros';
+
+  @override
+  String get milesUnit => 'millas';
+
+  @override
+  String get kilometersUnit => 'kilómetros';
+
+  @override
   String get edit => 'Editar';
 
   @override
@@ -498,7 +510,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String shareStatistics(String name) {
-    return 'Statistics for $name';
+    return 'Estadísticas de $name';
   }
 
   @override
@@ -512,37 +524,37 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get allData => 'All data';
+  String get allData => 'Todos los datos';
 
   @override
-  String get dateRange => 'Date Range';
+  String get dateRange => 'Rango de fechas';
 
   @override
-  String get months => 'months';
+  String get months => 'meses';
 
   @override
   String fuelEconomy(String metric) {
-    return 'Fuel Economy ($metric)';
+    return 'Consumo ($metric)';
   }
 
   @override
-  String get distanceDriven => 'Distance Driven';
+  String get distanceDriven => 'Distancia recorrida';
 
   @override
-  String get fuelPurchased => 'Fuel Purchased';
+  String get fuelPurchased => 'Combustible comprado';
 
   @override
-  String get fuelCost => 'Fuel Cost';
+  String get fuelCost => 'Costo de combustible';
 
   @override
-  String get fuelPrice => 'Fuel Price (avg)';
+  String get fuelPrice => 'Precio del combustible (prom.)';
 
   @override
-  String get perMonth => 'per month';
+  String get perMonth => 'por mes';
 
   @override
   String per(String unit) {
-    return 'per $unit';
+    return 'por $unit';
   }
 
   @override
@@ -561,6 +573,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String mileageUnitLabel(String unit) {
-    return 'Mileage ($unit)';
+    return 'Rendimiento ($unit)';
   }
+
+  @override
+  String get noFileSelected => 'No se seleccionó ningún archivo';
+
+  @override
+  String get searchLanguagesHint => 'Buscar idiomas...';
 }

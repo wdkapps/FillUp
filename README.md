@@ -1,163 +1,45 @@
 FillUp - Gas Mileage Log
-========================
+==============================================
 
-A cross-platform Flutter application to calculate and track gas mileage (fuel economy/efficiency).
-Rewritten from the original Android Java app to Flutter.
+An open source cross-platform application to calculate and track gas mileage
+(fuel economy/efficiency).
 
-**Author:** Muhammad Bashir Al-Noimi  
-**Date:** August 31, 2026  
-**Original App:** FillUp - Gas Mileage Log Android App (Java) by William D. Kraemer  
-**Source:** https://github.com/wdkapps/FillUp
+Available on Google Play at:
+https://play.google.com/store/apps/details?id=com.github.wdkapps.fillup
 
-## Project Overview
+For further details, see the project page at:
+http://wdkapps.github.io
 
-FillUp helps you track fuel consumption and calculate mileage for your vehicles. Features include:
-- Multiple vehicle support
-- Fuel record tracking with full/partial tank detection
-- Mileage calculations (MPG, L/100km, km/L, UK MPG)
-- Statistics and charts per vehicle and overall
-- CSV import/export
-- Material Design 3 UI with dark/light theme
-- Localization: English, Arabic (RTL), Turkish
+This is a Flutter cross-platform conversion of the original Android app by
+William D. Kraemer. Build with `flutter build` for your target platform.
 
-## Requirements
+Build platform:
++ Flutter 3.24+ with Dart 3.5+
++ Targets: Linux (default), Android, iOS, Windows, macOS, Web
 
-- **Flutter SDK:** 3.24+ (stable channel)
-- **Dart:** 3.5+
-- **Platform targets:** Linux (default), Android, iOS, Windows, macOS, Web
-- **Database:** SQLite (via sqflite)
-- **State Management:** GetX
-- **Charts:** fl_chart
-- **Localization:** intl with ARB files
+Dependencies:
++ GetX (state management)
++ sqflite (database)
++ fl_chart (charts)
 
-## Development Setup
+Future Plan:
++ GitHub Actions CI/CD pipeline to automate building and releasing
+  Android APKs, Linux desktop binaries, and Windows desktop installers
++ Once the Java → Flutter migration is fully complete, backport selected
+  features from https://github.com/JeziL/carvita into FillUp
++ Publish desktop builds as a Flatpak package and mobile builds on F-Droid
 
-```bash
-# Clone and navigate
-cd fillup_flutter  # or src/ if using the source directory
-
-# Install dependencies
-flutter pub get
-
-# Generate localization files
-flutter gen-l10n
-
-# Run on Linux (default)
-flutter run -d linux
-
-# Run on Android (requires device/emulator)
-flutter run -d android
-```
-
-## Building
-
-### Linux (Development)
-```bash
-flutter build linux
-```
-Output: `build/linux/x64/release/bundle/fillup`
-
-### Android APK (Release)
-```bash
-flutter build apk --release
-```
-Output: `build/app/outputs/flutter-apk/app-release.apk`
-
-### Android App Bundle (Play Store)
-```bash
-flutter build appbundle --release
-```
-Output: `build/app/outputs/bundle/release/app-release.aab`
-
-### iOS (macOS only)
-```bash
-flutter build ios --release
-```
-
-### Windows
-```bash
-flutter build windows
-```
-
-### macOS
-```bash
-flutter build macos
-```
-
-### Web
-```bash
-flutter build web
-```
-
-## Demo Data
-
-Populate with sample data (12 vehicles, 212 records):
-```bash
-flutter build linux --dart-define=FILL_DEMO=true
-timeout 15 ./build/linux/x64/release/bundle/fillup
-flutter build linux  # rebuild normally
-```
-
-Reset demo data:
-```bash
-flutter build linux --dart-define=RESET_DEMO=true
-timeout 15 ./build/linux/x64/release/bundle/fillup
-flutter build linux
-```
-
-Alternative: `./lib/tools/demo_data.sh fill|reset`
-
-## Testing
-
-```bash
-# Run all tests
-flutter test
-
-# Run with coverage
-flutter test --coverage
-```
-
-## Project Structure
-
-```
-src/
-├── lib/
-│   ├── main.dart              # App entry point, FFI init, seed data
-│   ├── app.dart               # MaterialApp, GetX, theming, localization
-│   ├── l10n/                  # ARB files (app_en.arb, app_ar.arb, app_tr.arb)
-│   ├── models/                # Data models
-│   ├── database/              # SQLite CRUD layer
-│   ├── controllers/           # GetX state management
-│   ├── screens/               # UI screens (8 screens)
-│   ├── widgets/               # Reusable widgets
-│   ├── utils/                 # Utilities
-│   ├── constants/             # App constants and icons
-│   └── tools/                 # Demo data scripts
-├── assets/
-│   ├── icons/                 # App icons
-│   └── brands_icons/          # Vehicle brand logos (git submodule)
-├── test/                      # Unit and widget tests
-├── android/                   # Android configuration
-├── ios/                       # iOS configuration
-├── linux/                     # Linux configuration
-├── macos/                     # macOS configuration
-├── windows/                   # Windows configuration
-└── web/                       # Web configuration
-```
-
-## Key Implementation Notes
-
-- **Mileage calculations** match the original Java implementation exactly
-- **Unit system:** SettingsController.unit is the single source of truth
-- **Data storage:** User's current unit system (not canonical base unit)
-- **Desktop SQLite:** Requires `databaseFactory = databaseFactoryFfi;` before openDatabase
-- **CSV format:** Java-compatible (header `#,version,5`, rows with MM/dd/yyyy HH:mm, etc.)
-- **Statistics:** Monthly trips from consecutive record pairs; empty months show zeros
-
-## License
-
-Apache License 2.0 - same as original project.
-Copyright 2013,2014 William D. Kraemer (original Java app)
+Copyright 2013,2014 William D. Kraemer
 Flutter conversion copyright 2026 Muhammad Bashir Al-Noimi
 
-See LICENSE file for details.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this software except in compliance with the License.
+You may obtain a copy of the License at:
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

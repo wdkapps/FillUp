@@ -226,21 +226,21 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                 _buildSectionHeader(l10n.distanceSection),
                 _buildStatRow(
                   '  ${l10n.total}',
-                  '$totalTripDistance ${unit.distanceLabel}',
+                  '$totalTripDistance ${MileageCalculator.distanceLabel(unit, l10n)}',
                 ),
                 _buildStatRow(
                   '  ${l10n.avgMonth}',
-                  '${avgDistPerMonth.toStringAsFixed(0)} ${unit.distanceLabel}',
+                  '${avgDistPerMonth.toStringAsFixed(0)} ${MileageCalculator.distanceLabel(unit, l10n)}',
                 ),
                 const Divider(),
                 _buildSectionHeader(l10n.fuelSection),
                 _buildStatRow(
                   '  ${l10n.total}',
-                  '${totalFuel.toStringAsFixed(3)} ${unit.liquidVolumeLabel}',
+                  '${totalFuel.toStringAsFixed(3)} ${MileageCalculator.fuelVolumeLabel(unit, l10n)}',
                 ),
                 _buildStatRow(
                   '  ${l10n.avgMonth}',
-                  '${avgFuelPerMonth.toStringAsFixed(3)} ${unit.liquidVolumeLabel}',
+                  '${avgFuelPerMonth.toStringAsFixed(3)} ${MileageCalculator.fuelVolumeLabel(unit, l10n)}',
                 ),
                 const Divider(),
                 _buildSectionHeader(l10n.costSection),
@@ -251,13 +251,13 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                     cm.formatCurrency(avgCostPerMonth, currencyCode)),
                 if (totalTripDistance > 0)
                   _buildStatRow(
-                    '  ${l10n.perDistance(unit.distanceLabel)}',
-                    '${cm.formatCurrency(costPerDist, currencyCode)}/${unit.distanceLabel}',
+                    '  ${l10n.perDistance(MileageCalculator.distanceLabel(unit, l10n))}',
+                    '${cm.formatCurrency(costPerDist, currencyCode)}/${MileageCalculator.distanceLabel(unit, l10n)}',
                   ),
                 const Divider(),
                 _buildSectionHeader(l10n.priceSection),
                 _buildStatRow(
-                  '  ${l10n.avgPerVolume(unit.liquidVolumeLabel)}',
+                  '  ${l10n.avgPerVolume(MileageCalculator.fuelVolumeLabel(unit, l10n))}',
                   cm.formatCurrency(avgPricePerUnit, currencyCode),
                 ),
               ],
@@ -360,9 +360,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         subtitle: Text(
           l10n.recordsSummary(
               mDistance.toString(),
-              unit.distanceLabel,
+              MileageCalculator.distanceLabel(unit, l10n),
               mFuel.toStringAsFixed(3),
-              unit.liquidVolumeLabel)),
+              MileageCalculator.fuelVolumeLabel(unit, l10n))),
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
@@ -382,25 +382,25 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                 ],
                 _buildMonthlySubHeader(l10n.distanceSection),
                 _buildStatRow('  ${l10n.total}',
-                    '$mDistance ${unit.distanceLabel}'),
+                    '$mDistance ${MileageCalculator.distanceLabel(unit, l10n)}'),
                 const Divider(height: 16),
                 _buildMonthlySubHeader(l10n.fuelSection),
                 _buildStatRow(
                     '  ${l10n.total}',
-                    '${mFuel.toStringAsFixed(3)} ${unit.liquidVolumeLabel}'),
+                    '${mFuel.toStringAsFixed(3)} ${MileageCalculator.fuelVolumeLabel(unit, l10n)}'),
                 const Divider(height: 16),
                 _buildMonthlySubHeader(l10n.costSection),
                 _buildStatRow(
                     '  ${l10n.total}', cm.formatCurrency(mCost, currencyCode)),
                 if (mDistance > 0)
                   _buildStatRow(
-                    '  ${l10n.perDistance(unit.distanceLabel)}',
-                    '${cm.formatCurrency(mCostPerDist, currencyCode)}/${unit.distanceLabel}',
+                    '  ${l10n.perDistance(MileageCalculator.distanceLabel(unit, l10n))}',
+                    '${cm.formatCurrency(mCostPerDist, currencyCode)}/${MileageCalculator.distanceLabel(unit, l10n)}',
                   ),
                 const Divider(height: 16),
                 _buildMonthlySubHeader(l10n.priceSection),
                 _buildStatRow(
-                  '  ${l10n.avgPerVolume(unit.liquidVolumeLabel)}',
+                  '  ${l10n.avgPerVolume(MileageCalculator.fuelVolumeLabel(unit, l10n))}',
                   mFuel > 0
                       ? cm.formatCurrency(mAvgPrice, currencyCode)
                       : '-',

@@ -107,13 +107,13 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
               controller: _gallonsController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: '${l10n.fuelAmount} (${settings.unit.liquidVolumeLabel})',
+                labelText: '${l10n.fuelAmount} (${settings.unit.isImperial ? l10n.gallonsUnit : l10n.litersUnit})',
                 border: const OutlineInputBorder(),
                 prefixIcon: const Icon(Icons.local_gas_station),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return l10n.pleaseEnterFuel(settings.unit.liquidVolumeLabel);
+                  return l10n.pleaseEnterFuel(settings.unit.isImperial ? l10n.gallonsUnit : l10n.litersUnit);
                 }
                 try {
                   GasRecord.validateGallons(double.parse(value));
@@ -199,27 +199,35 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
     }
   }
 
-  void _saveRecord() {
+  Future<void> _saveRecord() async {
     if (_formKey.currentState!.validate()) {
       final record = GasRecord(
         id: widget.record?.id,
-        vehicleId: widget.vehicle.id,
+        vehicleId: widget.record?.vehicleId ?? widget.vehicle.id,
         date: _date,
         odometer: int.parse(_odometerController.text),
         gallons: double.parse(_gallonsController.text),
         cost: double.parse(_costController.text),
         notes: _notesController.text,
         fullTank: _fullTank,
+        hidden: widget.record?.hidden ?? false,
+        price: GasRecord.calculatePrice(
+          double.parse(_costController.text),
+          double.parse(_gallonsController.text),
+        ),
       );
 
       final controller = Get.find<GasRecordController>();
+      bool saved;
       if (widget.record != null) {
-        controller.updateRecord(record);
+        saved = await controller.updateRecord(record);
       } else {
-        controller.addRecord(record);
+        saved = await controller.addRecord(record);
       }
 
-      Navigator.pop(context, true);
+      if (saved) {
+        Navigator.pop(context, true);
+      }
     }
   }
 }

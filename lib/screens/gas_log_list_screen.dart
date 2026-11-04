@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../utils/mileage_calculator.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../models/vehicle.dart';
 import '../models/gas_record.dart';
@@ -117,9 +118,10 @@ class _GasLogListScreenState extends State<GasLogListScreen> {
       GasRecord record,
       AppLocalizations l10n) {
     final settingsController = Get.find<SettingsController>();
-    final unitLabel = settingsController.unit.liquidVolumeLabel;
-    final mileageLabel = settingsController.unit.mileageLabel;
-    final distanceLabel = settingsController.unit.distanceLabel;
+    final unit = settingsController.unit;
+    final unitLabel = MileageCalculator.fuelVolumeLabel(unit, l10n);
+    final mileageLabel = MileageCalculator.getUnitLabel(unit, l10n);
+    final distanceLabel = MileageCalculator.distanceLabel(unit, l10n);
     final calc = record.hasCalculation ? record.calculation : null;
     final mileageStr =
         calc != null ? '${calc.getMileageString()} $mileageLabel' : '';

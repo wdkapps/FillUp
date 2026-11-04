@@ -89,23 +89,14 @@ class SettingsScreen extends StatelessWidget {
 
             // Language section
             _buildSectionTitle(context, l10n.language),
-            SegmentedButton<String>(
-              segments: [
-                ButtonSegment(value: 'en', label: Text('English')),
-                ButtonSegment(value: 'de', label: Text('Deutsch')),
-                ButtonSegment(value: 'es', label: Text('Español')),
-                ButtonSegment(value: 'fr', label: Text('Français')),
-                ButtonSegment(value: 'pt-BR', label: Text('Português (BR)')),
-                ButtonSegment(value: 'ru', label: Text('Русский')),
-                ButtonSegment(value: 'ar', label: Text('العربية')),
-                ButtonSegment(value: 'tr', label: Text('Türkçe')),
-              ],
-              selected: {controller.language},
-              onSelectionChanged: (Set<String> selected) {
-                if (selected.isNotEmpty) {
-                  controller.setLanguage(selected.first);
-                }
-              },
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.language_outlined),
+                title: Text(l10n.language),
+                subtitle: Text(_languageLabel(controller.language)),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showLanguagePicker(context, controller, l10n),
+              ),
             ),
             const SizedBox(height: 24),
 
@@ -221,6 +212,102 @@ class SettingsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  String _languageLabel(String code) {
+    const labels = {
+      'en': 'English',
+      'de': 'Deutsch',
+      'es': 'Español',
+      'fr': 'Français',
+      'pt-BR': 'Português (BR)',
+      'ru': 'Русский',
+      'ar': 'العربية',
+      'tr': 'Türkçe',
+    };
+    return labels[code] ?? code;
+  }
+
+  void _showLanguagePicker(
+    BuildContext context,
+    SettingsController controller,
+    AppLocalizations l10n,
+  ) {
+    final languages = [
+      'en', 'de', 'es', 'fr', 'pt-BR', 'ru', 'ar', 'tr',
+    ];
+    var filtered = List.of(languages);
+
+    showDialog(
+      context: context,
+      builder: (dialogCtx) {
+        final searchController = TextEditingController();
+        return StatefulBuilder(
+          builder: (context, setState) => AlertDialog(
+            title: Text(l10n.language),
+            content: SizedBox(
+              width: double.maxFinite,
+              height: 400,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      hintText: l10n.searchLanguagesHint,
+                      prefixIcon: const Icon(Icons.search),
+                      border: const OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        final q = value.toLowerCase();
+                        filtered = languages
+                            .where(
+                              (c) =>
+                                  _languageLabel(c).toLowerCase().contains(q) ||
+                                  c.toLowerCase().contains(q),
+                            )
+                            .toList();
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: filtered.length,
+                      itemBuilder: (context, index) {
+                        final lang = filtered[index];
+                        final isSelected = controller.language == lang;
+                        return ListTile(
+                          leading: Text(
+                            _languageLabel(lang),
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          title: Text(_languageLabel(lang)),
+                          subtitle: Text(lang),
+                          trailing: isSelected ? const Icon(Icons.check) : null,
+                          selected: isSelected,
+                          onTap: () {
+                            controller.setLanguage(lang);
+                            Navigator.pop(dialogCtx);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(dialogCtx),
+                child: Text(l10n.cancel),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -430,7 +517,7 @@ class SettingsScreen extends StatelessWidget {
           if (filePath == null) {
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.restoreFailed('No file selected')), backgroundColor: Colors.red),
+                SnackBar(content: Text(l10n.noFileSelected), backgroundColor: Colors.red),
               );
             }
             return;

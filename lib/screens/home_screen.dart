@@ -13,6 +13,7 @@ import 'plot_screen.dart';
 import 'statistics_screen.dart';
 import 'import_export_screen.dart';
 import 'settings_screen.dart';
+import '../utils/mileage_calculator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -133,16 +134,16 @@ class _HomeScreenState extends State<HomeScreen> {
         if (recordCount == 0) {
           subtitle = l10n.tankSizeOnly(
               vehicle.tankSize.toString(),
-              unit.liquidVolumeLabel);
+              MileageCalculator.fuelVolumeLabel(unit, l10n));
         } else {
           final odoStr = odo != null ? NumberFormat('#,###').format(odo) : '-';
           final avgStr = avgMileage != null
-              ? '${avgMileage.toStringAsFixed(2)} ${unit.mileageLabel}'
+              ? '${avgMileage.toStringAsFixed(2)} ${MileageCalculator.getUnitLabel(unit, l10n)}'
               : '-';
           subtitle = l10n.recordsLabelShort(
             recordCount,
             odoStr,
-            unit.distanceLabel,
+            MileageCalculator.distanceLabel(unit, l10n),
             avgStr,
           );
         }
@@ -186,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Vehicle vehicle,
       AppLocalizations l10n) {
     final settingsController = Get.find<SettingsController>();
-    final unitLabel = settingsController.unit.liquidVolumeLabel;
+    final unitLabel = MileageCalculator.fuelVolumeLabel(settingsController.unit, l10n);
     showModalBottomSheet(
       context: context,
       builder: (context) => SafeArea(
@@ -259,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final tankSizeController = TextEditingController();
     final formKey = GlobalKey<FormState>();
     final settingsController = Get.find<SettingsController>();
-    final unitLabel = settingsController.unit.liquidVolumeLabel;
+    final unitLabel = MileageCalculator.fuelVolumeLabel(settingsController.unit, l10n);
 
     showDialog(
       context: context,

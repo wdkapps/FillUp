@@ -53,6 +53,10 @@ class MileageCalculator {
     }
   }
 
+  static String formatMileage(double mileage, Units unit, AppLocalizations l10n) {
+    return '${mileage.toStringAsFixed(2)} ${getUnitLabel(unit, l10n)}';
+  }
+
   static String getUnitLabel(Units unit, AppLocalizations l10n) {
     switch (unit) {
       case Units.mpg:
@@ -68,7 +72,13 @@ class MileageCalculator {
     }
   }
 
-  static String formatMileage(double mileage, Units unit, AppLocalizations l10n) {
-    return '${mileage.toStringAsFixed(2)} ${getMileageLabel(unit)}';
+  /// Localized fuel volume unit label (e.g. "gallons" / "liters").
+  static String fuelVolumeLabel(Units unit, AppLocalizations l10n) {
+    return unit.isImperial ? l10n.gallonsUnit : l10n.litersUnit;
+  }
+
+  /// Localized distance unit label (e.g. "miles" / "kilometers").
+  static String distanceLabel(Units unit, AppLocalizations l10n) {
+    return unit.isImperial ? l10n.milesUnit : l10n.kilometersUnit;
   }
 }

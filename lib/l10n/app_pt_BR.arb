@@ -147,5 +147,43 @@
   "helpA4": "Os dados do FillUp são armazenados em um banco de dados no seu dispositivo. Use Exportar para salvar os dados em um arquivo CSV e Importar para restaurá-los.",
   "licenseText": "Licenciado sob a Licença Apache, Versão 2.0 (a \"Licença\"); você não pode usar este software exceto em conformidade com a Licença. Você pode obter uma cópia da Licença em:\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nExceto conforme exigido pela lei aplicável ou por acordo escrito, o software é distribuído sob a Licença com base \"COM ESTÁ\", SEM GARANTIAS OU CONDIÇÕES DE QUALQUER TIPO, expressas ou implícitas. Consulte a Licença para os termos que regem permissões e limitações.",
   "copyright": "Copyright © 2013,2014 William D. Kraemer - Reescrito por Muhammad Bashir Al-Noimi em 2026-08-31",
-  "fuelAmount": "Quantidade de combustível"
+  "fuelAmount": "Quantidade de combustível",
+  "gallonsUnit": "galões",
+  "litersUnit": "litros",
+  "milesUnit": "milhas",
+  "kilometersUnit": "quilômetros",
+  "allData": "Todos os dados",
+  "dateRange": "Período",
+  "distanceDriven": "Distância percorrida",
+  "fuelCost": "Custo de combustível",
+  "fuelEconomy": "Consumo ({metric})",
+  "@fuelEconomy": {
+    "description": "Fuel economy label with metric"
+  },
+  "fuelPrice": "Preço do combustível (média)",
+  "fuelPurchased": "Combustível adquirido",
+  "months": "meses",
+  "per": "por {unit}",
+  "@per": {
+    "description": "Per unit suffix"
+  },
+  "perMonth": "por mês",
+  "recordSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}{mileagePart}",
+  "@recordSummary": {
+    "description": "Record list subtitle: odometer | fuel | mileage"
+  },
+  "recordsSummary": "{odometer} {unitDistance} | {fuel} {unitVolume}",
+  "@recordsSummary": {
+    "description": "Monthly card subtitle: distance | fuel"
+  },
+  "shareStatistics": "Estatísticas de {name}",
+  "@shareStatistics": {
+    "description": "Share sheet text for statistics report"
+  },
+  "mileageUnitLabel": "Rendimento ({unit})",
+  "@mileageUnitLabel": {
+    "description": "Mileage unit label with short unit code"
+  },
+  "noFileSelected": "Nenhum arquivo selecionado",
+  "searchLanguagesHint": "Buscar idiomas..."
 }

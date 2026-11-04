@@ -1,21 +1,36 @@
 FillUp - Gas Mileage Log
 ==============================================
 
-An open source Android application to calculate and track gas mileage (fuel economy/efficiency). 
+An open source cross-platform application to calculate and track gas mileage
+(fuel economy/efficiency).
 
-Available on Google Play at: https://play.google.com/store/apps/details?id=com.github.wdkapps.fillup
+Available on Google Play at:
+https://play.google.com/store/apps/details?id=com.github.wdkapps.fillup
 
-For further details, see the project page at: http://wdkapps.github.io
+For further details, see the project page at:
+http://wdkapps.github.io
+
+This is a Flutter cross-platform conversion of the original Android app by
+William D. Kraemer. Build with `flutter build` for your target platform.
 
 Build platform:
-+ Eclipse 3.7.1 with Android Development Tools (ADT) plugin
-+ Android targetSdkVersion=10 (2.3.3)
++ Flutter 3.24+ with Dart 3.5+
++ Targets: Linux (default), Android, iOS, Windows, macOS, Web
 
 Dependencies:
-+ androidplot-core-0.6.0.jar  (http://www.androidplot.com)
++ GetX (state management)
++ sqflite (database)
++ fl_chart (charts)
 
+Future Plan:
++ GitHub Actions CI/CD pipeline to automate building and releasing
+  Android APKs, Linux desktop binaries, and Windows desktop installers
++ Once the Java → Flutter migration is fully complete, backport selected
+  features from https://github.com/JeziL/carvita into FillUp
++ Publish desktop builds as a Flatpak package and mobile builds on F-Droid
 
 Copyright 2013,2014 William D. Kraemer
+Flutter conversion copyright 2026 Muhammad Bashir Al-Noimi
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this software except in compliance with the License.

@@ -1,0 +1,157 @@
+# CI/CD for FillUp Flutter
+#
+# Fork: https://github.com/mbnoimi/FillUp
+# To add to the original repo: https://github.com/wdkapps/FillUp
+#
+# ── GitHub Secrets required ─────────────────────────────────────────────────
+#
+#   ANDROID_KEYSTORE_BASE64   Base64-encoded release .keystore file
+#   ANDROID_KEYSTORE_ALIAS    Keystore alias
+#   ANDROID_KEYSTORE_PASSWORD Keystore password
+#   ANDROID_KEY_PASSWORD      Key password (same as keystore if identical)
+#
+# The keystore is never committed — it's decoded at build time.
+#
+# ── Triggers ────────────────────────────────────────────────────────────────
+#
+#   ci:        every push to flutter/main/master + PRs + manual dispatch
+#   release:   every tag push (v*) + manual dispatch
+
+name: CI
+
+on:
+  push:
+    branches: [flutter, main, master]
+  pull_request:
+    branches: [flutter, main, master]
+  workflow_dispatch:
+
+env:
+  # Pin to a known-good Flutter/Dart pair. Bump when needed.
+  FLUTTER_VERSION: "3.47.9"
+
+jobs:
+  # ── Lint & test ──────────────────────────────────────────────────────────
+  analyze-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive   # assets/brands_icons is a submodule
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - run: flutter analyze --fatal-infos
+      - run: flutter test --coverage
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/lcov.info
+          if-no-files-found: ignore
+
+  # ── Build all platforms ─────────────────────────────────────────────────
+  # Each platform job is independent so a failure on one doesn't block
+  # the others.
+  build-android:
+    needs: analyze-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - name: Decode release keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > release.keystore
+      - name: Build release APK (signed)
+        run: |
+          flutter build apk --release \
+            --dart-define=FILL_DEMO="" \
+            --dart-define=RESET_DEMO="" \
+            --dart-define=STATUS_DEMO=""
+        env:
+          ANDROID_KEYSTORE: ${{ github.workspace }}/release.keystore
+          ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fillup-android-apk
+          path: build/app/outputs/apk/release/app-release.apk
+
+  build-linux:
+    needs: analyze-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install Linux build deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build pkg-config libgtk-3-dev
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - run: flutter build linux --release
+      - name: Package bundle
+        run: |
+          VERSION="$(grep -m1 '^version:' pubspec.yaml | sed -E 's/^version:[[:space:]]*//; s/[[:space:]]*$//')"
+          DEST="dist/FillUp-${VERSION}-linux-x64"
+          mkdir -p "$DEST"
+          cp -r build/linux/x64/release/bundle/. "$DEST/"
+          tar czf "dist/FillUp-${VERSION}-linux-x64.tar.gz" -C dist "FillUp-${VERSION}-linux-x64"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fillup-linux-x64
+          path: dist/FillUp-*-linux-x64.tar.gz
+
+  build-windows:
+    needs: analyze-test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - name: Build Windows release
+        run: flutter build windows --release
+        env:
+          # MSVC 18 / Windows-latest runner: permission_handler_windows (and
+          # other native plugins) need this define to suppress the STL1011
+          # "experimental coroutine is deprecated" hard error.
+          _SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS: "1"
+      - name: Package bundle
+        run: |
+          $Version = (Get-Content pubspec.yaml | Select-String -Pattern '^version:' | ForEach-Object { ($_ -split '\s*:\s*')[1] })
+          $Stage = "dist\FillUp-${Version}-windows-x64"
+          New-Item -ItemType Directory -Force -Path $Stage | Out-Null
+          Copy-Item -Recurse "build\windows\x64\runner\Release\." $Stage
+          Compress-Archive -Path "$Stage\*" -DestinationPath "dist\FillUp-${Version}-windows-x64.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fillup-windows-x64
+          path: dist/FillUp-*-windows-x64.zip
+          if-no-files-found: warn

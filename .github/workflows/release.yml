@@ -1,0 +1,143 @@
+# Release workflow for FillUp Flutter
+#
+# Triggered on tag push (v*) or manual dispatch.
+# Publishes signed Android APK + Linux x64 bundle + Windows x64 installer
+# to GitHub Releases.
+#
+# Required secrets (see ci.yml header for full list).
+
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to build (e.g. v2.1.8+220)"
+        required: true
+        type: string
+
+env:
+  FLUTTER_VERSION: "3.47.9"
+
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: ${{ github.event.inputs.tag || github.ref }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - name: Decode release keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > release.keystore
+      - name: Build signed release APK
+        run: |
+          flutter build apk --release \
+            --dart-define=FILL_DEMO="" \
+            --dart-define=RESET_DEMO="" \
+            --dart-define=STATUS_DEMO=""
+        env:
+          ANDROID_KEYSTORE: ${{ github.workspace }}/release.keystore
+          ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fillup-android-apk
+          path: build/app/outputs/apk/release/app-release.apk
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: ${{ github.event.inputs.tag || github.ref }}
+      - name: Install Linux build deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build pkg-config libgtk-3-dev
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - run: flutter build linux --release
+      - name: Package bundle
+        run: |
+          VERSION="$(grep -m1 '^version:' pubspec.yaml | sed -E 's/^version:[[:space:]]*//; s/[[:space:]]*$//')"
+          DEST="dist/FillUp-${VERSION}-linux-x64"
+          mkdir -p "$DEST"
+          cp -r build/linux/x64/release/bundle/. "$DEST/"
+          # Optionally tar it for download
+          tar czf "dist/FillUp-${VERSION}-linux-x64.tar.gz" -C dist "FillUp-${VERSION}-linux-x64"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fillup-linux-x64
+          path: dist/FillUp-*-linux-x64.tar.gz
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: ${{ github.event.inputs.tag || github.ref }}
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - name: Build Windows release
+        run: flutter build windows --release
+        env:
+          _SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS: "1"
+      - name: Package
+        run: |
+          $Version = (Get-Content pubspec.yaml | Select-String -Pattern '^version:' | ForEach-Object { ($_ -split '\s*:\s*')[1] })
+          $Stage = "dist\FillUp-${Version}-windows-x64"
+          New-Item -ItemType Directory -Force -Path $Stage | Out-Null
+          Copy-Item -Recurse "build\windows\x64\runner\Release\." $Stage
+          Compress-Archive -Path $Stage\* -DestinationPath "dist\FillUp-${Version}-windows-x64.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fillup-windows-x64
+          path: dist/FillUp-*-windows-x64.zip
+
+  publish-release:
+    needs: [build-android, build-linux, build-windows]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'   # auto-publish only on tag, not manual
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          draft: false
+          files: |
+            artifacts/fillup-android-apk/app-release.apk
+            artifacts/fillup-linux-x64/*.tar.gz
+            artifacts/fillup-windows-x64/*.zip
+          generate_release_notes: false
+          release_name: "FillUp ${{ github.ref_name }}"

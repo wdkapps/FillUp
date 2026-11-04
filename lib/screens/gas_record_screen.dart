@@ -226,7 +226,7 @@ class _GasRecordScreenState extends State<GasRecordScreen> {
       }
 
       if (saved) {
-        Navigator.pop(context, true);
+        if (mounted) Navigator.pop(context, true);
       }
     }
   }

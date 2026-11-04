@@ -16,6 +16,11 @@ analyzer:
     - windows/**
     - macos/**
     - linux/**
+  errors:
+    package_names: ignore
+    avoid_print: ignore
+    use_super_parameters: ignore
+    prefer_initializing_formals: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:

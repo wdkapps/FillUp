@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'dart:io';
 import 'dart:math';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
